@@ -1,10 +1,13 @@
 import logo from '../../assets/logohorizontal.png';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { useContext, useEffect } from 'react';
 import { initFlowbite } from 'flowbite';
 
 export default function Navbar() {
-  
+  const location = useLocation();
+
     const getLinkClass = (path) => {
     return location.pathname === path
       ? 'block py-2 px-3 text-coklat bg-coklat-700 rounded lg:bg-transparent lg:text-coklat-700 lg:p-0 lg:dark:text-coklat-500'
@@ -12,7 +15,7 @@ export default function Navbar() {
   };
   
 return (
-    <nav className="bg-primary shadow-md fixed top-0 w-full z-50">
+    <nav className="bg-primary shadow-md fixed top-0 w-full z-50 h-16">
       <div className="max-w-screen-xl mx-auto flex items-center p-4">
         {/* Logo kiri */}
         <Link to="/" className="flex items-center">
@@ -31,7 +34,7 @@ return (
         {/* Profile kanan */}
         <div>
           <Link to="/profile" className={getLinkClass('/profile')}>
-            Profile
+            <FontAwesomeIcon icon={faUser} className="mr-1 text-xl" />
           </Link>
         </div>
       </div>
