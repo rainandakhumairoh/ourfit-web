@@ -36,7 +36,8 @@
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import './App.css';
-import MainLayout from "./pages/MainLayout/MainLayout";
+import HomeLayout from "./pages/HomeLayout/HomeLayout";
+import MainLayout from "./pages/Mainlayout/Mainlayout";
 import Home from "./pages/Home/Home";
 import About from "./pages/About/About";
 import Wardrobe from "./pages/Wardrobe/Wardrobe";
@@ -49,13 +50,19 @@ function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <MainLayout />, // layout utama
+      element: <HomeLayout />,  // pakai layout dengan FooterHome
       children: [
-        { index: true, element: <Home /> },  // halaman home
+        { index: true, element: <Home /> },
+      ],
+    },
+    {
+      path: "/",  // layout umum untuk halaman lain
+      element: <MainLayout />,
+      children: [
         { path: "personalization", element: <Personalization /> },
         { path: "wardrobe", element: <Wardrobe /> },
         { path: "mixmatch", element: <MixMatch /> },
-        { path: "about", element: <About /> }, 
+        { path: "about", element: <About /> },
         { path: "profile", element: <Profile /> },
       ],
     },
