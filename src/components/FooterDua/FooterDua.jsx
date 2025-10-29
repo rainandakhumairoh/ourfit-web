@@ -30,14 +30,11 @@ export default function FooterDua() {
         </div>
 
         {/* === MIDDLE SECTION === */}
-        <div className="text-center md:text-left">
+        <div className="text-center md:text-justify-left">
           <p className="text-sm leading-relaxed">
-            Lorem ipsum dolor sit amet, 
-            consectetur adipiscing elit, 
-            sed do eiusmod tempor incididunt ut
-            labore et dolore magna aliqua.
-            <br />
-            (kata-kata atau pesan dari ourfit)
+            Keanggunan sejati dimulai dari rasa nyaman.
+            Ourfit hadir untuk menemani langkahmu tampil percaya diri setiap hari.
+            Terima kasih telah menjadi bagian dari perjalanan Ourfit!
           </p>
         </div>
 
