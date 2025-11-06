@@ -39,8 +39,7 @@ export default function WardrobeItem({ products = [] }) {
             ))}
             {/* Kolom ketiga: tombol di dalam kolom */}
             <div className="w-[330px] h-[500px] bg-transparent flex flex-col items-center justify-end pb-4">
-              <Link to="/wardrobe" className="bg-coklat text-white border-2 border-white rounded-full px-8 py-3 text-sm md:text-base 
-             shadow-lg shadow-[#00000040] hover:shadow-xl transition-all duration-300 hover:scale-105 hover:bg-[#8A3E2D]">
+              <Link to="/wardrobe" className="border border-white text-white bg-[#8A3E2D] rounded-full px-16 py-2 text-sm flex items-center gap-2 hover:bg-white hover:text-coklat transition-all duration-300 shadow-md">
                 Lihat Selengkapnya &gt;
               </Link>
             </div>

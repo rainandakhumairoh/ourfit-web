@@ -16,7 +16,7 @@ export default function Footer() {
 
   return (
     <>
-      <footer className="relative text-white pt-[12rem] pb-10 min-h-[300px] flex flex-col justify-end"
+    <footer className="relative text-white pt-[12rem] pb-10 min-h-[300px] flex flex-col justify-end"
     style={{
     backgroundImage: `url(${bgFooter})`,
     backgroundSize: "cover",
@@ -26,8 +26,8 @@ export default function Footer() {
         <div className="p-6 mx-auto max-w-screen-xl justify-between">
           <div className="lg:flex">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-36">
-              <div className="absolute inset-0 bg-pink3 -z-10 bottom-0 h-full"></div>
-              <div className="px-6 mt-12">
+              <div className="absolute inset-0 bg-pink3 -z-10 bottom-0 h-full -top-[6rem]"></div>
+              <div className="px-6 mt-[12rem]">
                 <a href="#">
                   <img className="w-auto h-[6rem]" src={logo2} alt="Site Logo" />
                 </a>
@@ -45,7 +45,7 @@ export default function Footer() {
                 </span>
               </div>
             </div>
-            <div className="mt-6 lg:mt-24 lg:flex-1">
+            <div className="mt-6 lg:mt-[12rem] lg:flex-1">
               <div className="grid grid-cols-1 gap-6">
                 <div>
                   <h3 className="text-2xl font-bold text-white uppercase dark:text-white">CONTACT</h3>
