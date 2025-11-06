@@ -26,6 +26,7 @@ export default function Footer() {
         <div className="p-6 mx-auto max-w-screen-xl justify-between">
           <div className="lg:flex">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-36">
+              <div className="absolute inset-0 bg-pink3 -z-10 bottom-0 h-full"></div>
               <div className="px-6 mt-12">
                 <a href="#">
                   <img className="w-auto h-[6rem]" src={logo2} alt="Site Logo" />

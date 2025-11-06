@@ -127,6 +127,9 @@ export default function PersonalizationSection() {
           marginTop: "-100px"
         }}
       >
+        {/* ===== Tambahkan background cream di belakang ===== */}
+        <div className="absolute inset-0 bg-[#FFEBC8] -z-10 bottom-0 h-full"></div>
+        
         <div className="flex justify-between items-center gap-18 w-full mt-6 mb-6">
           <img
             src={manekin}

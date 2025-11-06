@@ -2,67 +2,46 @@ import { Link } from "react-router-dom";
 import bgLemari from "../../assets/bgLemari.png";
 
 export default function WardrobeItem({ products = [] }) {
+  // Dummy data sementara buat tes tampilan
+  if (products.length === 0) {
+    products = [
+      { _id: 1, title: "Produk 1", imageCover: "https://via.placeholder.com/150" },
+      { _id: 2, title: "Produk 2", imageCover: "https://via.placeholder.com/150" },
+    ];
+  }
   return (
     <div className="relative w-full overflow-hidden py-16">
       {/* ======== Latar belakang cream & pink ======== */}
       <div className="absolute inset-0">
-        {/* Warna cream bagian atas */}
-        <div className="bg-primary h-1/2 w-full"></div>
-        {/* Warna pink bagian bawah (setengah lingkaran) */}
-        <div className="relative bg-pink2 h-1/2 w-full item-center">
-          <div className="absolute -top-[80px] left-0 w-screen h-[80px] bg-pink2 rounded-t-full"></div>
+        <div className="bg-[#FFEBC8] h-full w-full "></div>
+        <div className="absolute bottom-0 left-0 w-full bg-pink2 h-[200px]">
+          <div className="absolute -top-[260px] bottom-0 left-0 w-full h-[500px] bg-pink2 rounded-[9999px]"></div>
         </div>
       </div>
 
       {/* ======== Konten utama ======== */}
       <div className="relative z-10 flex flex-col items-center">
         {/* Judul */}
-        <h2 className="text-center text-[#B13B3B] font-bold text-2xl md:text-3xl mb-8">
-          OURFIT’S WARDROBE
-        </h2>
+        <h2 className="text-center text-[#B13B3B] font-bold text-2xl md:text-3xl mb-8">OURFIT’S WARDROBE</h2>
 
-        {/* Container lemari */}
-        <div className="relative w-full max-w-6xl flex justify-center items-center">
-          {/* Gambar lemari */}
-          <img
-            src={bgLemari}
-            alt="Lemari"
-            className="w-full max-w-5xl h-auto object-contain"
-          />
+        {/* ======== Lemari Section ======== */}
+        <div className="relative w-full max-w-6xl">
+          {/* Background lemari */}
+          <img src={bgLemari} alt="Lemari" className="w-full max-w-6xl h-auto object-contain mx-auto" />
 
-          {/* Box produk di atas lemari */}
-          <div className="absolute top-[15%] left-1/2 -translate-x-1/2 flex flex-col md:flex-row justify-center items-center gap-6 px-4">
-            {/* Dua produk */}
+          {/* Isi lemari */}
+          <div className="absolute z-10 top-[5%] left-1/2 -translate-x-1/2 w-[90%] md:w-[80%] grid grid-cols-1 md:grid-cols-3 gap-[13rem] justify-items-center">
+            {/* Dua foto produk */}
             {products.slice(0, 2).map((product) => (
-              <Link
-                to={`/product/${product._id}`}
-                key={product._id}
-                className="bg-white hover:scale-105 transition-transform duration-300 rounded-lg w-52 h-56 shadow-md flex items-center justify-center"
-              >
-                <img
-                  src={product.imageCover}
-                  alt={product.title}
-                  className="object-contain max-h-44"
-                />
-              </Link>
-            ))}
-
-            {/* Kotak warna & tombol */}
-            <div className="bg-[#E6B89C] rounded-lg w-52 h-56 flex flex-col items-center justify-center shadow-md">
-              {/* Warna kain */}
-              <div className="flex gap-2 mb-4">
-                <div className="w-5 h-20 bg-[#F9D3C0]"></div>
-                <div className="w-5 h-20 bg-[#F1AFAF]"></div>
-                <div className="w-5 h-20 bg-[#E68A89]"></div>
-                <div className="w-5 h-20 bg-[#C76767]"></div>
+              <div key={product._id} className="w-[325px] h-[350px] bg-white rounded-xl shadow-lg flex items-center justify-center">
+                {product.imageCover ? <img src={product.imageCover} alt={product.title} className="object-contain max-h-[480px]" /> : <span className="text-gray-400 font-semibold">FOTO PRODUK</span>}
               </div>
-
-              {/* Tombol */}
-              <Link
-                to="/wardrobe"
-                className="flex items-center justify-center bg-[#8A3E2D] hover:bg-[#6E2E22] text-white rounded-full px-5 py-2 text-sm transition"
-              >
-                Lihat Selengkapnya →
+            ))}
+            {/* Kolom ketiga: tombol di dalam kolom */}
+            <div className="w-[330px] h-[500px] bg-transparent flex flex-col items-center justify-end pb-4">
+              <Link to="/wardrobe" className="bg-coklat text-white border-2 border-white rounded-full px-8 py-3 text-sm md:text-base 
+             shadow-lg shadow-[#00000040] hover:shadow-xl transition-all duration-300 hover:scale-105 hover:bg-[#8A3E2D]">
+                Lihat Selengkapnya &gt;
               </Link>
             </div>
           </div>
