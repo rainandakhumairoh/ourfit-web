@@ -44,6 +44,9 @@ import Wardrobe from "./pages/Wardrobe/Wardrobe";
 import Personalization from "./pages/Personalization/Personalization";
 import MixMatch from "./pages/MixMatch/MixMatch";
 import Profile from "./pages/Profile/Profile";
+import ProductsProvider from "./context/Products/Products";
+import ProductDetails from "./pages/ProductDetails/ProductDetails";
+import MixMatchDetails from "./pages/MixMatchDetails/MixMatchDetails";
 
 
 function App() {
@@ -61,14 +64,20 @@ function App() {
       children: [
         { path: "personalization", element: <Personalization /> },
         { path: "wardrobe", element: <Wardrobe /> },
+        { path: "wardrobe/:id", element: <ProductDetails /> }, // 🔹 route detail produk
         { path: "mixmatch", element: <MixMatch /> },
+        { path: "mixmatch/:id", element: <MixMatchDetails /> },
         { path: "about", element: <About /> },
         { path: "profile", element: <Profile /> },
       ],
     },
   ]);
 
-  return <RouterProvider router={router} />;
+   return (
+    <ProductsProvider>
+      <RouterProvider router={router} />
+    </ProductsProvider>
+  );
 }
 
 export default App;
