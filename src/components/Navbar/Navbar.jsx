@@ -25,7 +25,7 @@ return (
         {/* Menu tengah */}
         <div className="flex-1 flex justify-center space-x-4">
           <Link to="/" className={getLinkClass('/')}>Home</Link>
-          <Link to="/personalization" className={getLinkClass('/personalization')}>Personalization</Link>
+          <Link to="/smart-fit" className={getLinkClass('/smart-fit')}>Personalization</Link>
           <Link to="/wardrobe" className={getLinkClass('/wardrobe')}>Wardrobe</Link>
           <Link to="/mixmatch" className={getLinkClass('/mixmatch')}>Mix & Match</Link>
           <Link to="/about" className={getLinkClass('/about')}>About Us</Link>

@@ -38,6 +38,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import './App.css';
 import HomeLayout from "./pages/HomeLayout/HomeLayout";
 import MainLayout from "./pages/Mainlayout/Mainlayout";
+import SecondaryLayout from "./pages/SecondaryLayout/SecondaryLayout";
 import Home from "./pages/Home/Home";
 import About from "./pages/About/About";
 import Wardrobe from "./pages/Wardrobe/Wardrobe";
@@ -47,6 +48,8 @@ import Profile from "./pages/Profile/Profile";
 import ProductsProvider from "./context/Products/Products";
 import ProductDetails from "./pages/ProductDetails/ProductDetails";
 import MixMatchDetails from "./pages/MixMatchDetails/MixMatchDetails";
+import SmartFit from "./pages/SmartFit/SmartFit";
+import SmartFitQuiz from "./pages/SmartFit/SmartFitQuiz"; 
 
 
 function App() {
@@ -69,6 +72,16 @@ function App() {
         { path: "mixmatch/:id", element: <MixMatchDetails /> },
         { path: "about", element: <About /> },
         { path: "profile", element: <Profile /> },
+      ],
+    },
+
+    // 💥 LAYOUT TANPA NAVBAR & FOOTER
+    {
+      path: "/",
+      element: <SecondaryLayout />,
+      children: [
+        { path: "smart-fit", element: <SmartFit /> },
+        { path: "smart-fit/quiz", element: <SmartFitQuiz /> },
       ],
     },
   ]);
