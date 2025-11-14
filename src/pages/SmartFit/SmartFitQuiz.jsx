@@ -1,42 +1,214 @@
-import React from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function SmartFitQuiz() {
   const navigate = useNavigate();
+  const [currentStep, setCurrentStep] = useState(0);
+
+  const questions = [
+    {
+      id: "tinggi",
+      question: "Tinggi kamu berapa?",
+      options: ["<150", "150-155", "156-160", "161-165", ">165"],
+    },
+    {
+      id: "berat",
+      question: "Berat kamu sekitar berapa?",
+      options: ["<45", "45-50", "51-55", "56-60", "61-65", ">65"],
+    },
+    {
+      id: "lingkarDada",
+      question: "Ukuran lingkar dada kamu?",
+      options: ["<80", "80-85", "86-90", "91-95", "96-100", ">100"],
+    },
+    {
+      id: "lingkarPinggang",
+      question: "Ukuran lingkar pinggang?",
+      options: ["<60", "60-65", "66-70", "71-75", "76-80", ">80"],
+    },
+    {
+      id: "bodyShape",
+      question: "Bentuk badan kamu yang mana?",
+      options: ["Petite", "Pear", "Hourglass", "Rectangle", "Apple", "Inverted Triangle"],
+    },
+    {
+      id: "style",
+      question: "Style baju favorit kamu yang gimana?",
+      options: ["Fitted", "Regular", "Oversized"],
+    },
+    {
+      id: "problems",
+      question: "Paling sering ngalamin problem apa? (Bisa pilih lebih dari 1)",
+      type: "checkbox",
+      options: [
+        "Baju selalu kepanjangan",
+        "Lengan kudu digulung mulu",
+        "Celana nyeret ke lantai",
+        "Pinggang longgar kebesaran",
+        "Kancing dada mepet",
+        "Pinggul/paha kenceng",
+        "Bahu ga pas",
+        "Tidak ada masalah",
+      ],
+    },
+    {
+      id: "usualSize",
+      question: "Biasanya ambil size apa?",
+      options: ["XS", "S", "M", "L", "XL"],
+    },
+  ];
+
+  const [answers, setAnswers] = useState({
+    tinggi: "",
+    berat: "",
+    lingkarDada: "",
+    lingkarPinggang: "",
+    bodyShape: "",
+    style: "",
+    problems: [],
+    usualSize: "",
+  });
+
+  function handleSelect(questionId, value) {
+    setAnswers((prev) => ({
+      ...prev,
+      [questionId]: value,
+    }));
+  }
+
+  function handleCheckbox(questionId, option) {
+    setAnswers((prev) => {
+      const arr = prev[questionId] || [];
+      if (arr.includes(option)) {
+        return { ...prev, [questionId]: arr.filter((i) => i !== option) };
+      } else {
+        return { ...prev, [questionId]: [...arr, option] };
+      }
+    });
+  }
+
+
+  function isAnswered(question) {
+  const value = answers[question.id];
+
+  if (question.type === "checkbox") {
+    return value && value.length > 0; // minimal 1 centang
+  }
+
+  return value !== ""; // option dipilih
+}
+
+  // ============================
+  // NEXT BUTTON
+  // ============================
+function goNext() {
+  if (currentStep < questions.length - 1) {
+    setCurrentStep(prev => prev + 1);
+  } else {
+    const result = calculateSmartFitResult(answers);
+
+    // Simpan hasil Smart Fit
+    localStorage.setItem("smartFitResult", JSON.stringify(result));
+
+    // Arahkan ke halaman "Smart Fit Done"
+    navigate("/smart-fit/done");
+  }
+}
+
+  // ============================
+  // SMART FIT LOGIC
+  // ============================
+
+  function extractNumber(str) {
+    if (!str) return 0;
+    if (str.includes("<")) return Number(str.replace("<", ""));
+    if (str.includes(">")) return Number(str.replace(">", ""));
+    return Number(str.split("-")[0]);
+  }
+
+  function calculateSmartFitResult(a) {
+    const tinggi = extractNumber(a.tinggi);
+    const berat = extractNumber(a.berat);
+    const lingkarDada = extractNumber(a.lingkarDada);
+
+    const tinggiMeter = tinggi / 100;
+    const BMI = berat / (tinggiMeter * tinggiMeter);
+
+    let petiteCount = 0;
+
+    if (tinggi <= 155) petiteCount++;
+    if (berat <= 55) petiteCount++;
+    if (lingkarDada <= 90) petiteCount++;
+    if (a.bodyShape === "Petite") petiteCount++;
+    if (a.style === "Fitted") petiteCount++;
+
+    const panjangIssues = [
+      "Baju selalu kepanjangan",
+      "Lengan kudu digulung mulu",
+      "Celana nyeret ke lantai",
+    ];
+
+    let panjangCount = a.problems.filter((p) => panjangIssues.includes(p)).length;
+    if (panjangCount >= 2) petiteCount++;
+
+    let petiteScore = petiteCount;
+    let allScore = 0;
+
+    if (BMI < 18.5) petiteScore += 1;
+    else if (BMI >= 25 && BMI <= 29.9) allScore += 1;
+    else if (BMI >= 30) allScore += 2;
+
+    let sizeCategory = "ALL SIZE";
+    if (petiteScore >= 3 && allScore === 0) sizeCategory = "PETITE SIZE";
+
+    return {
+      sizeCategory,
+      petiteScore,
+      allScore,
+      BMI: BMI.toFixed(1),
+      details: a,
+    };
+  }
+
+  const q = questions[currentStep];
 
   return (
-    <div className="w-full min-h-screen bg-[#FFF5E6] flex flex-col items-center justify-center px-6 py-10 relative">
+    <div className="p-5 max-w-xl mx-auto">
+      <h2 className="text-xl font-semibold mb-4">{q.question}</h2>
 
-      {/* Tombol close */}
+      {q.type === "checkbox" ? (
+        q.options.map((op) => (
+          <label key={op} className="flex gap-3 mb-2">
+            <input
+              type="checkbox"
+              checked={answers[q.id]?.includes(op)}
+              onChange={() => handleCheckbox(q.id, op)}
+            />
+            {op}
+          </label>
+        ))
+      ) : (
+        q.options.map((op) => (
+          <button
+            key={op}
+            onClick={() => handleSelect(q.id, op)}
+            className={`block w-full p-3 my-2 rounded-lg border ${
+              answers[q.id] === op ? "bg-black text-white" : "bg-white"
+            }`}
+          >
+            {op}
+          </button>
+        ))
+      )}
+
       <button
-        onClick={() => navigate(-1)}
-        className="absolute top-6 right-6 bg-[#E08A7C] text-white w-8 h-8 flex items-center justify-center rounded-full text-xl font-bold"
+        onClick={goNext}
+        disabled={!isAnswered(q)}
+        className={`mt-5 w-full p-3 rounded-lg 
+          ${isAnswered(q) ? "bg-black text-white" : "bg-gray-300 text-gray-500 cursor-not-allowed"}
+        `}
       >
-        ✕
-      </button>
-
-      <h1 className="text-[#C2524D] text-2xl font-bold mb-4">
-        SMART FIT QUIZ
-      </h1>
-
-      <p className="text-gray-700 max-w-[400px] text-center mb-6">
-        Contoh: Silakan jawab beberapa pertanyaan untuk menyesuaikan ukuran tubuhmu.
-      </p>
-
-      {/* Contoh pertanyaan */}
-      <div className="w-full max-w-[400px] bg-white shadow-md p-5 rounded-xl">
-        <h2 className="font-semibold text-gray-800 mb-2">1. Berapa tinggi badanmu?</h2>
-        <input
-          type="number"
-          className="w-full border border-gray-300 px-3 py-2 rounded-md"
-          placeholder="cm"
-        />
-      </div>
-
-      <button
-        className="mt-8 bg-[#C7544D] text-white px-10 py-3 rounded-full text-lg font-medium"
-      >
-        Lanjut
+        {currentStep === questions.length - 1 ? "Selesai" : "Lanjut"}
       </button>
     </div>
   );

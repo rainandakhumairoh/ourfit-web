@@ -38,7 +38,7 @@ export default function SmartFit() {
 
         {/* Tombol Start */}
         <button
-          onClick={() => navigate("/smart-fit/quiz")}
+          onClick={() => navigate("/smart-fit/question")}
           className="mt-8 bg-pink1 hover:bg-oren2 text-white px-10 py-3 rounded-full text-lg font-medium w-[180px] shadow-md transition"
         >
           Start

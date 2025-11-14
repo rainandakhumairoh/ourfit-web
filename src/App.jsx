@@ -1,39 +1,3 @@
-// import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-// import './App.css';
-// import MainLayout from './pages/MainLayout/MainLayout';
-
-
-// function App() {
-//   const queryClient = new QueryClient();
-
-//   const router = createBrowserRouter([
-//     {
-//       path: '/',
-//       element: <MainLayout />,
-//       children: [
-//         {
-//           index: true,
-//           element: (
-//             <ProtectedRoute>
-//               <Home />
-//             </ProtectedRoute>
-//           ),
-//         },
-//       ],
-//     },
-//   ]);
-
-//   return (
-//     <QueryClientProvider client={queryClient}>
-//         <Toaster />
-//         <RouterProvider router={router} />
-//     </QueryClientProvider>
-//   );
-// }
-
-// export default App;
-
-
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import './App.css';
 import HomeLayout from "./pages/HomeLayout/HomeLayout";
@@ -50,6 +14,9 @@ import ProductDetails from "./pages/ProductDetails/ProductDetails";
 import MixMatchDetails from "./pages/MixMatchDetails/MixMatchDetails";
 import SmartFit from "./pages/SmartFit/SmartFit";
 import SmartFitQuiz from "./pages/SmartFit/SmartFitQuiz"; 
+import StyleQuiz from "./pages/StyleQuiz/StyleQuiz";
+import StyleQuizQuestion from "./pages/StyleQuiz/StyleQuizQuestion";
+import SmartFitDone from "./pages/SmartFit/SmartFitDone";
 
 
 function App() {
@@ -81,7 +48,10 @@ function App() {
       element: <SecondaryLayout />,
       children: [
         { path: "smart-fit", element: <SmartFit /> },
-        { path: "smart-fit/quiz", element: <SmartFitQuiz /> },
+        { path: "smart-fit/question", element: <SmartFitQuiz /> },
+        { path: "smart-fit/done", element: <SmartFitDone />},
+        { path: "style-quiz", element: <StyleQuiz /> },
+        { path: "style-quiz/question", element: <StyleQuizQuestion /> },
       ],
     },
   ]);
