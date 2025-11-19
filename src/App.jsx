@@ -17,6 +17,8 @@ import SmartFitQuiz from "./pages/SmartFit/SmartFitQuiz";
 import StyleQuiz from "./pages/StyleQuiz/StyleQuiz";
 import StyleQuizQuestion from "./pages/StyleQuiz/StyleQuizQuestion";
 import SmartFitDone from "./pages/SmartFit/SmartFitDone";
+import HasilPersonalisasi from "./pages/Personalization/HasilPersonalisasi";
+import MasukkanNama from "./pages/Personalization/MasukkanNama";
 
 
 function App() {
@@ -52,6 +54,8 @@ function App() {
         { path: "smart-fit/done", element: <SmartFitDone />},
         { path: "style-quiz", element: <StyleQuiz /> },
         { path: "style-quiz/question", element: <StyleQuizQuestion /> },
+        { path: "masukkan-nama", element: <MasukkanNama /> },
+        { path: "hasil-personalisasi", element: <HasilPersonalisasi /> },
       ],
     },
   ]);

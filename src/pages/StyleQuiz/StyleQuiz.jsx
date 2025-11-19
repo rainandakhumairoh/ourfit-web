@@ -10,7 +10,7 @@ export default function StyleQuiz() {
 
       {/* Tombol close */}
       <button
-        onClick={() => navigate(-1)}
+        onClick={() => navigate("/")}
         className="absolute top-6 right-6 bg-pink1 text-white w-8 h-8 flex items-center justify-center rounded-full text-xl font-bold shadow-md hover:bg-oren2 transition-all active:scale-95"
       >
         ✕
@@ -27,18 +27,18 @@ export default function StyleQuiz() {
         />
 
         {/* Judul */}
-        <h1 className="text-pink1 text-2xl font-extrabold mt-6">
-          AYO TEMUKAN UKURAN YANG <br/> FIT DENGAN SMART FIT!
+        <h1 className="text-pink1 text-2xl font-bold mt-6">
+          AYO TEMUKAN STYLE YANG <br/> COCOK DENGAN STYLE QUIZ!
         </h1>
 
         {/* Deskripsi */}
         <p className="text-coklat text-sm max-w-[350px] mt-3">
-          Siap cari ukuran paling pas? Yuk jawab beberapa pertanyaan cepat biar kami bantu temukan size outfitmu dalam hitungan detik!
+          Belum tahu gaya yang paling cocok untukmu? Yuk coba Style Quiz! Kami bantu pilih inspirasi outfit yang sesuai dengan selera dan vibe kamu.
         </p>
 
         {/* Tombol Start */}
         <button
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/style-quiz/question")}
           className="mt-8 bg-pink1 hover:bg-oren2 text-white px-10 py-3 rounded-full text-lg font-medium w-[180px] shadow-md transition"
         >
           Start

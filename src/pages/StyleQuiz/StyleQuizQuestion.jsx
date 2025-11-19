@@ -1,215 +1,230 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function StyleQuizQuestion() {
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
 
+  // =============================
+  //  PERTANYAAN OURFIT STYLE QUIZ
+  // =============================
   const questions = [
     {
-      id: "tinggi",
-      question: "Tinggi kamu berapa?",
-      options: ["<150", "150-155", "156-160", "161-165", ">165"],
-    },
-    {
-      id: "berat",
-      question: "Berat kamu sekitar berapa?",
-      options: ["<45", "45-50", "51-55", "56-60", "61-65", ">65"],
-    },
-    {
-      id: "lingkarDada",
-      question: "Ukuran lingkar dada kamu?",
-      options: ["<80", "80-85", "86-90", "91-95", "96-100", ">100"],
-    },
-    {
-      id: "lingkarPinggang",
-      question: "Ukuran lingkar pinggang?",
-      options: ["<60", "60-65", "66-70", "71-75", "76-80", ">80"],
-    },
-    {
-      id: "bodyShape",
-      question: "Bentuk badan kamu yang mana?",
-      options: ["Petite", "Pear", "Hourglass", "Rectangle", "Apple", "Inverted Triangle"],
-    },
-    {
-      id: "style",
-      question: "Style baju favorit kamu yang gimana?",
-      options: ["Fitted", "Regular", "Oversized"],
-    },
-    {
-      id: "problems",
-      question: "Paling sering ngalamin problem apa? (Bisa pilih lebih dari 1)",
-      type: "checkbox",
+      id: "warnaOutfit",
+      question: "Warna apa yang paling sering kamu pilih untuk outfit sehari-hari?",
       options: [
-        "Baju selalu kepanjangan",
-        "Lengan kudu digulung mulu",
-        "Celana nyeret ke lantai",
-        "Pinggang longgar kebesaran",
-        "Kancing dada mepet",
-        "Pinggul/paha kenceng",
-        "Bahu ga pas",
-        "Tidak ada masalah",
+        "Baby pink, cream, lilac", // A
+        "Hitam, abu-abu, dark brown", // B
+        "Beige, olive, cokelat muda", // C
+        "Biru langit, kuning, coral", // D
+        "Putih, ivory, abu muda", // E
       ],
     },
     {
-      id: "usualSize",
-      question: "Biasanya ambil size apa?",
-      options: ["XS", "S", "M", "L", "XL"],
+      id: "undertone",
+      question: "Warna kulit kamu cenderung punya undertone seperti apa?",
+      options: [
+        "Cool tone — cocok silver", // A
+        "Warm tone — cocok gold", // B
+        "Neutral tone — cocok keduanya", // C
+      ],
+    },
+    {
+      id: "acara",
+      question: "Biasanya kamu pakai baju untuk acara apa?",
+      options: [
+        "Hangout santai / ngopi", // A
+        "Event formal / meeting", // B
+        "Jalan-jalan / traveling", // C
+        "Kumpul bareng teman", // D
+        "Acara kampus / kantor", // E
+      ],
+    },
+    {
+      id: "gayaFavorit",
+      question: "Gaya favorit kamu seperti apa?",
+      options: [
+        "Feminine dan manis", // A
+        "Chic dan classy", // B
+        "Simple dan nyaman", // C
+        "Fun dan berwarna", // D
+        "Minimalist dan rapi", // E
+      ],
+    },
+    {
+      id: "kataKamu",
+      question: "Pilih kata yang paling menggambarkan kamu.",
+      options: [
+        "Dreamy", // A
+        "Confident", // B
+        "Grounded", // C
+        "Playful", // D
+        "Calm", // E
+      ],
     },
   ];
 
+  // =============================
+  //  STATE + LOAD TEMP (SESSION)
+  // =============================
   const [answers, setAnswers] = useState({
-    tinggi: "",
-    berat: "",
-    lingkarDada: "",
-    lingkarPinggang: "",
-    bodyShape: "",
-    style: "",
-    problems: [],
-    usualSize: "",
+    warnaOutfit: "",
+    undertone: "",
+    acara: "",
+    gayaFavorit: "",
+    kataKamu: "",
   });
 
-  function handleSelect(questionId, value) {
-    setAnswers((prev) => ({
-      ...prev,
-      [questionId]: value,
-    }));
+  useEffect(() => {
+    const saved = sessionStorage.getItem("styleQuizTemp");
+    if (saved) setAnswers(JSON.parse(saved));
+  }, []);
+
+  function saveTemp(updated) {
+    sessionStorage.setItem("styleQuizTemp", JSON.stringify(updated));
   }
 
-  function handleCheckbox(questionId, option) {
+  // =============================
+  // HANDLE SELECT
+  // =============================
+  function handleSelect(questionId, value) {
     setAnswers((prev) => {
-      const arr = prev[questionId] || [];
-      if (arr.includes(option)) {
-        return { ...prev, [questionId]: arr.filter((i) => i !== option) };
-      } else {
-        return { ...prev, [questionId]: [...arr, option] };
-      }
+      const updated = { ...prev, [questionId]: value };
+      saveTemp(updated);
+      return updated;
     });
   }
 
-
-  function isAnswered(question) {
-  const value = answers[question.id];
-
-  if (question.type === "checkbox") {
-    return value && value.length > 0; // minimal 1 centang
+  function isAnswered(q) {
+    return answers[q.id] !== "";
   }
 
-  return value !== ""; // option dipilih
-}
+  // =============================
+  // STYLE SCORING
+  // =============================
+  function calculateStyleResult(a) {
+    const map = { A: 0, B: 0, C: 0, D: 0, E: 0 };
 
-  // ============================
-  // NEXT BUTTON
-  // ============================
-function goNext() {
-  if (currentStep < questions.length - 1) {
-    setCurrentStep(prev => prev + 1);
-  } else {
-    const result = calculateSmartFitResult(answers);
+    const optionToLetter = (questionId, selected) => {
+      const index = questions
+        .find((q) => q.id === questionId)
+        .options.indexOf(selected);
 
-    // Simpan hasil Smart Fit
-    localStorage.setItem("smartFitResult", JSON.stringify(result));
+      return ["A", "B", "C", "D", "E"][index];
+    };
 
-    // Arahkan ke halaman "Smart Fit Done"
-    navigate("/smart-fit/done");
-  }
-}
+    Object.keys(a).forEach((q) => {
+      const letter = optionToLetter(q, a[q]);
+      map[letter] += 1;
+    });
 
-  // ============================
-  // SMART FIT LOGIC
-  // ============================
+    const top = Object.entries(map).sort((a, b) => b[1] - a[1])[0][0];
 
-  function extractNumber(str) {
-    if (!str) return 0;
-    if (str.includes("<")) return Number(str.replace("<", ""));
-    if (str.includes(">")) return Number(str.replace(">", ""));
-    return Number(str.split("-")[0]);
-  }
-
-  function calculateSmartFitResult(a) {
-    const tinggi = extractNumber(a.tinggi);
-    const berat = extractNumber(a.berat);
-    const lingkarDada = extractNumber(a.lingkarDada);
-
-    const tinggiMeter = tinggi / 100;
-    const BMI = berat / (tinggiMeter * tinggiMeter);
-
-    let petiteCount = 0;
-
-    if (tinggi <= 155) petiteCount++;
-    if (berat <= 55) petiteCount++;
-    if (lingkarDada <= 90) petiteCount++;
-    if (a.bodyShape === "Petite") petiteCount++;
-    if (a.style === "Fitted") petiteCount++;
-
-    const panjangIssues = [
-      "Baju selalu kepanjangan",
-      "Lengan kudu digulung mulu",
-      "Celana nyeret ke lantai",
-    ];
-
-    let panjangCount = a.problems.filter((p) => panjangIssues.includes(p)).length;
-    if (panjangCount >= 2) petiteCount++;
-
-    let petiteScore = petiteCount;
-    let allScore = 0;
-
-    if (BMI < 18.5) petiteScore += 1;
-    else if (BMI >= 25 && BMI <= 29.9) allScore += 1;
-    else if (BMI >= 30) allScore += 2;
-
-    let sizeCategory = "ALL SIZE";
-    if (petiteScore >= 3 && allScore === 0) sizeCategory = "PETITE SIZE";
+    const resultMap = {
+      A: "Luna Girl",
+      B: "Noir Girl",
+      C: "Terra Girl",
+      D: "Astra Girl",
+      E: "Velvet Girl",
+    };
 
     return {
-      sizeCategory,
-      petiteScore,
-      allScore,
-      BMI: BMI.toFixed(1),
-      details: a,
+      type: resultMap[top],
+      rawScore: map,
+      detail: a,
     };
+  }
+
+  // =============================
+  // NEXT
+  // =============================
+  function goNext() {
+    if (currentStep < questions.length - 1) {
+      setCurrentStep((s) => s + 1);
+    } else {
+      const styleResult = calculateStyleResult(answers);
+
+      sessionStorage.setItem("styleQuizResult", JSON.stringify(styleResult));
+
+      navigate("/masukkan-nama");
+    }
   }
 
   const q = questions[currentStep];
 
   return (
-    <div className="p-5 max-w-xl mx-auto">
-      <h2 className="text-xl font-semibold mb-4">{q.question}</h2>
+    <div className="relative min-h-screen bg-[#F7E3C6] flex flex-col items-center px-5 py-10">
+      {/* CLOSE BUTTON */}
+      <button
+        onClick={() => {
+          sessionStorage.removeItem("styleQuizTemp");
+          sessionStorage.removeItem("styleQuizResult");
+          navigate("/");
+        }}
+        className="absolute top-5 right-5 text-[#C75E58] text-2xl font-bold"
+      >
+        ×
+      </button>
 
-      {q.type === "checkbox" ? (
-        q.options.map((op) => (
-          <label key={op} className="flex gap-3 mb-2">
-            <input
-              type="checkbox"
-              checked={answers[q.id]?.includes(op)}
-              onChange={() => handleCheckbox(q.id, op)}
-            />
-            {op}
-          </label>
-        ))
-      ) : (
-        q.options.map((op) => (
+      {/* TITLE */}
+      <h1 className="text-[#C64747] text-2xl font-bold text-center mb-6">
+        PILIH YANG PALING SESUAI DENGANMU
+      </h1>
+
+      {/* PROGRESS */}
+      <div className="flex gap-3 mb-8">
+        {questions.map((_, i) => (
+          <div
+            key={i}
+            className={`h-2 w-10 rounded-full transition-all
+              ${
+                i === currentStep
+                  ? "bg-[#C64747]"
+                  : answers[questions[i].id]
+                  ? "bg-[#D27672]"
+                  : "bg-[#C9C5BB]"
+              }
+            `}
+          ></div>
+        ))}
+      </div>
+
+      {/* QUESTION */}
+      <p className="text-gray-700 text-center mb-6 px-4">{q.question}</p>
+
+      {/* OPTIONS */}
+      <div className="w-full max-w-md flex flex-col mb-10">
+        {q.options.map((op) => (
           <button
             key={op}
             onClick={() => handleSelect(q.id, op)}
-            className={`block w-full p-3 my-2 rounded-lg border ${
-              answers[q.id] === op ? "bg-black text-white" : "bg-white"
-            }`}
+            className={`w-full py-3 px-4 my-2 rounded-xl border text-left transition-all
+              ${
+                answers[q.id] === op
+                  ? "bg-[#D27672] text-white border-[#D27672]"
+                  : "bg-white text-gray-700 border-gray-300"
+              }`}
           >
             {op}
           </button>
-        ))
-      )}
+        ))}
+      </div>
 
-      <button
-        onClick={goNext}
-        disabled={!isAnswered(q)}
-        className={`mt-5 w-full p-3 rounded-lg 
-          ${isAnswered(q) ? "bg-black text-white" : "bg-gray-300 text-gray-500 cursor-not-allowed"}
-        `}
-      >
-        {currentStep === questions.length - 1 ? "Selesai" : "Lanjut"}
-      </button>
+      {/* NEXT BUTTON */}
+      <div className="w-full max-w-md">
+        <button
+          onClick={goNext}
+          disabled={!isAnswered(q)}
+          className={`w-full py-3 rounded-full text-white text-lg transition-all
+            ${
+              isAnswered(q)
+                ? "bg-[#C85E5A]"
+                : "bg-[#E2A6A3] opacity-60 cursor-not-allowed"
+            }`}
+        >
+          {currentStep === questions.length - 1 ? "Selesai" : "Lanjut"}
+        </button>
+      </div>
     </div>
   );
 }

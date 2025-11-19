@@ -27,7 +27,7 @@ export default function SmartFit() {
         />
 
         {/* Judul */}
-        <h1 className="text-pink1 text-2xl font-extrabold mt-6">
+        <h1 className="text-pink1 text-2xl font-bold mt-6">
           AYO TEMUKAN UKURAN YANG <br/> FIT DENGAN SMART FIT!
         </h1>
 
