@@ -1,12 +1,25 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { QRCodeCanvas } from "qrcode.react";
+
+// placeholder image imports — ganti file sesuai asetmu
+import cheesecakeImg from "../../assets/cheesecake.png";
+import blackforestImg from "../../assets/blackforest.png";
+import tiramisuImg from "../../assets/tiramisu.png";
+import macaronImg from "../../assets/macarons.png";
+import caramelImg from "../../assets/caramelpuding.png";
+
+import warmImg from "../../assets/warm.png";
+import coolImg from "../../assets/cool.png";
+import neutralImg from "../../assets/neutral.png";
 
 export default function HasilPersonalisasi() {
   const navigate = useNavigate();
 
   const [name, setName] = useState("");
   const [smart, setSmart] = useState(null);
-  const [style, setStyle] = useState(null);
+  const [styleRes, setStyleRes] = useState(null);
+  const [pageUrl, setPageUrl] = useState("");
 
   useEffect(() => {
     const nm = sessionStorage.getItem("userName");
@@ -15,47 +28,89 @@ export default function HasilPersonalisasi() {
 
     if (nm) setName(nm);
     if (sf) setSmart(JSON.parse(sf));
-    if (st) setStyle(JSON.parse(st));
+    if (st) setStyleRes(JSON.parse(st));
+
+    setPageUrl(window.location.href);
   }, []);
 
-  const styleRekom = {
-    "Luna Girl": {
-      warna: ["Baby Pink", "Rose", "Lilac"],
-      outfit: ["Blouse flowy", "Pleated skirt", "Cardigan lembut"],
-      produk: ["Luna Blouse", "Soft Pleats Skirt", "Ribbon Cardigan"],
+const styleMeta = {
+    Cheesecake: {
+      title: "Cheesecake Girl",
+      desc: " Vibe lembut, feminin, dan kalem. Warm tone cocok dengan warna peach, cream, dan butter yellow. Cool tone cocok dengan lilac, baby pink, dan icy blue. Gaya khasmu flowy, manis, dan effortless.",
+      colors: {
+        WARM: ["Walnut", "Stone", "Army", "Cocoa","Sage", "Coral Pink"],
+        COOL: ["Plum Dusk", "Rosewood", "Navy", "Denim", "Pink Blossom", "Plum Dusk", "Nude", "Steel"],
+        NEUTRAL: ["Black", "Beige", "Stone", "BW", "Nude", "Mauve"],
+      },
+      img: cheesecakeImg,
     },
-    "Noir Girl": {
-      warna: ["Hitam", "Charcoal", "Navy"],
-      outfit: ["Blazer fit", "Straight pants", "Turtleneck"],
-      produk: ["Noir Blazer", "Essential Pants", "Classy Knit Top"],
+    Blackforest: {
+      title: "Blackforest Girl",
+      desc: " Vibe tegas dan elegan. Warm tone cocok dengan espresso brown, ivory, dan deep olive. Cool tone cocok dengan jet black, charcoal grey, dan midnight blue. Gaya khasmu structured dan berkarisma.",
+      colors: {
+        WARM: ["Walnut", "Stone", "Army", "Cocoa","Sage", "Coral Pink"],
+        COOL: ["Plum Dusk", "Rosewood", "Navy", "Denim", "Pink Blossom", "Plum Dusk", "Nude", "Steel"],
+        NEUTRAL: ["Black", "Beige", "Stone", "BW", "Nude", "Mauve"],
+      },
+      img: blackforestImg,
     },
-    "Terra Girl": {
-      warna: ["Olive", "Beige", "Cokelat"],
-      outfit: ["Overshirt earth tone", "Loose pants", "Casual Tee"],
-      produk: ["Terra Shirt", "Relaxed Pants", "Daily Tee"],
+    Tiramisu: {
+      title: "Tiramisu Girl",
+      desc: " Vibe natural dan hangat. Warm tone cocok dengan terracotta, sand, dan golden beige. Cool tone cocok dengan taupe, dusty mauve, dan cool beige. Gaya khasmu simple dan earthy.",
+      colors: {
+        WARM: ["Walnut", "Stone", "Army", "Cocoa","Sage", "Coral Pink"],
+        COOL: ["Plum Dusk", "Rosewood", "Navy", "Denim", "Pink Blossom", "Plum Dusk", "Nude", "Steel"],
+        NEUTRAL: ["Black", "Beige", "Stone", "BW", "Nude", "Mauve"],
+      },
+      img: tiramisuImg,
     },
-    "Astra Girl": {
-      warna: ["Coral", "Sky Blue", "Sunshine Yellow"],
-      outfit: ["Sweater colorful", "Wide pants", "Cute top"],
-      produk: ["Astra Sweater", "Joy Pants", "Bright Top"],
+    Macaron: {
+      title: "Macaron Girl",
+      desc: " Vibe ceria dan kreatif. Warm tone cocok dengan coral, sunflower yellow, dan turquoise. Cool tone cocok dengan baby blue, lavender, dan candy pink. Gaya khasmu playful dan berani tampil beda.",
+      colors: {
+        WARM: ["Walnut", "Stone", "Army", "Cocoa","Sage", "Coral Pink"],
+        COOL: ["Plum Dusk", "Rosewood", "Navy", "Denim", "Pink Blossom", "Plum Dusk", "Nude", "Steel"],
+        NEUTRAL: ["Black", "Beige", "Stone", "BW", "Nude", "Mauve"],
+      },
+      img: macaronImg,
     },
-    "Velvet Girl": {
-      warna: ["Ivory", "Champagne", "Light Grey"],
-      outfit: ["Minimal blouse", "Straight skirt", "Soft knit"],
-      produk: ["Velvet Blouse", "Flow Skirt", "Calm Knit"],
+    "Caramel Pudding": {
+      title: "Caramel Pudding Girl",
+      desc: " Vibe elegan dan minimalis. Warm tone cocok dengan ivory, champagne, dan camel. Cool tone cocok dengan white, soft grey, dan blue tint. Gaya khasmu clean, tenang, dan timeless.",
+      colors: {
+        WARM: ["Walnut", "Stone", "Army", "Cocoa","Sage", "Coral Pink"],
+        COOL: ["Plum Dusk", "Rosewood", "Navy", "Denim", "Pink Blossom", "Plum Dusk", "Nude", "Steel"],
+        NEUTRAL: ["Black", "Beige", "Stone", "BW", "Nude", "Mauve"],
+      },
+      img: caramelImg,
     },
   };
 
-  if (!smart || !style)
+  const undertoneImage = styleRes?.undertone === "WARM" ? warmImg : styleRes?.undertone === "COOL" ? coolImg : neutralImg;
+
+  if (!styleRes || !smart)
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#F7E3C6] px-6">
-        <p className="text-gray-700 text-lg text-center">
-          Hasil belum lengkap. Silakan isi Smart Fit & Style Quiz dulu.
-        </p>
+      <div className="min-h-screen flex items-center justify-center bg-[#F7E3C6]">
+        <p className="text-gray-700 text-lg">Hasil belum lengkap. Isi Smart Fit & Style Quiz dulu ya!</p>
       </div>
     );
 
-  const rec = styleRekom[style.type];
+  const { primary, scores, mix, versatile, undertone } = styleRes;
+
+  const meta = styleMeta[primary] || styleMeta["Tiramisu"];
+  const mixMeta = mix ? styleMeta[mix] : null;
+
+  let displayTitle = meta.title;
+  if (mix && !versatile) {
+    displayTitle = `${meta.title} with a touch of ${mixMeta.title}`;
+  } else if (versatile) {
+    const entries = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+    const top = styleMeta[entries[0][0]].title;
+    const second = styleMeta[entries[1][0]].title;
+    displayTitle = `${top} & ${second} (Versatile)`;
+  }
+
+  const finalColors = meta.colors[undertone] || meta.colors["NEUTRAL"];
 
   function handleDownload() {
     window.print();
@@ -67,89 +122,74 @@ export default function HasilPersonalisasi() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F7E3C6] px-6 py-10">
-      <h1 className="text-[#C64747] text-3xl font-bold text-center">
-        Hai, {name}! ✨
-      </h1>
-      <p className="text-center text-gray-700 mt-2 mb-8">
-        Ini hasil personalisasi lengkap untuk kamu.
-      </p>
-
-      {/* CARD RESULT */}
-      <div
-        id="hasilCard"
-        className="max-w-lg mx-auto bg-white rounded-2xl shadow p-6 space-y-8"
-      >
-        {/* SMART FIT */}
-        <section>
-          <h2 className="text-xl font-bold text-[#C85E5A] mb-2">Smart Fit</h2>
-          <p className="text-gray-700 mb-1">
-            <strong>Rekomendasi ukuran:</strong> {smart.sizeCategory}
-          </p>
-          <p className="text-gray-700">
-            <strong>BMI:</strong> {smart.BMI}
-          </p>
-        </section>
-
-        {/* STYLE */}
-        <section>
-          <h2 className="text-xl font-bold text-[#C85E5A] mb-2">
-            Style Persona
-          </h2>
-          <p className="text-gray-700 mb-3">
-            Kamu adalah: <strong>{style.type}</strong>
-          </p>
-
-          <div className="space-y-3">
-            <div>
-              <p className="font-semibold text-gray-700">Warna cocok kamu:</p>
-              <ul className="list-disc ml-6 text-gray-700">
-                {rec.warna.map((w) => (
-                  <li key={w}>{w}</li>
-                ))}
-              </ul>
-            </div>
-
-            <div>
-              <p className="font-semibold text-gray-700">Gaya outfit cocok:</p>
-              <ul className="list-disc ml-6 text-gray-700">
-                {rec.outfit.map((o) => (
-                  <li key={o}>{o}</li>
-                ))}
-              </ul>
-            </div>
-
-            <div>
-              <p className="font-semibold text-gray-700">Rekomendasi produk:</p>
-              <ul className="list-disc ml-6 text-gray-700">
-                {rec.produk.map((p) => (
-                  <li key={p}>{p}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        {/* BUTTON DOWNLOAD */}
-        <button
-          onClick={handleDownload}
-          className="w-full py-3 mt-4 rounded-full bg-[#C85E5A] text-white font-semibold text-lg"
-        >
-          Unduh Hasil Personalisasi
-        </button>
-      </div>
-
-       {/* CLOSE BUTTON */}
-      <button
-        onClick={() => {
-          sessionStorage.removeItem("styleQuizTemp");
-          sessionStorage.removeItem("styleQuizResult");
-          navigate("/");
-        }}
-        className="absolute top-5 right-5 text-[#C75E58] text-2xl font-bold"
-      >
+    <div className="min-h-screen bg-[#F7E3C6] px-6 py-10 relative">
+      {/* CLOSE BUTTON */}
+      <button onClick={handleClose} className="absolute top-5 right-5 text-[#C75E58] text-3xl font-bold">
         ×
       </button>
+
+      <h1 className="text-[#C64747] text-3xl font-bold text-center">Hai, {name}! ✨</h1>
+      <p className="text-center text-gray-700 mt-1 mb-8">Ini hasil personalisasi lengkap untukmu.</p>
+
+      {/* == 1 CARD BESAR == */}
+      <div className="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl p-10">
+        {/* GAMBAR STYLE */}
+        <div className="w-full mb-10 flex justify-center">
+          <img src={meta.img} alt={meta.title} className="w-full max-h-[550px] object-contain rounded-2xl" />
+        </div>
+
+        {/* JUDUL */}
+        <h2 className="text-2xl font-semibold text-[#C85E5A] text-center mb-3">{displayTitle}</h2>
+
+        <p className="text-gray-700 text-center max-w-2xl mx-auto mb-8">{meta.desc}</p>
+
+        {/* SMART FIT */}
+        <section className="mb-8">
+          <h3 className="font-semibold text-[#C85E5A] text-xl mb-2">Smart Fit</h3>
+          <p>
+            <b>Rekomendasi ukuran:</b> {smart.sizeCategory}
+          </p>
+          <p>
+            <b>BMI:</b> {smart.BMI}
+          </p>
+        </section>
+
+        {/* WARNA */}
+        <section className="mb-8">
+          <h3 className="font-semibold text-[#C85E5A] text-xl mb-3">Rekomendasi Warna ({undertone})</h3>
+
+          <div className="flex flex-wrap gap-4 mb-6">
+            {finalColors.map((c) => (
+              <div key={c} className="flex items-center gap-2">
+                <div className="w-9 h-9 rounded-full border" style={{ backgroundColor: "#eee" }}></div>
+                <span>{c}</span>
+              </div>
+            ))}
+          </div>
+
+          <img src={undertoneImage} alt="Tone palette" className="w-full max-h-[350px] object-contain rounded-lg border" />
+        </section>
+
+        {/* QR CODE */}
+        {/* <div className="flex flex-col items-center mt-10">
+          <p className="font-medium text-gray-700 mb-2">Scan untuk menyimpan hasil:</p>
+          <QRCodeCanvas value={pageUrl} size={180} bgColor="#ffffff" />
+        </div> */}
+
+        {/* BUTTONS */}
+        <div className="mt-10">
+          {/* <button
+            onClick={handleDownload}
+            className="w-full py-3 rounded-full bg-oren2 text-white font-semibold text-lg mb-3"
+          >
+            Unduh Hasil Personalisasi
+          </button> */}
+
+          <button onClick={handleClose} className="w-full py-3 rounded-full bg-[#C85E5A] text-white font-semibold text-lg">
+            Close
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

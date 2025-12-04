@@ -1,13 +1,17 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+/**
+ * StyleQuizQuestion.jsx
+ * - sessionStorage untuk menyimpan sementara
+ * - scoring sesuai brief Ourfit Style Quiz
+ * - menyimpan undertone (WARM/COOL/NEUTRAL)
+ */
+
 export default function StyleQuizQuestion() {
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
 
-  // =============================
-  //  PERTANYAAN OURFIT STYLE QUIZ
-  // =============================
   const questions = [
     {
       id: "warnaOutfit",
@@ -22,22 +26,23 @@ export default function StyleQuizQuestion() {
     },
     {
       id: "undertone",
-      question: "Warna kulit kamu cenderung punya undertone seperti apa?",
+      question:
+        "Warna kulit kamu cenderung punya undertone seperti apa?",
       options: [
-        "Cool tone — cocok silver", // A
-        "Warm tone — cocok gold", // B
-        "Neutral tone — cocok keduanya", // C
+        "Cool tone — sedikit pink atau keunguan, cocok dengan perhiasan silver", // A
+        "Warm tone — kekuningan atau keemasan, cocok dengan perhiasan gold", // B
+        "Neutral tone — di tengah-tengah, cocok dengan keduanya", // C
       ],
     },
     {
       id: "acara",
       question: "Biasanya kamu pakai baju untuk acara apa?",
       options: [
-        "Hangout santai / ngopi", // A
-        "Event formal / meeting", // B
-        "Jalan-jalan / traveling", // C
-        "Kumpul bareng teman", // D
-        "Acara kampus / kantor", // E
+        "Hangout santai atau ngopi", // A
+        "Event formal atau meeting", // B
+        "Jalan-jalan atau traveling", // C
+        "Kumpul bareng teman atau festival", // D
+        "Acara kampus atau kantor", // E
       ],
     },
     {
@@ -54,22 +59,14 @@ export default function StyleQuizQuestion() {
     {
       id: "kataKamu",
       question: "Pilih kata yang paling menggambarkan kamu.",
-      options: [
-        "Dreamy", // A
-        "Confident", // B
-        "Grounded", // C
-        "Playful", // D
-        "Calm", // E
-      ],
+      options: ["Dreamy", "Confident", "Grounded", "Playful", "Calm"], // A B C D E
     },
   ];
 
-  // =============================
-  //  STATE + LOAD TEMP (SESSION)
-  // =============================
+  // initial answers + undertone stored separately
   const [answers, setAnswers] = useState({
     warnaOutfit: "",
-    undertone: "",
+    undertone: "", // value: "COOL"|"WARM"|"NEUTRAL"
     acara: "",
     gayaFavorit: "",
     kataKamu: "",
@@ -84,68 +81,240 @@ export default function StyleQuizQuestion() {
     sessionStorage.setItem("styleQuizTemp", JSON.stringify(updated));
   }
 
-  // =============================
-  // HANDLE SELECT
-  // =============================
   function handleSelect(questionId, value) {
-    setAnswers((prev) => {
-      const updated = { ...prev, [questionId]: value };
-      saveTemp(updated);
-      return updated;
-    });
+    // for undertone question we map to COOL/WARM/NEUTRAL
+    const updated = { ...answers };
+    if (questionId === "undertone") {
+      const mapped =
+        value.startsWith("Cool") ? "COOL" : value.startsWith("Warm") ? "WARM" : "NEUTRAL";
+      updated[questionId] = mapped;
+    } else {
+      updated[questionId] = value;
+    }
+    setAnswers(updated);
+    saveTemp(updated);
   }
 
   function isAnswered(q) {
-    return answers[q.id] !== "";
+    // undertone considered answered if answers.undertone set
+    return answers[q.id] && answers[q.id] !== "";
   }
 
-  // =============================
-  // STYLE SCORING
-  // =============================
+  // ============================
+  // SCORING RULES (dari brief)
+  // ============================
   function calculateStyleResult(a) {
-    const map = { A: 0, B: 0, C: 0, D: 0, E: 0 };
-
-    const optionToLetter = (questionId, selected) => {
-      const index = questions
-        .find((q) => q.id === questionId)
-        .options.indexOf(selected);
-
-      return ["A", "B", "C", "D", "E"][index];
+    // styles keys: Cheesecake, Blackforest, Tiramisu, Macaron, Caramel
+    const scores = {
+      Cheesecake: 0,
+      Blackforest: 0,
+      Tiramisu: 0,
+      Macaron: 0,
+      "Caramel Pudding": 0,
     };
 
-    Object.keys(a).forEach((q) => {
-      const letter = optionToLetter(q, a[q]);
-      map[letter] += 1;
-    });
+    // P1: warnaOutfit
+    switch (a.warnaOutfit) {
+      case "Baby pink, cream, lilac":
+        scores.Cheesecake += 3;
+        scores.Macaron += 1;
+        break;
+      case "Hitam, abu-abu, dark brown":
+        scores.Blackforest += 3;
+        scores["Caramel Pudding"] += 1;
+        break;
+      case "Beige, olive, cokelat muda":
+        scores.Tiramisu += 3;
+        scores["Caramel Pudding"] += 1;
+        break;
+      case "Biru langit, kuning, coral":
+        scores.Macaron += 3;
+        scores.Cheesecake += 1;
+        break;
+      case "Putih, ivory, abu muda":
+        scores["Caramel Pudding"] += 3;
+        scores.Tiramisu += 1;
+        break;
+      default:
+        break;
+    }
 
-    const top = Object.entries(map).sort((a, b) => b[1] - a[1])[0][0];
+    // P2: undertone -> just saved separately (no score)
+    // a. stored as "COOL"/"WARM"/"NEUTRAL"
 
-    const resultMap = {
-      A: "Luna Girl",
-      B: "Noir Girl",
-      C: "Terra Girl",
-      D: "Astra Girl",
-      E: "Velvet Girl",
-    };
+    // P3: acara
+    switch (a.acara) {
+      case "Hangout santai atau ngopi":
+        scores.Cheesecake += 2;
+        scores.Tiramisu += 2;
+        break;
+      case "Event formal atau meeting":
+        scores.Blackforest += 3;
+        scores["Caramel Pudding"] += 2;
+        break;
+      case "Jalan-jalan atau traveling":
+        scores.Tiramisu += 3;
+        scores.Macaron += 1;
+        break;
+      case "Kumpul bareng teman atau festival":
+        scores.Macaron += 3;
+        scores.Cheesecake += 1;
+        break;
+      case "Acara kampus atau kantor":
+        scores["Caramel Pudding"] += 3;
+        scores.Blackforest += 1;
+        break;
+      default:
+        break;
+    }
+
+    // P4: gayaFavorit
+    switch (a.gayaFavorit) {
+      case "Feminine dan manis":
+        scores.Cheesecake += 3;
+        break;
+      case "Chic dan classy":
+        scores.Blackforest += 3;
+        break;
+      case "Simple dan nyaman":
+        scores.Tiramisu += 3;
+        break;
+      case "Fun dan berwarna":
+        scores.Macaron += 3;
+        break;
+      case "Minimalist dan rapi":
+        scores["Caramel Pudding"] += 3;
+        break;
+      default:
+        break;
+    }
+
+    // P5: kataKamu
+    switch (a.kataKamu) {
+      case "Dreamy":
+        scores.Cheesecake += 3;
+        break;
+      case "Confident":
+        scores.Blackforest += 3;
+        break;
+      case "Grounded":
+        scores.Tiramisu += 3;
+        break;
+      case "Playful":
+        scores.Macaron += 3;
+        break;
+      case "Calm":
+        scores["Caramel Pudding"] += 3;
+        break;
+      default:
+        break;
+    }
+
+    // find top and second
+    const entries = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+    const topName = entries[0][0];
+    const topScore = entries[0][1];
+    const secondName = entries[1][0];
+    const secondScore = entries[1][1];
+
+    // Tiebreak rules:
+    // 1) If tie, pick based on Question 4 (gayaFavorit) preference
+    // 2) If still tie, pick based on Question 5 (kataKamu)
+    // 3) If still tie, pick based on Question 1 (warnaOutfit)
+    let finalPrimary = topName;
+    // handle exact tie for first
+    const tied = entries.filter((e) => e[1] === topScore).map((e) => e[0]);
+    if (tied.length > 1) {
+      // try tiebreak Q4
+      const q4 = a.gayaFavorit;
+      const mapQ4 = {
+        "Feminine dan manis": "Cheesecake",
+        "Chic dan classy": "Blackforest",
+        "Simple dan nyaman": "Tiramisu",
+        "Fun dan berwarna": "Macaron",
+        "Minimalist dan rapi": "Caramel Pudding",
+      };
+      const preferQ4 = mapQ4[q4];
+      if (preferQ4 && tied.includes(preferQ4)) {
+        finalPrimary = preferQ4;
+      } else {
+        // tie Q5
+        const q5 = a.kataKamu;
+        const mapQ5 = {
+          Dreamy: "Cheesecake",
+          Confident: "Blackforest",
+          Grounded: "Tiramisu",
+          Playful: "Macaron",
+          Calm: "Caramel Pudding",
+        };
+        const preferQ5 = mapQ5[q5];
+        if (preferQ5 && tied.includes(preferQ5)) {
+          finalPrimary = preferQ5;
+        } else {
+          // tie Q1
+          const q1 = a.warnaOutfit;
+          const mapQ1 = {
+            "Baby pink, cream, lilac": "Cheesecake",
+            "Hitam, abu-abu, dark brown": "Blackforest",
+            "Beige, olive, cokelat muda": "Tiramisu",
+            "Biru langit, kuning, coral": "Macaron",
+            "Putih, ivory, abu muda": "Caramel Pudding",
+          };
+          const preferQ1 = mapQ1[q1];
+          if (preferQ1 && tied.includes(preferQ1)) {
+            finalPrimary = preferQ1;
+          } else {
+            // fallback: choose first in alphabetical order of tied to keep deterministic
+            finalPrimary = tied.sort()[0];
+          }
+        }
+      }
+    }
+
+    // Mix-style rule: if top-second difference <= 2 => show "with a touch of"
+    let mix = null;
+    if (topScore - secondScore <= 2 && topScore !== secondScore) {
+      mix = secondName;
+    }
+
+    // Versatile rule: if topScore <= 8 and no one strongly dominant (>8)
+    let versatile = false;
+    if (topScore <= 8 && topScore - secondScore <= 2) {
+      versatile = true;
+    }
 
     return {
-      type: resultMap[top],
-      rawScore: map,
-      detail: a,
+      primary: finalPrimary,
+      scores,
+      topScore,
+      secondName,
+      secondScore,
+      mix, // string or null
+      versatile, // boolean
+      undertone: a.undertone || "NEUTRAL",
+      detailAnswers: a,
     };
   }
 
-  // =============================
+  // ============================
   // NEXT
-  // =============================
+  // ============================
   function goNext() {
     if (currentStep < questions.length - 1) {
       setCurrentStep((s) => s + 1);
     } else {
-      const styleResult = calculateStyleResult(answers);
-
-      sessionStorage.setItem("styleQuizResult", JSON.stringify(styleResult));
-
+      // calculate
+      const raw = {
+        warnaOutfit: answers.warnaOutfit,
+        undertone: answers.undertone || "NEUTRAL",
+        acara: answers.acara,
+        gayaFavorit: answers.gayaFavorit,
+        kataKamu: answers.kataKamu,
+      };
+      const result = calculateStyleResult(raw);
+      sessionStorage.setItem("styleQuizResult", JSON.stringify(result));
+      // remove temp
+      sessionStorage.removeItem("styleQuizTemp");
       navigate("/masukkan-nama");
     }
   }
@@ -162,13 +331,14 @@ export default function StyleQuizQuestion() {
           navigate("/");
         }}
         className="absolute top-5 right-5 text-[#C75E58] text-2xl font-bold"
+        aria-label="Close"
       >
         ×
       </button>
 
       {/* TITLE */}
       <h1 className="text-[#C64747] text-2xl font-bold text-center mb-6">
-        PILIH YANG PALING SESUAI DENGANMU
+        OURFIT STYLE QUIZ
       </h1>
 
       {/* PROGRESS */}
@@ -176,15 +346,13 @@ export default function StyleQuizQuestion() {
         {questions.map((_, i) => (
           <div
             key={i}
-            className={`h-2 w-10 rounded-full transition-all
-              ${
-                i === currentStep
-                  ? "bg-[#C64747]"
-                  : answers[questions[i].id]
-                  ? "bg-[#D27672]"
-                  : "bg-[#C9C5BB]"
-              }
-            `}
+            className={`h-2 w-10 rounded-full transition-all ${
+              i === currentStep
+                ? "bg-[#C64747]"
+                : answers[questions[i].id]
+                ? "bg-[#D27672]"
+                : "bg-[#C9C5BB]"
+            }`}
           ></div>
         ))}
       </div>
@@ -198,12 +366,11 @@ export default function StyleQuizQuestion() {
           <button
             key={op}
             onClick={() => handleSelect(q.id, op)}
-            className={`w-full py-3 px-4 my-2 rounded-xl border text-left transition-all
-              ${
-                answers[q.id] === op
-                  ? "bg-[#D27672] text-white border-[#D27672]"
-                  : "bg-white text-gray-700 border-gray-300"
-              }`}
+            className={`w-full py-3 px-4 my-2 rounded-xl border text-left transition-all ${
+              answers[q.id] === op
+                ? "bg-[#D27672] text-white border-[#D27672]"
+                : "bg-white text-gray-700 border-gray-300"
+            }`}
           >
             {op}
           </button>
@@ -215,12 +382,11 @@ export default function StyleQuizQuestion() {
         <button
           onClick={goNext}
           disabled={!isAnswered(q)}
-          className={`w-full py-3 rounded-full text-white text-lg transition-all
-            ${
-              isAnswered(q)
-                ? "bg-[#C85E5A]"
-                : "bg-[#E2A6A3] opacity-60 cursor-not-allowed"
-            }`}
+          className={`w-full py-3 rounded-full text-white text-lg transition-all ${
+            isAnswered(q)
+              ? "bg-[#C85E5A]"
+              : "bg-[#E2A6A3] opacity-60 cursor-not-allowed"
+          }`}
         >
           {currentStep === questions.length - 1 ? "Selesai" : "Lanjut"}
         </button>

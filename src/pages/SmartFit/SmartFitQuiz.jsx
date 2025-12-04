@@ -89,7 +89,6 @@ export default function SmartFitQuiz() {
         "Kancing baju di dada suka mepet",
         "Bagian pinggul/paha suka kenceng",
         "Bahu suka ga pas tempatnya",
-        "Enggak ada masalah kok",
       ],
     },
     {
@@ -180,59 +179,30 @@ export default function SmartFitQuiz() {
     return num ? Number(num[0]) : 0;
   }
 
-  function calculateSmartFitResult(a) {
-    const tinggi = extract(a.tinggi);
-    const berat = extract(a.berat);
-    const lingkarDada = extract(a.lingkarDada);
+function calculateSmartFitResult(a) {
+  const tinggi = extract(a.tinggi);
+  const berat = extract(a.berat);
 
-    const tinggiM = tinggi / 100;
-    const BMI = berat / (tinggiM * tinggiM);
+  // Hitung BMI
+  const tinggiM = tinggi / 100;
+  const BMI = (berat / (tinggiM * tinggiM)).toFixed(1);
 
-    let petiteScore = 0;
-    let allSizeScore = 0;
+  // ===== LOGIC BARU =====
+  let sizeCategory = "";
 
-    if (tinggi <= 155) petiteScore++;
-    else allSizeScore++;
-
-    if (berat <= 55) petiteScore++;
-    else allSizeScore++;
-
-    if (lingkarDada <= 90) petiteScore++;
-    else allSizeScore++;
-
-    const shape = a.bodyShape.toLowerCase();
-    const style = a.style.toLowerCase();
-
-    if (shape.includes("petite") || style.includes("ketat")) petiteScore++;
-    else allSizeScore++;
-
-    const panjangIssues = [
-      "Baju selalu kepanjangan",
-      "Lengan kudu digulung mulu",
-      "Celana nyeret ke lantai",
-    ];
-
-    const panjangCount = a.problems.filter((p) =>
-      panjangIssues.includes(p)
-    ).length;
-
-    if (panjangCount >= 2) petiteScore++;
-    else allSizeScore++;
-
-    if (BMI < 18.5) petiteScore += 1;
-    else if (BMI >= 25 && BMI <= 29.9) allSizeScore += 1;
-    else if (BMI >= 30) allSizeScore += 2;
-
-    let sizeCategory = petiteScore > allSizeScore ? "PETITE SIZE" : "ALL SIZE";
-
-    return {
-      sizeCategory,
-      petiteScore,
-      allSizeScore,
-      BMI: BMI.toFixed(1),
-      details: a,
-    };
+  if (tinggi < 156) {
+    sizeCategory = "PETITE SIZE";
+  } else {
+    sizeCategory = "ALL SIZE";
   }
+
+  return {
+    sizeCategory,
+    BMI,
+    details: a, // tetap simpan semua jawaban user
+  };
+}
+
 
   const q = questions[currentStep];
   const totalSteps = questions.length;

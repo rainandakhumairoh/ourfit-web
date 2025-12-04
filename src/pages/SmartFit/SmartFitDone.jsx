@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import animasiKarakter from "../../assets/karakter.png";
+import animasiKarakter from "../../assets/welcomingkarakter.png";
 
 export default function SmartFitDone() {
   const navigate = useNavigate();
