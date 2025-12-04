@@ -100,17 +100,55 @@ const styleMeta = {
   const meta = styleMeta[primary] || styleMeta["Tiramisu"];
   const mixMeta = mix ? styleMeta[mix] : null;
 
+    // ===== LOGIKA GAMBAR MIX / VERSATILE =====
+  let displayImages = [meta.img];
+
+  if (versatile) {
+    const entries = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+    const top = styleMeta[entries[0][0]];
+    const second = styleMeta[entries[1][0]];
+    displayImages = [top.img, second.img];
+  } else if (mix && mixMeta) {
+    displayImages = [meta.img, mixMeta.img];
+  }
+
+
   let displayTitle = meta.title;
   if (mix && !versatile) {
-    displayTitle = `${meta.title} with a touch of ${mixMeta.title}`;
+    displayTitle = `${meta.title} dengan sentuhan ${mixMeta.title} (Mix)`;
   } else if (versatile) {
     const entries = Object.entries(scores).sort((a, b) => b[1] - a[1]);
     const top = styleMeta[entries[0][0]].title;
     const second = styleMeta[entries[1][0]].title;
-    displayTitle = `${top} & ${second} (Versatile)`;
+    displayTitle = `${top} & ${second} (Dual Vibe)`;
   }
 
   const finalColors = meta.colors[undertone] || meta.colors["NEUTRAL"];
+
+    // ===== FORMAT OUTPUT FINAL =====
+  const outputFinal = `
+  Kamu adalah ${meta.title}!
+
+  ${meta.desc}
+
+  Karena kamu punya undertone ${undertone}, warna yang paling cocok untukmu adalah: ${finalColors.join(", ")}.
+  `;
+
+
+  // === KALIMAT MIX & VERSATILE ===
+  let resultSentence = "";
+
+  if (versatile) {
+    const entries = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+    const top = styleMeta[entries[0][0]].title;
+    const second = styleMeta[entries[1][0]].title;
+    resultSentence = `Gaya kamu fleksibel! Kamu bisa mix-match antara ${top} dan ${second}.`;
+  } 
+  else if (mix) {
+    const primaryTitle = meta.title.replace(" Girl", "");
+    const mixTitle = mixMeta.title.replace(" Girl", "");
+    resultSentence = `Kamu ${primaryTitle} Girl with a touch of ${mixTitle} elegance.`;
+  }
 
   function handleDownload() {
     window.print();
@@ -134,12 +172,25 @@ const styleMeta = {
       {/* == 1 CARD BESAR == */}
       <div className="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl p-10">
         {/* GAMBAR STYLE */}
-        <div className="w-full mb-10 flex justify-center">
-          <img src={meta.img} alt={meta.title} className="w-full max-h-[550px] object-contain rounded-2xl" />
+        <div className="w-full mb-3 flex flex-col items-center gap-6">
+          {displayImages.map((imgSrc, idx) => (
+            <img
+              key={idx}
+              src={imgSrc}
+              alt={`Style ${idx + 1}`}
+              className="w-full max-w-[550px] max-h-[550px] object-contain rounded-2xl"
+            />
+          ))}
         </div>
 
         {/* JUDUL */}
         <h2 className="text-2xl font-semibold text-[#C85E5A] text-center mb-3">{displayTitle}</h2>
+
+        {resultSentence && (
+          <p className="text-center text-gray-700 mt-1 mb-6 text-sm max-w-xl mx-auto">
+            {resultSentence}
+          </p>
+        )}
 
         <p className="text-gray-700 text-center max-w-2xl mx-auto mb-8">{meta.desc}</p>
 
