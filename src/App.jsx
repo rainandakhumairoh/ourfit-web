@@ -19,6 +19,12 @@ import StyleQuizQuestion from "./pages/StyleQuiz/StyleQuizQuestion";
 import SmartFitDone from "./pages/SmartFit/SmartFitDone";
 import HasilPersonalisasi from "./pages/Personalization/HasilPersonalisasi";
 import MasukkanNama from "./pages/Personalization/MasukkanNama";
+import LoginUser from "./pages/Auth/Login/LoginUser";
+import LoginAdmin from "./pages/Auth/Login/LoginAdmin";
+import PrivateRoute from "./components/PrivateRoute";
+import UserProvider from "./context/UserContext";
+import AdminPage from "./pages/Admin/AdminPage";
+
 
 
 function App() {
@@ -56,13 +62,23 @@ function App() {
         { path: "style-quiz/question", element: <StyleQuizQuestion /> },
         { path: "masukkan-nama", element: <MasukkanNama /> },
         { path: "hasil-personalisasi", element: <HasilPersonalisasi /> },
+        { path: "/login-user", element: <LoginUser /> },
+        { path: "/login-admin", element: <LoginAdmin /> },
+        { path: "/admin", element: (
+            <PrivateRoute role="admin">
+                <AdminPage />  // halaman khusus admin
+            </PrivateRoute>
+        )},
       ],
     },
   ]);
 
-   return (
+
+  return (
     <ProductsProvider>
-      <RouterProvider router={router} />
+      <UserProvider>
+        <RouterProvider router={router} />
+      </UserProvider>
     </ProductsProvider>
   );
 }

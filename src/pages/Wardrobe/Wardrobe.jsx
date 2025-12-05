@@ -1,15 +1,9 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useContext } from "react";
 import ProductCard from "../../components/ProductCard/ProductCard";
+import { productsContext } from "../../context/Products/Products";
 
 export default function Wardrobe() {
-  const [products, setProducts] = useState([]);
-
-  useEffect(() => {
-    axios.get("https://fakestoreapi.com/products").then((res) => {
-      setProducts(res.data);
-    });
-  }, []);
+  const { products } = useContext(productsContext); // ambil data produk dari context
 
   const handleWishlist = (id) => {
     console.log("Wishlist toggled:", id);
