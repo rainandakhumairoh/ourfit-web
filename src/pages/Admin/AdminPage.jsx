@@ -5,13 +5,11 @@ import { UserContext } from "../../context/UserContext";
 export default function AdminPage() {
   const { logout } = useContext(UserContext);
   const [products, setProducts] = useState([]);
-  const [title, setTitle] = useState("");
-  const [price, setPrice] = useState("");
-  const [image, setImage] = useState(null);
 
   const [editProduct, setEditProduct] = useState(null); // product yang diedit
-  const [editTitle, setEditTitle] = useState("");
+  const [editName, setEditName] = useState("");
   const [editPrice, setEditPrice] = useState("");
+  const [editCategory, setEditCategory] = useState("");
   const [editImage, setEditImage] = useState(null);
 
   const fetchProducts = async () => {
@@ -23,20 +21,6 @@ export default function AdminPage() {
     fetchProducts();
   }, []);
 
-  // Tambah produk
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("price", price);
-    if (image) formData.append("image", image);
-
-    await axios.post("http://localhost:5000/api/products", formData, {
-      headers: { "Content-Type": "multipart/form-data" },
-    });
-    setTitle(""); setPrice(""); setImage(null);
-    fetchProducts();
-  };
 
   // Hapus produk
   const handleDelete = async (id) => {
@@ -47,8 +31,9 @@ export default function AdminPage() {
   // Mulai edit produk
   const startEdit = (product) => {
     setEditProduct(product);
-    setEditTitle(product.title);
+    setEditName(product.name);
     setEditPrice(product.price);
+    setEditCategory(product.category);
     setEditImage(null);
   };
 
@@ -56,7 +41,7 @@ export default function AdminPage() {
   const handleEditSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append("title", editTitle);
+    formData.append("name", editName);
     formData.append("price", editPrice);
     if (editImage) formData.append("image", editImage);
 
@@ -65,7 +50,7 @@ export default function AdminPage() {
     });
 
     setEditProduct(null);
-    setEditTitle("");
+    setEditName("");
     setEditPrice("");
     setEditImage(null);
     fetchProducts();
@@ -80,35 +65,13 @@ export default function AdminPage() {
         </button>
       </div>
 
-      {/* Form tambah produk */}
-      <form onSubmit={handleSubmit} className="mb-8 flex gap-3 items-center">
-        <input 
-          type="text" 
-          placeholder="Title" 
-          value={title} 
-          onChange={(e) => setTitle(e.target.value)} 
-          className="border p-2 rounded"
-        />
-        <input 
-          type="number" 
-          placeholder="Price" 
-          value={price} 
-          onChange={(e) => setPrice(e.target.value)} 
-          className="border p-2 rounded"
-        />
-        <input 
-          type="file" 
-          onChange={(e) => setImage(e.target.files[0])}
-        />
-        <button type="submit" className="bg-green-500 text-white px-4 py-2 rounded">Add Product</button>
-      </form>
 
       {/* List produk */}
       <div className="grid grid-cols-3 gap-4">
         {products.map(p => (
           <div key={p._id} className="border p-4 rounded">
-            <img src={`http://localhost:5000${p.image}`} alt={p.title} className="w-full h-32 object-contain mb-2"/>
-            <h3 className="font-semibold">{p.title}</h3>
+            <img src={`http://localhost:5000${p.image}`} alt={p.name} className="w-full h-32 object-contain mb-2"/>
+            <h3 className="font-semibold">{p.name}</h3>
             <p>Rp{p.price}</p>
             <div className="flex gap-2 mt-2">
               <button 
@@ -136,8 +99,8 @@ export default function AdminPage() {
             <form onSubmit={handleEditSubmit} className="flex flex-col gap-3">
               <input 
                 type="text" 
-                value={editTitle} 
-                onChange={(e) => setEditTitle(e.target.value)} 
+                value={editName} 
+                onChange={(e) => setEditName(e.target.value)} 
                 className="border p-2 rounded"
               />
               <input 
@@ -145,6 +108,13 @@ export default function AdminPage() {
                 value={editPrice} 
                 onChange={(e) => setEditPrice(e.target.value)} 
                 className="border p-2 rounded"
+              />
+              <input
+                type="text"
+                value={editCategory}
+                onChange={(e) => setEditCategory(e.target.value)}
+                className="border p-2 rounded"
+                required
               />
               <input 
                 type="file" 

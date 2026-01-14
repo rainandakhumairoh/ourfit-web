@@ -15,6 +15,7 @@
     "@fortawesome/react-fontawesome": "^3.1.0",
     "@tailwindcss/vite": "^4.1.14",
     "axios": "^1.13.2",
+    "dotenv": "^17.2.3",
     "flowbite": "^3.1.2",
     "flowbite-react": "^0.12.9",
     "jspdf": "^3.0.3",

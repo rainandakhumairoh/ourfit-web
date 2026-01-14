@@ -2,17 +2,19 @@ import { useState } from "react";
 import axios from "axios";
 
 export default function ProductForm({ refresh }) {
-  const [title, setTitle] = useState("");
+  const [name, setName] = useState("");
   const [price, setPrice] = useState("");
+  const [category, setCategory] = useState("");
   const [image, setImage] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!title || !price || !image) return alert("Semua field harus diisi");
+    if (!name || !price || !category || !image) return alert("Semua field harus diisi");
 
     const formData = new FormData();
-    formData.append("title", title);
+    formData.append("name", name);
     formData.append("price", price);
+    formData.append("category", category);
     formData.append("image", image);
 
     try {
@@ -20,8 +22,9 @@ export default function ProductForm({ refresh }) {
         headers: { "Content-Type": "multipart/form-data" },
       });
       alert("Produk berhasil ditambahkan");
-      setTitle("");
+      setName("");
       setPrice("");
+      setCategory("");
       setImage(null);
       refresh(); // refresh list produk
     } catch (err) {
@@ -36,8 +39,8 @@ export default function ProductForm({ refresh }) {
       <input
         type="text"
         placeholder="Nama Produk"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
+        value={name}
+        onChange={(e) => setName(e.target.value)}
         className="border p-2 rounded"
       />
       <input
@@ -47,6 +50,14 @@ export default function ProductForm({ refresh }) {
         onChange={(e) => setPrice(e.target.value)}
         className="border p-2 rounded"
       />
+        <input
+          type="text"
+          placeholder="Category"
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+          className="border p-2 rounded"
+          required
+        />
       <input
         type="file"
         accept="image/*"

@@ -18,8 +18,8 @@ export default function ProductList({ products, refresh }) {
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       {products.map((product) => (
         <div key={product._id} className="border p-3 rounded shadow flex flex-col items-center">
-          <img src={`http://localhost:5000/${product.image}`} alt={product.title} className="w-32 h-32 object-contain mb-2" />
-          <h3 className="font-semibold">{product.title}</h3>
+          <img src={`http://localhost:5000/${product.image}`} alt={product.name} className="w-32 h-32 object-contain mb-2" />
+          <h3 className="font-semibold">{product.name}</h3>
           <p>Rp{Number(product.price).toLocaleString("id-ID")}</p>
           <button
             onClick={() => handleDelete(product._id)}
