@@ -33,13 +33,13 @@ export default function Footer() {
                 </a>
                 <div className="max-w-sm mt-2 text-white">Perfect fit for petite, we fit ourfit!</div>
                 <span className="block space-x-2 mt-2 text-sm text-white dark:text-white hover:underline flex items-center space-x-3">
-                  <a href="https://linkedin.com/in/mohamedemary" target="_blank" rel="noopener noreferrer">
-                    <img src={tiktokIcon} alt="Shopee" className="w-[1.2rem] h-[1.2rem] object-contain inline-block" />
+                  <a href="https://www.tiktok.com/@by.ourfit" target="_blank" rel="noopener noreferrer">
+                    <img src={tiktokIcon} alt="Tiktok" className="w-[1.2rem] h-[1.2rem] object-contain inline-block" />
                   </a>
-                  <a href="https://github.com/mohamedemary" target="_blank" rel="noopener noreferrer">
-                    <img src={instagramIcon} alt="Shopee" className="w-[1.2rem] h-[1.2rem] object-contain inline-block" />
+                  <a href="https://www.instagram.com/by.ourfit" target="_blank" rel="noopener noreferrer">
+                    <img src={instagramIcon} alt="Instagram" className="w-[1.2rem] h-[1.2rem] object-contain inline-block" />
                   </a>
-                  <a href="https://leetcode.com/Spark71"  target="_blank" rel="noopener noreferrer">
+                  <a href="https://www.shopee.co.id/by.ourfit"  target="_blank" rel="noopener noreferrer">
                     <img src={shopeeIcon} alt="Shopee" className="w-[1.2rem] h-[1.2rem] object-contain inline-block" />
                   </a>
                 </span>
@@ -50,20 +50,33 @@ export default function Footer() {
                 <div>
                   <h3 className="text-2xl font-bold text-white uppercase dark:text-white">CONTACT</h3>
 
-                    <>
-                      <Link to="whatsapp" className="block mt-2 text-sm text-white dark:text-white hover:underline">
-                      <FontAwesomeIcon icon={faWhatsapp} className="mr-1 text-xl" />
-                       085126451462
-                      </Link>
-                      <Link to="email" className="block mt-2 text-sm text-white dark:text-white hover:underline">
-                      <FontAwesomeIcon icon={faEnvelope} className="mr-2 text-xl" />
-                      ourfitstore.id@gmail.com
-                      </Link>
-                      <Link to="location" className="block mt-2 text-sm text-white dark:text-white">
-                      <FontAwesomeIcon icon={faMapPin} className="mr-1 text-xl" />
-                       Bandung, Jawa Barat
-                      </Link>
-                    </>
+                  <a 
+                    href="https://wa.me/6285126451462" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="block mt-2 text-sm text-white dark:text-white hover:underline"
+                  >
+                    <FontAwesomeIcon icon={faWhatsapp} className="mr-1 text-xl" />
+                    085126451462
+                  </a>
+
+                  <a 
+                    href="mailto:ourfitstore.id@gmail.com"
+                    className="block mt-2 text-sm text-white dark:text-white hover:underline"
+                  >
+                    <FontAwesomeIcon icon={faEnvelope} className="mr-2 text-xl" />
+                    ourfitstore.id@gmail.com
+                  </a>
+
+                  <a 
+                    href="https://maps.google.com/?q=Bandung,+Jawa+Barat"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block mt-2 text-sm text-white dark:text-white hover:underline"
+                  >
+                    <FontAwesomeIcon icon={faMapPin} className="mr-1 text-xl" />
+                    Bandung, Jawa Barat
+                  </a>
                 </div>
               </div>
             </div>

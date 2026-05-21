@@ -17,13 +17,13 @@ export default function FooterDua() {
           <img src={logocoklat} alt="Logo Coklat" className="w-36 mb-5" />
           <p className="text-sm">Perfect fit for petite,<br />we fit ourfit!</p>
           <div className="flex items-center gap-3 mt-4">
-            <a href="#" target="_blank" rel="noreferrer">
+            <a href="https://www.tiktok.com/@by.ourfit" target="_blank" rel="noreferrer">
               <img src={tiktokIcon2} alt="TikTok" className="w-5 h-5" />
             </a>
-            <a href="#" target="_blank" rel="noreferrer">
+            <a href="https://www.instagram.com/by.ourfit" target="_blank" rel="noreferrer">
               <img src={instagramIcon2} alt="Instagram" className="w-5 h-5" />
             </a>
-            <a href="#" target="_blank" rel="noreferrer">
+            <a href="https://www.shopee.co.id/by.ourfit" target="_blank" rel="noreferrer">
               <img src={shopeeIcon2} alt="Shopee" className="w-5 h-5" />
             </a>
           </div>
@@ -42,20 +42,33 @@ export default function FooterDua() {
         <div className="text-center md:text-left ml-24">
           <h3 className="text-xl font-bold mb-3 uppercase">Contact</h3>
           <div>
-            <>
-                                  <Link to="whatsapp" className="block mt-2 text-sm text-[#A95C18] dark:text-[#A95C18] hover:underline">
-                                  <FontAwesomeIcon icon={faWhatsapp} className="mr-1 text-xl" />
-                                   085126451462
-                                  </Link>
-                                  <Link to="email" className="block mt-2 text-sm text-[#A95C18] dark:text-[#A95C18] hover:underline">
-                                  <FontAwesomeIcon icon={faEnvelope} className="mr-2 text-xl" />
-                                  ourfitstore.id@gmail.com
-                                  </Link>
-                                  <Link to="location" className="block mt-2 text-sm text-[#A95C18] dark:text-[#A95C18]">
-                                  <FontAwesomeIcon icon={faMapPin} className="mr-1 text-xl" />
-                                   Bandung, Jawa Barat
-                                  </Link>
-                                </>
+            <a 
+              href="https://wa.me/6285126451462" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="block mt-2 text-sm text-[#A95C18] dark:text-[#A95C18] hover:underline"
+            >
+              <FontAwesomeIcon icon={faWhatsapp} className="mr-1 text-xl" />
+              085126451462
+            </a>
+
+            <a 
+              href="mailto:ourfitstore.id@gmail.com"
+              className="block mt-2 text-sm text-[#A95C18] dark:text-[#A95C18] hover:underline"
+            >
+              <FontAwesomeIcon icon={faEnvelope} className="mr-2 text-xl" />
+              ourfitstore.id@gmail.com
+            </a>
+
+            <a 
+              href="https://maps.google.com/?q=Bandung,+Jawa+Barat"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block mt-2 text-sm text-[#A95C18] dark:text-[#A95C18] hover:underline"
+            >
+              <FontAwesomeIcon icon={faMapPin} className="mr-1 text-xl" />
+              Bandung, Jawa Barat
+            </a>
           </div>
         </div>
       </div>
