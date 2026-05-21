@@ -66,7 +66,7 @@ function App() {
         { path: "/login-admin", element: <LoginAdmin /> },
         { path: "/admin", element: (
             <PrivateRoute role="admin">
-                <AdminPage />  // halaman khusus admin
+                <AdminPage /> 
             </PrivateRoute>
         )},
       ],
