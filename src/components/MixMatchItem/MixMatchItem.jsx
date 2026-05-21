@@ -38,7 +38,7 @@ export default function MixMatchItem({ items = [] }) {
           <img
             src={bgBordir}
             alt="Bordir bawah"
-            className="absolute bottom-[-15em] w-full object-cover z-0"
+            className="absolute bottom-[-14em] w-full h-auto object-cover z-0"
           />
 
           {/* GANTUNGAN di atas bordir */}

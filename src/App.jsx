@@ -21,6 +21,7 @@ import HasilPersonalisasi from "./pages/Personalization/HasilPersonalisasi";
 import MasukkanNama from "./pages/Personalization/MasukkanNama";
 import LoginUser from "./pages/Auth/Login/LoginUser";
 import LoginAdmin from "./pages/Auth/Login/LoginAdmin";
+import Register from "./pages/Auth/Register/Register";
 import PrivateRoute from "./components/PrivateRoute";
 import UserProvider from "./context/UserContext";
 import AdminPage from "./pages/Admin/AdminPage";
@@ -64,6 +65,7 @@ function App() {
         { path: "hasil-personalisasi", element: <HasilPersonalisasi /> },
         { path: "/login-user", element: <LoginUser /> },
         { path: "/login-admin", element: <LoginAdmin /> },
+        { path: "/register", element: <Register /> },
         { path: "/admin", element: (
             <PrivateRoute role="admin">
                 <AdminPage /> 

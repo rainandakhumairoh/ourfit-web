@@ -57,7 +57,7 @@ export default function Footer() {
                     className="block mt-2 text-sm text-white dark:text-white hover:underline"
                   >
                     <FontAwesomeIcon icon={faWhatsapp} className="mr-1 text-xl" />
-                    085126451462
+                     085126451462
                   </a>
 
                   <a 

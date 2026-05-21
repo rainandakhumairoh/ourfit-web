@@ -24,7 +24,7 @@ export default function WelcomeSection() {
         <img src={karakter} alt="Karakter Ourfit" className="w-[200px] md:w-[350px] lg:w-[400px] scale-110 md:scale-125 lg:scale-150 mb-6 transition-transform duration-300 ease-in-out" />
         {/* SECTION 2 - Kotak merah */}
         <div className="w-full bg-[#CB5252] flex flex-col items-center justify-center py-12 px-8">
-          <p className="max-w-xl text-sm md:text-base text-white text-center">Di website ini, kamu bisa menemukan berbagai koleksi outfit terbaru, fitur Smart Fit untuk bantu pilih ukuran terbaik, dan Style Quiz untuk temukan gaya yang paling cocok dengan kepribadianmu.</p>
+          <p className="max-w-xl text-sm md:text-base text-white text-center ">Di website ini, kamu bisa menemukan berbagai koleksi outfit terbaru, fitur Smart Fit untuk bantu pilih ukuran terbaik, dan Style Quiz untuk temukan gaya yang paling cocok dengan kepribadianmu.</p>
         </div>
       </div>
     </>

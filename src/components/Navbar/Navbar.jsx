@@ -45,7 +45,7 @@ export default function Navbar() {
         </Link>
 
         {/* Menu tengah */}
-        <div className="flex-1 flex justify-center space-x-4">
+        <div className="flex-1 flex justify-center space-x-5">
           <Link to="/" className={getLinkClass('/')}>Home</Link>
           <Link to="/smart-fit" className={getLinkClass('/smart-fit')}>Personalization</Link>
           <Link to="/wardrobe" className={getLinkClass('/wardrobe')}>Wardrobe</Link>
