@@ -1,7 +1,10 @@
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
+import bcrypt from "bcryptjs";
 import productsRoute from "./routes/Products.js";
+import authRoute from "./routes/Auth.js";
+import User from "./models/User.js";
 import "dotenv/config";
 
 
@@ -15,6 +18,7 @@ app.use("/uploads", express.static("uploads")); // supaya gambar bisa diakses
 
 // Routes
 app.use("/api/products", productsRoute);
+app.use("/api/auth", authRoute);
 
 // Connect MongoDB
 mongoose.connect(process.env.MONGO_URI)

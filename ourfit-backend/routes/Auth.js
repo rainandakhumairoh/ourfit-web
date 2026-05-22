@@ -1,25 +1,115 @@
-// const express = require("express");
-// const router = express.Router();
-// const bcrypt = require("bcryptjs");
-// const jwt = require("jsonwebtoken");
-// const User = require("../models/User");
+import express from "express";
+import bcrypt from "bcryptjs";
+import User from "../models/User.js";
 
-// router.post("/register", async (req, res) => {
-//   const hashed = await bcrypt.hash(req.body.password, 10);
-//   const newUser = new User({ ...req.body, password: hashed });
-//   await newUser.save();
-//   res.json({ message: "User registered" });
-// });
+const router = express.Router();
 
-// router.post("/login", async (req, res) => {
-//   const user = await User.findOne({ email: req.body.email });
-//   if (!user) return res.status(400).json({ message: "Email not found" });
 
-//   const valid = await bcrypt.compare(req.body.password, user.password);
-//   if (!valid) return res.status(400).json({ message: "Wrong password" });
+// =========================
+// REGISTER
+// =========================
+router.post("/register", async (req, res) => {
 
-//   const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "1d" });
-//   res.json({ token, role: user.role, username: user.username });
-// });
+  try {
 
-// module.exports = router;
+    const { username, password } = req.body;
+
+    // cek username
+    const existingUser = await User.findOne({
+      username,
+    });
+
+    if (existingUser) {
+      return res.status(400).json({
+        success: false,
+        message: "Username sudah digunakan",
+      });
+    }
+
+    // hash password
+    const hashedPassword = await bcrypt.hash(
+      password,
+      10
+    );
+
+    // simpan user
+    const newUser = new User({
+      username,
+      password: hashedPassword,
+    });
+
+    await newUser.save();
+
+    res.json({
+      success: true,
+      message: "Register berhasil",
+    });
+
+  } catch (err) {
+
+    console.error(err);
+
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+});
+
+
+// =========================
+// LOGIN
+// =========================
+router.post("/login", async (req, res) => {
+
+  try {
+
+    const { username, password } = req.body;
+
+    // cari user
+    const user = await User.findOne({
+      username,
+    });
+
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: "User tidak ditemukan",
+      });
+    }
+
+    // cek password
+    const isMatch = await bcrypt.compare(
+      password,
+      user.password
+    );
+
+    if (!isMatch) {
+      return res.status(400).json({
+        success: false,
+        message: "Password salah",
+      });
+    }
+
+    res.json({
+      success: true,
+
+      user: {
+        id: user._id,
+        username: user.username,
+        role: user.role,
+      },
+    });
+
+  } catch (err) {
+
+    console.error(err);
+
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+});
+
+export default router;

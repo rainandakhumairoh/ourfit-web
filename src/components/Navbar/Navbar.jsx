@@ -8,7 +8,7 @@ import { UserContext } from '../../context/UserContext';
 export default function Navbar() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { user } = useContext(UserContext); // ambil status login
+  const { currentUser } = useContext(UserContext); // ambil status login
   const [showLoginChoice, setShowLoginChoice] = useState(false);
 
   const getLinkClass = (path) => {
@@ -18,9 +18,9 @@ export default function Navbar() {
   };
 
   const handleProfileClick = () => {
-    if (user) {
+    if (currentUser) {
       // user sudah login
-      navigate(user.role === "admin" ? "/admin" : "/profile");
+      navigate(currentUser.role === "admin" ? "/admin" : "/profile");
     } else {
       // user belum login → tampilkan modal pilihan
       setShowLoginChoice(true);

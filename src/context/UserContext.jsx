@@ -1,58 +1,63 @@
-import { createContext, useState } from "react";
+import {createContext, useEffect, useState,} from "react";
 
 export const UserContext = createContext();
 
 export default function UserProvider({ children }) {
-  const [user, setUser] = useState(null);
-  // Simpan registered users (di production pakai database)
-  const [registeredUsers, setRegisteredUsers] = useState([
-    { username: "user1", password: "pass123", role: "user" }
-  ]);
 
-  const register = (username, password) => {
-    // Cek apakah user sudah terdaftar
-    if (registeredUsers.some(u => u.username === username)) {
-      return false; // User sudah ada
-    }
-    
-    // Tambah user baru
-    setRegisteredUsers([...registeredUsers, { username, password, role: "user" }]);
-    return true; // Registrasi berhasil
-  };
+  // ambil user dari localStorage
+  const [currentUser, setCurrentUser] = useState(() => {
 
-  const login = (username, password, role) => {
-    if (role === "admin") {
-      // Admin hardcoded
-      if (username === "adminourfit" && password === "ownercantiq05") {
-        setUser({ username, role });
-        return true;
-      }
-      return false;
-    }
+    const savedUser =
+      localStorage.getItem("currentUser");
 
-    if (role === "user") {
-      // Cek di registered users
-      const foundUser = registeredUsers.find(
-        u => u.username === username && u.password === password
+    return savedUser
+      ? JSON.parse(savedUser)
+      : null;
+  });
+
+  // simpan otomatis ke localStorage
+  useEffect(() => {
+
+    if (currentUser) {
+
+      localStorage.setItem(
+        "currentUser",
+        JSON.stringify(currentUser)
       );
-      
-      if (foundUser) {
-        setUser({ username, role });
-        return true;
-      }
-      return false;
+
+    } else {
+
+      localStorage.removeItem("currentUser");
+
     }
 
-    return false;
+  }, [currentUser]);
+
+
+  // LOGIN
+  const login = (userData) => {
+
+    setCurrentUser(userData);
   };
 
+
+  // LOGOUT
   const logout = () => {
-    setUser(null);
+
+    setCurrentUser(null);
+
     window.location.href = "/";
   };
 
+
   return (
-    <UserContext.Provider value={{ user, login, logout, register, registeredUsers }}>
+    <UserContext.Provider
+      value={{
+        currentUser,
+        login,
+        logout,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );
