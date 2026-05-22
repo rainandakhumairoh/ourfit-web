@@ -17,11 +17,8 @@ export default function MixMatchItem({ items = [] }) {
       <div className="relative w-full bg-pink2 pb-16">
         <div className="text-center pt-16 pb-10">
             <h1
-                className="text-pink1 font-extrabold text-3xl mb-3 tracking-wide"
-                style={{
-                textShadow:
-                    "4px 4px 0 #fff, -4px 4px 0 #fff, 4px -4px 0 #fff, -4px -4px 0 #fff", // outline putih
-                }}
+                className="text-white font-bold text-3xl mb-3"
+                
             >
                 MIX & MATCH
             </h1>
@@ -78,7 +75,7 @@ export default function MixMatchItem({ items = [] }) {
           to="/mixmatch"
           className="border border-white text-white bg-pink1 rounded-full px-16 py-2 text-sm flex items-center gap-2 hover:bg-white hover:text-[#B13B3B] transition-all duration-300 shadow-md"
         >
-          Lihat Selengkapnya &gt;
+          Lihat Selengkapnya
         </Link>
       </div>
     </div>

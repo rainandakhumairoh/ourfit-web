@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import karakterAnimasi from "../../assets/welcomingkarakter.png"; // GANTI dengan path gambar karakter kamu
+import karakterAnimasi from "../../assets/welcomingkarakter2.png"; // GANTI dengan path gambar karakter kamu
 
 export default function SmartFit() {
   const navigate = useNavigate();

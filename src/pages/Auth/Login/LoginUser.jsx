@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import karakter from "../../../assets/welcomingkarakter.png";
 
 export default function LoginUser() {
-  const { login } = useContext(UserContext);
+  const { login, registeredUsers } = useContext(UserContext);
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -17,11 +17,25 @@ export default function LoginUser() {
     setError("");
 
     setTimeout(() => {
+      // Cek apakah username ada di registered users
+      const userExists = registeredUsers.some(u => u.username === username);
+      
+      if (!userExists) {
+        // User belum terdaftar, arahkan ke register
+        setError("Akun tidak ditemukan. Silakan daftar terlebih dahulu.");
+        setTimeout(() => {
+          navigate("/register");
+        }, 1500);
+        setIsLoading(false);
+        return;
+      }
+
+      // Coba login
       const success = login(username, password, "user");
       if (success) {
         navigate("/profile");
       } else {
-        setError("Login gagal, coba lagi.");
+        setError("Password salah, coba lagi.");
       }
       setIsLoading(false);
     }, 500);
@@ -38,14 +52,14 @@ export default function LoginUser() {
         <button onClick={handleClose} className="absolute top-6 right-6 bg-pink1 text-white w-8 h-8 flex items-center justify-center rounded-full text-xl font-bold shadow-md hover:bg-oren2 transition-all active:scale-95" aria-label="Close">
           ✕
         </button>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-center">
           {/* LEFT SIDE - FORM */}
           <div className="relative">
             <div className="space-y-6">
               {/* Header */}
-              <div className="text-center lg:text-left">
-                <h1 className="text-4xl lg:text-5xl font-bold text-[#C84C3C] mb-3">WELCOME BACK!</h1>
-                <p className="text-sm lg:text-base text-[#8B5A4A]">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+              <div className="text-center lg:text-center">
+                <h1 className="text-4xl lg:text-5xl font-bold text-pink1 mb-3">WELCOME BACK!</h1>
+                <p className="text-sm lg:text-base text-[#8B5A4A]">Masuk untuk melanjutkan perjalanan gaya personalmu bersama Ourfit.</p>
               </div>
 
               {/* Error Message */}
@@ -53,11 +67,11 @@ export default function LoginUser() {
 
               {/* Form */}
               <form onSubmit={handleLogin} className="space-y-4">
-                {/* Email Input */}
+                {/* Username Input */}
                 <div>
                   <input
                     type="text"
-                    placeholder="Email Address"
+                    placeholder="Username"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     className="w-full px-6 py-3 rounded-full border-2 border-[#D4A896] bg-white/60 placeholder-[#B8956A] text-[#5A4A3A] focus:outline-none focus:border-[#C84C3C] focus:bg-white transition"
@@ -79,13 +93,13 @@ export default function LoginUser() {
 
                 {/* Forgot Password Link */}
                 <div className="text-right">
-                  <a href="#" className="text-sm text-[#C84C3C] hover:underline font-medium">
+                  <a href="#" className="text-sm text-pink1 hover:underline font-medium">
                     Forgot password?
                   </a>
                 </div>
 
                 {/* Login Button */}
-                <button type="submit" disabled={isLoading} className="w-full py-3 rounded-full bg-[#C84C3C] text-white font-semibold hover:bg-[#B23D2E] transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg">
+                <button type="submit" disabled={isLoading} className="w-full py-3 rounded-full bg-pink1 text-white font-medium hover:bg-[#B23D2E] transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg">
                   {isLoading ? "Logging in..." : "Log In"}
                 </button>
               </form>
@@ -111,9 +125,9 @@ export default function LoginUser() {
               </div>
 
               {/* Sign Up Link */}
-              <p className="text-center text-sm text-[#8B5A4A]">
+              <p className="text-center text-sm text-coklat">
                 Don't have an account?{" "}
-                <a href="/register" className="text-[#C84C3C] font-semibold hover:underline">
+                <a href="/register" className="text-pink1 font-semibold hover:underline">
                   Sign up
                 </a>
               </p>
@@ -125,13 +139,6 @@ export default function LoginUser() {
             <img src={karakter} alt="Karakter Ourfit" className="w-[200px] md:w-[350px] lg:w-[400px] scale-110 md:scale-125 lg:scale-150 mb-6 transition-transform duration-300 ease-in-out" />
           </div>
         </div>
-      </div>
-
-      {/* Decorative wavy border at bottom */}
-      <div className="absolute bottom-0 left-0 right-0 h-20 pointer-events-none overflow-hidden">
-        <svg viewBox="0 0 1440 120" className="w-full h-full" preserveAspectRatio="none">
-          <path d="M0,40 Q360,0 720,40 T1440,40 L1440,120 L0,120 Z" fill="white" opacity="0.3" />
-        </svg>
       </div>
     </div>
   );

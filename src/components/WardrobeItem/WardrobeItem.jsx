@@ -63,7 +63,7 @@ export default function WardrobeItem() {
                 to="/wardrobe"
                 className="border border-white text-white bg-[#8A3E2D] rounded-full px-16 py-2 text-sm hover:bg-white hover:text-coklat transition-all shadow-md"
               >
-                Lihat Selengkapnya &gt;
+                Lihat Selengkapnya
               </Link>
             </div>
 

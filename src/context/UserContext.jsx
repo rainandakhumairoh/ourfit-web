@@ -3,21 +3,44 @@ import { createContext, useState } from "react";
 export const UserContext = createContext();
 
 export default function UserProvider({ children }) {
-  const [user, setUser] = useState(null); // { username, role: "user" | "admin" }
+  const [user, setUser] = useState(null);
+  // Simpan registered users (di production pakai database)
+  const [registeredUsers, setRegisteredUsers] = useState([
+    { username: "user1", password: "pass123", role: "user" }
+  ]);
+
+  const register = (username, password) => {
+    // Cek apakah user sudah terdaftar
+    if (registeredUsers.some(u => u.username === username)) {
+      return false; // User sudah ada
+    }
+    
+    // Tambah user baru
+    setRegisteredUsers([...registeredUsers, { username, password, role: "user" }]);
+    return true; // Registrasi berhasil
+  };
 
   const login = (username, password, role) => {
     if (role === "admin") {
+      // Admin hardcoded
       if (username === "adminourfit" && password === "ownercantiq05") {
         setUser({ username, role });
-        return true; // sukses login
-      } else {
-        return false;
+        return true;
       }
+      return false;
     }
 
     if (role === "user") {
-      setUser({ username, role });
-      return true;
+      // Cek di registered users
+      const foundUser = registeredUsers.find(
+        u => u.username === username && u.password === password
+      );
+      
+      if (foundUser) {
+        setUser({ username, role });
+        return true;
+      }
+      return false;
     }
 
     return false;
@@ -29,7 +52,7 @@ export default function UserProvider({ children }) {
   };
 
   return (
-    <UserContext.Provider value={{ user, login, logout }}>
+    <UserContext.Provider value={{ user, login, logout, register, registeredUsers }}>
       {children}
     </UserContext.Provider>
   );
