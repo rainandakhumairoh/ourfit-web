@@ -22,7 +22,7 @@ export default function TeamSection() {
         {/* SECTION 2 - Container dengan 2 box persegi */}
         <div className="w-full">
           {/* Box Coklat (bagian atas - dengan dashed border) */}
-          <div className="w-full bg-coklat flex flex-col items-center justify-center py-4 px-0 border-white">
+          <div className="w-full bg-coklat flex flex-col items-center justify-center py-4 px-2 border-2 border-white">
             <div className="w-full flex flex-col items-center justify-center border-4 border-white"
               style={{
                 borderStyle: "dashed",

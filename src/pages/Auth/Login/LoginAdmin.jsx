@@ -4,7 +4,7 @@ import { UserContext } from "../../../context/UserContext";
 import karakter from "../../../assets/welcomingkarakter.png";
 
 export default function LoginAdmin() {
-  const { login } = useContext(UserContext);
+  const { adminLogin } = useContext(UserContext);
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -17,20 +17,19 @@ export default function LoginAdmin() {
     setError("");
 
     setTimeout(() => {
-      const success = login(username, password, "admin");
-      if (success) {
+      const result = adminLogin(username, password);
+      if (result.success) {
         navigate("/admin");
       } else {
-        setError("Login gagal, coba lagi.");
+        setError(result.message);
       }
       setIsLoading(false);
     }, 500);
   };
 
-    const handleClose = () => {
+  const handleClose = () => {
     navigate("/");
   };
-
 
   return (
     <div className="min-h-screen bg-primary flex items-center justify-center p-4 font-['Poppins']">
@@ -54,7 +53,7 @@ export default function LoginAdmin() {
 
               {/* Form */}
               <form onSubmit={handleSubmit} className="space-y-4">
-                {/* Email Input */}
+                {/* Username Input */}
                 <div>
                   <input
                     type="text"
@@ -78,13 +77,11 @@ export default function LoginAdmin() {
                   />
                 </div>
 
-
                 {/* Login Button */}
                 <button type="submit" disabled={isLoading} className="w-full py-3 rounded-full bg-pink1 text-white font-medium hover:bg-[#B23D2E] transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg">
                   {isLoading ? "Logging in..." : "Log In"}
                 </button>
               </form>
-
             </div>
           </div>
 

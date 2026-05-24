@@ -19,9 +19,26 @@ export default function UserProvider({ children }) {
     }
   }, [currentUser]);
 
-  // LOGIN
+  // LOGIN untuk User biasa
   const login = (userData) => {
     setCurrentUser(userData);
+  };
+
+  // LOGIN untuk Admin
+  const adminLogin = (username, password) => {
+    // Validasi admin credentials
+    if (username === "adminourfit" && password === "ownercantiq05") {
+      const adminUser = {
+        id: "admin",
+        name: "Admin Ourfit",
+        email: "admin@ourfit.com",
+        role: "admin",
+      };
+      setCurrentUser(adminUser);
+      return { success: true, message: "Admin login berhasil" };
+    } else {
+      return { success: false, message: "Username atau password salah" };
+    }
   };
 
   // LOGOUT
@@ -36,6 +53,7 @@ export default function UserProvider({ children }) {
       value={{
         currentUser,
         login,
+        adminLogin,
         logout,
       }}
     >
