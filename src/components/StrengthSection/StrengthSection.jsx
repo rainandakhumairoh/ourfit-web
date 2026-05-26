@@ -10,12 +10,9 @@ export default function StrengthSection() {
     <>
       {/* SECTION - Background Cream dengan Gradient */}
       <div
-        className="relative w-full min-h-screen flex flex-col items-center justify-center pt-8 md:pt-16"
+        className="relative w-full min-h-screen flex flex-col items-center justify-center pt-4 md:pt-8"
         style={{
           backgroundColor: "#FFEBC8",
-          backgroundPosition: "bottom",
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
         }}
       >
         {/* Title */}
@@ -77,15 +74,6 @@ export default function StrengthSection() {
             </div>
           </div>
         </div>
-          <div className="w-full bg-primary flex flex-col items-center justify-center mt-8 md:mt-16">
-            {/* Content bisa ditambahkan di sini jika perlu */}
-            <img 
-                    src={renda} 
-                    alt="renda" 
-                    className="relative w-full flex flex-col items-center justify-center text-center"
-                />
-          </div>
-
       </div>
     </>
   );

@@ -5,7 +5,7 @@ export default function VisiMisiSection() {
     <>
       {/* SECTION - Background coklat dengan border dashed */}
       <div
-        className="relative w-full min-h-screen flex flex-col justify-start"
+        className="relative w-full min-h-auto flex flex-col justify-center"
         style={{
           backgroundColor: "#C7752E",
         }}

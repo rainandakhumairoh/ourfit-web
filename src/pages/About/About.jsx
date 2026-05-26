@@ -2,6 +2,7 @@ import TeamSection from '../../components/TeamSection/TeamSection';
 import IntroductionSection from '../../components/IntroductionSection/IntroductionSection';
 import VisiMisiSection from '../../components/VisiMisiSection/VisiMisiSection';
 import StrengthSection from '../../components/StrengthSection/StrengthSection';
+import MeetTeamSection from '../../components/MeetTeamSection/MeetTeamSection';
 
 
 
@@ -12,6 +13,7 @@ export default function About() {
       <IntroductionSection />
       <VisiMisiSection />
       <StrengthSection />
+      <MeetTeamSection />
     </>
   );
 }
