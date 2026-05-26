@@ -24,7 +24,7 @@ export default function WardrobeItem() {
 
       {/* ======== Konten ======== */}
       <div className="relative z-10 flex flex-col items-center">
-        <h2 className="text-center text-[#B13B3B] font-bold text-2xl md:text-3xl mb-8">
+        <h2 className="text-center text-pink1 font-bold text-2xl md:text-3xl mb-8 font-[Poppins]">
           OURFIT’S WARDROBE
         </h2>
 

@@ -18,15 +18,15 @@ export default function IntroductionSection() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
             
             {/* LEFT SIDE - HEADING */}
-            <div className="text-left">
-              <p className="text-coklat text-lg md:text-2xl lg:text-3xl font-bold mb-2">GET TO KNOW</p>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-pink1">
+            <div className="text-center">
+              <p className="text-coklat text-xl md:text-3xl lg:text-4xl font-bold mb-2">GET TO KNOW</p>
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-pink1">
                 OURFIT
               </h1>
             </div>
 
             {/* RIGHT SIDE - TEXT CONTENT */}
-            <div className="text-left space-y-6 mb">
+            <div className="text-left space-y-6 mb text-justify">
               {/* Paragraph 1 */}
               <p className="text-sm md:text-base text-black leading-relaxed">
                 Ourfit adalah brand fashion muslimah yang petite-friendly, dirancang khusus untuk kamu yang sering kesulitan cari baju yang pas di badan.

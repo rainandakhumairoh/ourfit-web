@@ -6,7 +6,8 @@ export default function WelcomeSection() {
     <>
       {/* SECTION 1 - Background cream dan gelombang */}
       <div
-        className="relative w-full min-h-[calc(100vh-64px)] flex flex-col items-center justify-center text-center text-[#A95C18]"
+        className="relative w-full min-h-[calc(100vh-64px)] flex flex-col items-center 
+        justify-center text-center text-[#A95C18] font-[Poppins]"
         style={{
           backgroundImage: `url(${bgGelombang})`,
           backgroundColor: "#FFEBC8",
@@ -24,7 +25,7 @@ export default function WelcomeSection() {
         <img src={karakter2} alt="Karakter Ourfit" className="w-[200px] md:w-[350px] lg:w-[400px] scale-110 md:scale-125 lg:scale-150 mb-12 transition-transform duration-300 ease-in-out" />
         {/* SECTION 2 - Kotak merah */}
         <div className="w-full bg-[#CB5252] flex flex-col items-center justify-center py-12 px-8">
-          <p className="max-w-xl text-sm md:text-base text-white text-center">
+          <p className="text-white text-sm max-w-xl mx-auto text-white text-center font-light">
             Di website ini, kamu bisa menemukan berbagai koleksi outfit terbaru, fitur Smart Fit untuk bantu pilih ukuran terbaik, dan Style Quiz untuk temukan gaya yang paling cocok dengan kepribadianmu.
           </p>
         </div>

@@ -9,7 +9,7 @@ import { faInstagram, faTiktok, faShopify, faWhatsapp } from '@fortawesome/free-
 
 export default function FooterDua() {
   return (
-    <footer className="bg-[#F6E2C4] text-[#A95C18] py-12 px-8">
+    <footer className="bg-primary text-[#A95C18] py-12 px-8">
       <div className="max-w-6xl mx-auto px-6 md:px-12 grid md:grid-cols-3 gap-12 items-start">
         
         {/* === LEFT SECTION === */}

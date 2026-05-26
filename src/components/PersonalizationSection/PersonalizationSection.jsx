@@ -88,7 +88,7 @@ export default function PersonalizationSection() {
         />
 
         {/* Tulisan utama */}
-        <h2 className="text-white text-lg md:text-2xl font-bold max-w-[600px] leading-snug">
+        <h2 className="text-white text-lg md:text-2xl font-bold max-w-[600px] leading-snug font-[Poppins]">
           YUK, TEMUKAN GAYA DAN UKURAN TERBAIKMU!
         </h2>
       </div>
