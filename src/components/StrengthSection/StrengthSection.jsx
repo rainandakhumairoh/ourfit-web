@@ -17,7 +17,19 @@ export default function StrengthSection() {
       >
         {/* Title */}
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-coklat font-[Poppins] uppercase tracking-widest">
+          <h2 className="text-4xl md:text-5xl font-bold text-[#C7752E] font-[Poppins] uppercase tracking-widest" 
+          style={{
+            textShadow: `
+              -4px -4px 0 #ffffff,
+              4px -4px 0 #ffffff,
+              -4px  4px 0 #ffffff,
+              4px  4px 0 #ffffff,
+              0px -4px 0 #ffffff,
+              0px  4px 0 #ffffff,
+              -4px  0px 0 #ffffff,
+              4px  0px 0 #ffffff
+            `,
+          }}>
             Why Choose Us?
           </h2>
         </div>

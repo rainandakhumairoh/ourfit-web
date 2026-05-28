@@ -80,7 +80,19 @@ export default function MeetOurTeamSection() {
       >
         {/* Title */}
         <div className="text-center mb-12 md:mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-[#C7752E] font-[Poppins] uppercase tracking-widest">
+          <h2 className="text-4xl md:text-5xl font-bold text-[#C7752E] font-[Poppins] uppercase tracking-widest" 
+          style={{
+            textShadow: `
+              -4px -4px 0 #ffffff,
+              4px -4px 0 #ffffff,
+              -4px  4px 0 #ffffff,
+              4px  4px 0 #ffffff,
+              0px -4px 0 #ffffff,
+              0px  4px 0 #ffffff,
+              -4px  0px 0 #ffffff,
+              4px  0px 0 #ffffff
+            `,
+          }}>
             Meet Our Team
           </h2>
         </div>
@@ -155,7 +167,7 @@ export default function MeetOurTeamSection() {
           </div>
         </div>
       </div>
-      <div className="w-full bg-primary flex flex-col items-center justify-center">
+      <div className="w-full bg-pink2 flex flex-col items-center justify-center">
      <img 
             src={renda} 
             alt="renda" 

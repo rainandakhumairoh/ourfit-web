@@ -19,8 +19,33 @@ export default function IntroductionSection() {
             
             {/* LEFT SIDE - HEADING */}
             <div className="text-center">
-              <p className="text-coklat text-xl md:text-3xl lg:text-4xl font-bold mb-2">GET TO KNOW</p>
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-pink1">
+              <p className="text-xl md:text-3xl lg:text-4xl font-bold text-[#C7752E] font-[Poppins] uppercase tracking-widest mb-2" 
+              style={{
+                textShadow: `
+                  -4px -4px 0 #ffffff,
+                  4px -4px 0 #ffffff,
+                  -4px  4px 0 #ffffff,
+                  4px  4px 0 #ffffff,
+                  0px -4px 0 #ffffff,
+                  0px  4px 0 #ffffff,
+                  -4px  0px 0 #ffffff,
+                  4px  0px 0 #ffffff
+                `,
+              }}>
+            GET TO KNOW</p>
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-pink1" 
+              style={{
+                textShadow: `
+                  -4px -4px 0 #ffffff,
+                  4px -4px 0 #ffffff,
+                  -4px  4px 0 #ffffff,
+                  4px  4px 0 #ffffff,
+                  0px -4px 0 #ffffff,
+                  0px  4px 0 #ffffff,
+                  -4px  0px 0 #ffffff,
+                  4px  0px 0 #ffffff
+                `,
+              }}>
                 OURFIT
               </h1>
             </div>

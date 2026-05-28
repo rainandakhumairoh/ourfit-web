@@ -15,7 +15,7 @@ export default function WelcomeSection() {
           backgroundRepeat: "no-repeat",
         }}
       >
-        <h1 className="text-md sm:text-lg md:text-xl lg:text-2xl font-bold text-center mb-12 md:mb-24 mt-12 md:mt-24">
+        <h1 className="text-md sm:text-lg md:text-xl lg:text-2xl font-bold text-center mb-12 md:mb-24 mt-12 md:mt-24 ">
           HAI, KAMI OURFIT
           <br />
           PILIHAN TERBAIKMU UNTUK TAMPIL <br />

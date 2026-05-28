@@ -3,6 +3,7 @@ import IntroductionSection from '../../components/IntroductionSection/Introducti
 import VisiMisiSection from '../../components/VisiMisiSection/VisiMisiSection';
 import StrengthSection from '../../components/StrengthSection/StrengthSection';
 import MeetTeamSection from '../../components/MeetTeamSection/MeetTeamSection';
+import MessageSection from '../../components/MessageSection/MessageSection';
 
 
 
@@ -14,6 +15,7 @@ export default function About() {
       <VisiMisiSection />
       <StrengthSection />
       <MeetTeamSection />
+      <MessageSection />
     </>
   );
 }

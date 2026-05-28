@@ -25,6 +25,7 @@ import Register from "./pages/Auth/Register/Register";
 import PrivateRoute from "./components/PrivateRoute";
 import UserProvider from "./context/UserContext";
 import AdminPage from "./pages/Admin/AdminPage";
+import ContactUs from "./pages/ContactUs/ContactUs";
 
 
 
@@ -51,7 +52,7 @@ function App() {
       ],
     },
 
-    // 💥 LAYOUT TANPA NAVBAR & FOOTER
+    //  LAYOUT TANPA NAVBAR & FOOTER
     {
       path: "/",
       element: <SecondaryLayout />,
@@ -66,11 +67,11 @@ function App() {
         { path: "/login-user", element: <LoginUser /> },
         { path: "/login-admin", element: <LoginAdmin /> },
         { path: "/register", element: <Register /> },
+        { path: "/contactus", element: <ContactUs /> },
         { path: "/admin", element: (
             <PrivateRoute role="admin">
                 <AdminPage /> 
-            </PrivateRoute>
-        )},
+            </PrivateRoute> )},
       ],
     },
   ]);
