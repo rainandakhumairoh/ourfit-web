@@ -6,6 +6,7 @@ import fotouli from "../../assets/fotouli.jpg";
 import fotonara from "../../assets/fotoacil.jpg";
 import fotoulil from "../../assets/fotoulil.jpg";
 import fotorai from "../../assets/fotorai.jpg";
+import { motion } from "framer-motion";
 
 export default function MeetOurTeamSection() {
   const teamMembers = [
@@ -98,18 +99,38 @@ export default function MeetOurTeamSection() {
         </div>
 
         {/* Team Cards Grid */}
-        <div className="w-full px-4 md:px-8 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16 justify-items-center">
-            
+        <div 
+        className="w-full px-4 md:px-8 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16 justify-items-center"> 
             {teamMembers.map((member) => (
-            <div key={member.id} className="relative w-[320px]">
+            <motion.div
+            key={member.id}
+            className="relative w-[320px]"
+            initial={{
+              opacity: 0,
+              scale: 0,
+              y: 100,
+            }}
+            whileInView={{
+              opacity: 1,
+              scale: 1,
+              y: 0,
+            }}
+            transition={{
+            type: "spring",
+            stiffness: 80,
+            damping: 10,
+            delay: member.id * 0.2,
+          }}
+            viewport={{ once: true }}
+          >
                 
                 {/* Card Image */}
                 <img
                 src={cardteam}
                 alt="Team Card"
                 className="w-full h-auto object-contain"
-                />
+              />
 
                 {/* Content Overlay */}
                 <div className="absolute inset-0 flex flex-col items-center px-6 py-8">
@@ -161,9 +182,8 @@ export default function MeetOurTeamSection() {
                     </div>
                     </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
-
           </div>
         </div>
       </div>

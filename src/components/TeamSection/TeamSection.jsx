@@ -1,24 +1,61 @@
 import boxgelombang from "../../assets/boxgelombang.png";
 import bggelombang from "../../assets/bggelombang5.png";
 import fototeam from "../../assets/fototeam.png"; // gambar karakter kamu
+import fototeam2 from "../../assets/fototeam2.png";
+import fototeam3 from "../../assets/fototeam3.png";
+import fototeam4 from "../../assets/fototeam4.png";
+import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function TeamSection() {
+  const photos = [
+    fototeam,
+    fototeam2,
+    fototeam3,
+    fototeam4,
+  ];
+
+  const [currentPhoto, setCurrentPhoto] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentPhoto((prev) =>
+        prev === photos.length - 1 ? 0 : prev + 1
+      );
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <>
       {/* SECTION 1 - Background cream dan gelombang */}
-      <div
-        className="relative w-full min-h-[calc(100vh-64px)] flex flex-col items-center justify-center text-center"
-        style={{
-          backgroundColor: "#FFEBC8",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-        }}
-      >
-        <img 
-          src={fototeam} 
-          alt="Foto Team" 
-          className="w-[400px] md:w-[550px] lg:w-[900px] mt-24" 
-        />
+      <div className="relative w-full min-h-[calc(100vh-64px)] flex flex-col items-center justify-center text-center" 
+      style={{ 
+        backgroundColor: "#FFEBC8", 
+        backgroundPosition: "center", 
+        backgroundRepeat: "no-repeat", 
+        }}>
+
+          <AnimatePresence mode="wait">
+          <motion.img
+            key={currentPhoto}
+            src={photos[currentPhoto]}
+            alt="Foto Team"
+            className="w-[400px] md:w-[550px] lg:w-[900px] mt-2"
+            initial={{
+              opacity: 0,
+            }}
+
+            animate={{
+              opacity: 1,
+            }}
+
+            exit={{
+              opacity: 0,
+            }}
+          />
+        </AnimatePresence>
 
         {/* SECTION 2 - Container dengan 2 box persegi */}
         <div className="w-full relative font-[Poppins]">

@@ -173,7 +173,7 @@ export default function LoginUser() {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full py-3 rounded-full bg-pink1 text-white font-medium hover:bg-[#B23D2E] transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
+                  className="w-full py-3 rounded-full bg-pink1 text-white font-medium hover:bg-white hover:text-pink1 transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-md"
                 >
                   {isLoading
                     ? "Logging in..."

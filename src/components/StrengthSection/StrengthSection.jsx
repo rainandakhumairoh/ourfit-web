@@ -2,7 +2,7 @@ import bunga1 from "../../assets/why1.png";
 import bunga2 from "../../assets/why2.png";
 import bunga3 from "../../assets/why3.png";
 import bunga4 from "../../assets/why4.png";
-import renda from "../../assets/renda.png";
+import { motion } from "framer-motion";
 
 export default function StrengthSection() {
 
@@ -38,10 +38,26 @@ export default function StrengthSection() {
         <div className="w-full px-6 md:px-12 max-w-7xl mx-auto font-[Poppins]">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-24 justify-items-center">
             <div className="w-[150px] md:w-[250px] lg:w-400px] h-auto">
-                <img 
-                src={bunga1} 
-                alt="bunga" 
-                className="w-full h-auto object-contain mb-4"
+                <motion.img
+                  src={bunga1}
+                  alt="bunga"
+                  className="w-full h-auto object-contain mb-4"
+                  initial={{
+                    opacity: 0,
+                    rotate: -180,
+                    scale: 0.5,
+                  }}
+                  whileInView={{
+                    opacity: 1,
+                    rotate: 0,
+                    scale: 1,
+                  }}
+                  transition={{
+                    duration: 1.2,
+                    delay: 0,
+                    ease: "easeOut",
+                  }}
+                  viewport={{ once: false }}
                 />
                 <div className="text-center">
                     <p className="text-xs md:text-sm text-black font-light">
@@ -50,10 +66,26 @@ export default function StrengthSection() {
             </div>
 
             <div className="w-[150px] md:w-[250px] lg:w-400px] h-auto">
-                <img 
-                src={bunga3} 
-                alt="bunga" 
-                className="w-full h-auto object-contain mb-4"
+                <motion.img
+                  src={bunga3}
+                  alt="bunga"
+                  className="w-full h-auto object-contain mb-4"
+                  initial={{
+                    opacity: 0,
+                    rotate: -180,
+                    scale: 0.5,
+                  }}
+                  whileInView={{
+                    opacity: 1,
+                    rotate: 0,
+                    scale: 1,
+                  }}
+                  transition={{
+                    duration: 1.2,
+                    delay: 0.2,
+                    ease: "easeOut",
+                  }}
+                  viewport={{ once: false }}
                 />
                 <div className="text-center">
                     <p className="text-xs md:text-sm text-black font-light">
@@ -62,10 +94,26 @@ export default function StrengthSection() {
                 </div>
             </div>
             <div className="w-[150px] md:w-[250px] lg:w-400px] h-auto">
-                <img 
-                src={bunga2} 
-                alt="bunga" 
-                className="w-full h-auto object-contain mb-4"
+                <motion.img
+                  src={bunga2}
+                  alt="bunga"
+                  className="w-full h-auto object-contain mb-4"
+                  initial={{
+                    opacity: 0,
+                    rotate: -180,
+                    scale: 0.5,
+                  }}
+                  whileInView={{
+                    opacity: 1,
+                    rotate: 0,
+                    scale: 1,
+                  }}
+                  transition={{
+                    duration: 1.2,
+                    delay: 0.4,
+                    ease: "easeOut",
+                  }}
+                  viewport={{ once: false }}
                 />
                 <div className="text-center">
                     <p className="text-xs md:text-sm text-black font-light">
@@ -73,10 +121,26 @@ export default function StrengthSection() {
                 </div>
             </div>
             <div className="w-[150px] md:w-[250px] lg:w-400px] h-auto">
-                <img 
-                src={bunga4} 
-                alt="bunga" 
-                className="w-full h-auto object-contain mb-4"
+                <motion.img
+                  src={bunga4}
+                  alt="bunga"
+                  className="w-full h-auto object-contain mb-4"
+                  initial={{
+                    opacity: 0,
+                    rotate: -180,
+                    scale: 0.5,
+                  }}
+                  whileInView={{
+                    opacity: 1,
+                    rotate: 0,
+                    scale: 1,
+                  }}
+                  transition={{
+                    duration: 1.2,
+                    delay: 0.6,
+                    ease: "easeOut",
+                  }}
+                  viewport={{ once: false }}
                 />
                 <div className="text-center">
                     <p className="text-xs md:text-sm text-black font-light">

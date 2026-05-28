@@ -69,19 +69,19 @@ export default function Navbar() {
             <div className="flex flex-col gap-3">
               <button
                 onClick={() => handleChoice("user")}
-                className="py-2 px-4 bg-coklat text-white rounded-full hover:bg-coklat"
+                className="py-2 px-4 bg-coklat text-white rounded-full bg-oren3 hover:bg-coklat"
               >
                 User
               </button>
               <button
                 onClick={() => handleChoice("admin")}
-                className="py-2 px-4 bg-[#C75E58] text-white rounded-full hover:bg-pink1"
+                className="py-2 px-4 bg-[#C75E58] text-white rounded-full bg-pink2 hover:bg-pink1"
               >
                 Admin
               </button>
               <button
                 onClick={() => setShowLoginChoice(false)}
-                className="py-2 px-4 bg-gray-200 rounded-full hover:bg-gray-300"
+                className="py-2 px-4 bg-gray-200 rounded-full bg-gray-350 hover:bg-gray-300"
               >
                 Batal
               </button>
