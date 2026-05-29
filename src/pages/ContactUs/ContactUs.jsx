@@ -189,7 +189,7 @@ const handleSubmit = async (e) => {
           <button
             type="submit"
             disabled={loading}
-            className="mt-1 py-3 rounded-full bg-pink1 text-white hover:text-pink1 text-sm hover:bg-white transition-all active:scale-95 shadow-md"
+            className="mt-1 py-3 rounded-full bg-pink1 text-white text-sm hover:bg-oren3 transition-all active:scale-95 shadow-md"
           >
             {loading ? "Loading..." : "Send Now"}
           </button>

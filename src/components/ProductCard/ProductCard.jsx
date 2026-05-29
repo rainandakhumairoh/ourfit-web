@@ -30,7 +30,7 @@ export default function ProductCard({ product, isWished, onWishlistToggle }) {
         {/* 🖼️ GAMBAR (TANPA ROUNDED BAWAH) */}
         <div className="w-full flex-1 overflow-hidden">
           <img
-            src={`http://localhost:5000${product.image}`}
+            src={`http://localhost:5000${product.coverImage}`}
             alt={product.name}
             className="w-full h-full object-cover"
           />
