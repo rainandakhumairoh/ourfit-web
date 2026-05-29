@@ -4,11 +4,14 @@ import { UserContext } from "../../context/UserContext";
 
 import ProductForm from "./ProductForm";
 import ProductList from "./ProductList";
+import MixMatchForm from "./MixMatchForm";
+import MixMatchList from "./MixMatchList";
 
 export default function AdminPage() {
   const { logout } = useContext(UserContext);
 
   const [products, setProducts] = useState([]);
+  const [mixmatch, setMixmatch] = useState([]);
 
   // fetch products
   const fetchProducts = async () => {
@@ -24,8 +27,23 @@ export default function AdminPage() {
     }
   };
 
+  // FETCH MIXMATCH
+  const fetchMixmatch = async () => {
+    try {
+      const res = await axios.get(
+        "http://localhost:5000/api/mixmatch"
+      );
+
+      setMixmatch(res.data);
+
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
     fetchProducts();
+    fetchMixmatch();
   }, []);
 
   return (
@@ -59,6 +77,20 @@ export default function AdminPage() {
             refresh={fetchProducts}
           />
         </div>
+
+        {/* FORM */}
+        <div>
+          <MixMatchForm refresh={fetchMixmatch} />
+        </div>
+
+        {/* MIXMATCH LIST */}
+        <div className="lg:col-span-2">
+          <MixMatchList
+            mixmatch={mixmatch}
+            refresh={fetchMixmatch}
+          />
+        </div>
+
       </div>
     </div>
   );

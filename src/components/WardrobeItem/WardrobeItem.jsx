@@ -43,9 +43,9 @@ export default function WardrobeItem() {
                 key={product._id}
                 className="w-[325px] h-[350px] bg-white rounded-xl shadow-lg flex items-center justify-center overflow-hidden transition-transform duration-300 hover:scale-95"
               >
-                {product.image ? (
+                {product.coverImage ? (
                   <img
-                    src={`http://localhost:5000${product.image}`}
+                    src={`http://localhost:5000${product.coverImage}`}
                     alt={product.name}
                     className="w-full h-full object-cover"
                   />

@@ -6,10 +6,9 @@ export default function MixMatch() {
   const [mixes, setMixes] = useState([]);
   const [saved, setSaved] = useState([]);
 
-  // Ambil data dari fakestoreapi
   useEffect(() => {
     axios
-      .get("https://fakestoreapi.com/products")
+      .get("http://localhost:5000/api/mixmatch")
       .then((res) => setMixes(res.data))
       .catch((err) => console.error("Gagal memuat data:", err));
   }, []);
