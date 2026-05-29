@@ -1,15 +1,17 @@
 import { Link } from "react-router-dom";
 import bgGantungan from "../../assets/bggantungan.png";
 import bgBordir from "../../assets/bgbordir2.png";
+import { useEffect, useState } from "react";
 
-export default function MixMatchItem({ items = [] }) {
-  if (items.length === 0) {
-    items = [
-      { id: 1, image: "https://via.placeholder.com/200x200", title: "Mix & Match 1" },
-      { id: 2, image: "https://via.placeholder.com/200x200", title: "Mix & Match 2" },
-      { id: 3, image: "https://via.placeholder.com/200x200", title: "Mix & Match 3" },
-    ];
-  }
+export default function MixMatchItem() {
+  const [mixmatch, setMixes] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/api/mixmatch")
+      .then((res) => res.json())
+      .then((data) => setMixes(data))
+      .catch((err) => console.error(err));
+  }, []);
 
   return (
     <div className="relative w-full overflow-hidden pb-32">
@@ -47,16 +49,16 @@ export default function MixMatchItem({ items = [] }) {
 
           {/* Kotak foto */}
           <div className="absolute top-[50%] left-1/2 -translate-x-1/2 w-[85%] max-w-5xl flex justify-center gap-6 px-6 z-20">
-            {items.map((item) => (
+            {mixmatch.slice(0, 3).map((item) => (
               <div
-                key={item.id}
+                key={item._id}
                 className="w-[300px] h-[300px] bg-white rounded-xl shadow-md flex items-center justify-center border-2 border-oren1"
               >
                 {item.image ? (
                   <img
-                    src={item.image}
+                    src={`http://localhost:5000${item.image}`}
                     alt={item.title}
-                    className="object-contain w-full h-full rounded-lg"
+                    className="object-cover w-full h-full rounded-lg"
                   />
                 ) : (
                   <span className="text-gray-400 font-semibold text-center leading-tight">
