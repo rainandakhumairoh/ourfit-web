@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import MixMatchCard from "../../components/MixMatchCard/MixMatchCard";
+import MixMatchTopSection from "./MixMatchTopSection";
 
 export default function MixMatch() {
   const [mixes, setMixes] = useState([]);
   const [saved, setSaved] = useState([]);
+  const [activeCategory, setActiveCategory] = useState("All");
 
   useEffect(() => {
     axios
@@ -19,12 +21,24 @@ export default function MixMatch() {
     );
   };
 
+  const filtered =
+    activeCategory === "All"
+      ? mixes
+      : mixes.filter(
+          (m) => m.category?.toLowerCase() === activeCategory.toLowerCase()
+        );
+
   return (
-    <div className="min-h-screen bg-pink2 p-10 pt-28">
+    <>
+    <MixMatchTopSection
+      activeCategory={activeCategory}
+      onCategoryChange={setActiveCategory}
+    />
+    <div className="min-h-screen bg-pink2 p-10 pt-6">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-3xl font-bold text-center text-white mb-8">
+        {/* <h2 className="text-3xl font-bold text-center text-white mb-8">
           Mix & Match Inspiration
-        </h2>
+        </h2> */}
 
         {/* Grid 3 kolom */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -39,5 +53,6 @@ export default function MixMatch() {
         </div>
       </div>
     </div>
+    </>
   );
 }

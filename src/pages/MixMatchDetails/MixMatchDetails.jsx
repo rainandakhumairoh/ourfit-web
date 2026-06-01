@@ -47,7 +47,7 @@ export default function MixMatchDetails() {
   if (!item) return <p className="text-center mt-20 text-[#804000]">Memuat...</p>;
 
   return (
-    <div className="min-h-screen flex flex-col bg-primary pt-28">
+    <div className="min-h-screen flex flex-col bg-primary pt-8">
 
       {/* BACK BUTTON */}
       <button
@@ -70,7 +70,7 @@ export default function MixMatchDetails() {
         </button>
 
         {/* KARTU FOTO */}
-        <div className="relative w-72 md:w-96">
+        <div className="relative w-[400px] sm:w-300 md:w-[500px]">
           {/* Bookmark */}
           <button
             onClick={() => setIsSaved((p) => !p)}
@@ -109,7 +109,7 @@ export default function MixMatchDetails() {
 
       {/* ===== BAGIAN BAWAH — rekomendasi produk ===== */}
       <div className="bg-pink2 px-6 py-10">
-        <h2 className="text-center text-white font-bold text-lg tracking-widest uppercase mb-6">
+        <h2 className="text-center text-white font-bold text-lg uppercase mb-6">
           Rekomendasi Produk
         </h2>
 
