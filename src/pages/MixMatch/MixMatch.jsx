@@ -1,12 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import MixMatchCard from "../../components/MixMatchCard/MixMatchCard";
 import MixMatchTopSection from "./MixMatchTopSection";
+import { UserContext } from "../../context/UserContext";
+
 
 export default function MixMatch() {
   const [mixes, setMixes] = useState([]);
   const [saved, setSaved] = useState([]);
   const [activeCategory, setActiveCategory] = useState("All");
+  const { currentUser } = useContext(UserContext);
 
   useEffect(() => {
     axios
@@ -33,6 +36,7 @@ export default function MixMatch() {
     <MixMatchTopSection
       activeCategory={activeCategory}
       onCategoryChange={setActiveCategory}
+      currentUser ={currentUser }
     />
     <div className="min-h-screen bg-pink2 p-10 pt-6">
       <div className="max-w-6xl mx-auto">

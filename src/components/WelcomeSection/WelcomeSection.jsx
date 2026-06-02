@@ -7,7 +7,7 @@ export default function WelcomeSection() {
       {/* SECTION 1 - Background cream dan gelombang */}
       <div
         className="relative w-full min-h-[calc(100vh-64px)] flex flex-col items-center 
-        justify-center text-center text-[#A95C18] font-[Poppins]"
+        justify-center text-center text-coklat font-[Poppins]"
         style={{
           backgroundImage: `url(${bgGelombang})`,
           backgroundColor: "#FFEBC8",

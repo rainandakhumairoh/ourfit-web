@@ -26,6 +26,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import UserProvider from "./context/UserContext";
 import AdminPage from "./pages/Admin/AdminPage";
 import ContactUs from "./pages/ContactUs/ContactUs";
+import Bookmark from "./pages/Bookmark/Bookmark";
 
 
 
@@ -49,6 +50,8 @@ function App() {
         { path: "mixmatch/:id", element: <MixMatchDetails /> },
         { path: "about", element: <About /> },
         { path: "profile", element: <Profile /> },
+        { path: "bookmark", element: <Bookmark /> }
+
       ],
     },
 

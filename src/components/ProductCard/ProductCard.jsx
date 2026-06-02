@@ -16,7 +16,7 @@ export default function ProductCard({ product, isWished, onWishlistToggle }) {
       >
 
         {/* ❤️ Wishlist (LAPISAN PALING ATAS) */}
-        <button
+        {/* <button
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -32,7 +32,7 @@ export default function ProductCard({ product, isWished, onWishlistToggle }) {
                 : "text-gray-600"
             }
           />
-        </button>
+        </button> */}
 
         {/* 🖼️ GAMBAR (TANPA ROUNDED BAWAH) */}
         <div className="w-full flex-1 overflow-hidden">
