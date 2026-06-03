@@ -5,6 +5,7 @@ import bcrypt from "bcryptjs";
 import productsRoute from "./routes/Products.js";
 import mixmatchRoute from "./routes/Mixmatch.js";
 import bookmarkRoute from "./routes/Bookmark.js";
+import favoriteRoute from "./routes/Favorite.js";
 import authRoute from "./routes/Auth.js";
 import User from "./models/User.js";
 import "dotenv/config";
@@ -23,6 +24,7 @@ app.use("/api/products", productsRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/mixmatch", mixmatchRoute);
 app.use("/api/bookmarks", bookmarkRoute);
+app.use("/api/favorite", favoriteRoute);
 
 // Connect MongoDB
 mongoose.connect(process.env.MONGO_URI)

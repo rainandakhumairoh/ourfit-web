@@ -27,7 +27,7 @@ import UserProvider from "./context/UserContext";
 import AdminPage from "./pages/Admin/AdminPage";
 import ContactUs from "./pages/ContactUs/ContactUs";
 import Bookmark from "./pages/Bookmark/Bookmark";
-
+import Favorite from "./pages/Favorite/Favorite";
 
 
 function App() {
@@ -50,7 +50,8 @@ function App() {
         { path: "mixmatch/:id", element: <MixMatchDetails /> },
         { path: "about", element: <About /> },
         { path: "profile", element: <Profile /> },
-        { path: "bookmark", element: <Bookmark /> }
+        { path: "bookmark", element: <Bookmark /> },
+        { path: "favorite", element: <Favorite /> }
 
       ],
     },
