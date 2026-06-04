@@ -48,7 +48,7 @@ router.get("/:userId", async (req, res) => {
 // delete
 router.delete("/:userId", async (req, res) => {
   try {
-    await Personalization.findOneAndDelete({
+    await Personalization.deleteMany({
       userId: req.params.userId,
     });
 
@@ -58,6 +58,7 @@ router.delete("/:userId", async (req, res) => {
     });
   } catch (err) {
     res.status(500).json({
+      success: false,
       message: err.message,
     });
   }

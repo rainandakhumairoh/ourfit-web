@@ -43,21 +43,27 @@ useEffect(() => {
   checkPersonalization();
 }, [currentUser]);
 
-  async function handleRetake() {
-    try {
-      await axios.delete(
-        `http://localhost:5000/api/personalization/${currentUser._id}`
-      );
+async function handleRetake() {
+  try {
+    const userId = currentUser.id || currentUser._id;
 
-      sessionStorage.removeItem("smartFitResult");
-      sessionStorage.removeItem("styleQuizResult");
+    await axios.delete(
+      `http://localhost:5000/api/personalization/${userId}`
+    );
 
-      navigate("/smart-fit/question");
-    } catch (err) {
-      console.error(err);
-      alert("Gagal mengulang personalisasi");
-    }
+    sessionStorage.removeItem("smartFitResult");
+    sessionStorage.removeItem("styleQuizResult");
+
+    navigate("/smart-fit/question");
+  } catch (err) {
+    console.error("DELETE ERROR:", err.response?.data || err);
+
+    alert(
+      err.response?.data?.message ||
+      "Gagal mengulang personalisasi"
+    );
   }
+}
 
   if (loading) {
     return (
