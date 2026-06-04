@@ -3,7 +3,7 @@ import bgteam from "../../assets/bgaboutteam.png";
 import cardteam from "../../assets/cardteam.png";
 import fotoacil from "../../assets/fotoacil.jpg";
 import fotouli from "../../assets/fotouli.jpg";
-import fotonara from "../../assets/fotoacil.jpg";
+import fotonara from "../../assets/fotonara.jpg";
 import fotoulil from "../../assets/fotoulil.jpg";
 import fotorai from "../../assets/fotorai.jpg";
 import { motion } from "framer-motion";

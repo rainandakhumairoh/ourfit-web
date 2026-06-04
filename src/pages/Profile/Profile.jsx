@@ -2,11 +2,119 @@ import { useContext, useState, useEffect } from "react";
 import axios from "axios";
 import { UserContext } from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
+import avatar1 from "../../assets/fotoacil.jpg";
+import avatar2 from "../../assets/fotouli.jpg";
+import avatar3 from "../../assets/fotonara.jpg";
+import avatar4 from "../../assets/fotoulil.jpg";
+import avatar5 from "../../assets/fotorai.jpg";
+import avatar6 from "../../assets/fotoacil.jpg";
+
+// ── Avatar preset ─────────────────────────────────────────────
+// Saat aset sudah siap, ganti `placeholder` dengan path gambar:
+// misal: image: "/avatars/avatar1.png"
+const AVATAR_PRESETS = [
+  { id: "avatar1", label: "A1", image: avatar1 },
+  { id: "avatar2", label: "A2", image: avatar2 },
+  { id: "avatar3", label: "A3", image: avatar3 },
+  { id: "avatar4", label: "A4", image: avatar4 },
+  { id: "avatar5", label: "A5", image: avatar5 },
+  { id: "avatar6", label: "A6", image: avatar6 },
+];
+
+// Komponen tampilan satu preset (pakai gambar kalau ada, fallback ke inisial)
+function AvatarOption({ preset, selected, onClick, size = "sm" }) {
+  const [imgError, setImgError] = useState(false);
+  const dim = size === "lg" ? "w-36 h-36" : "w-16 h-16";
+  const textSize = size === "lg" ? "text-3xl" : "text-sm";
+
+  return (
+    <button
+      onClick={onClick}
+      className={`${dim} rounded-full flex items-center justify-center font-bold transition-all duration-200 flex-shrink-0
+        ${selected
+          ? "ring-4 ring-pink1 ring-offset-2 scale-105 shadow-lg"
+          : "hover:scale-105 hover:shadow-md"
+        }`}
+      style={{ background: preset.color }}
+    >
+      {!imgError ? (
+        <img
+          src={preset.image}
+          alt={preset.label}
+          className="w-full h-full object-cover rounded-full"
+          onError={() => setImgError(true)}
+        />
+      ) : (
+        <span className={`${textSize} text-white font-bold select-none`}>
+          {preset.label}
+        </span>
+      )}
+    </button>
+  );
+}
+
+// Modal Edit Avatar
+function EditAvatarModal({ currentAvatarId, onSave, onClose }) {
+  const [selected, setSelected] = useState(
+    currentAvatarId || AVATAR_PRESETS[0].id
+  );
+  const selectedPreset = AVATAR_PRESETS.find((p) => p.id === selected) ?? AVATAR_PRESETS[0];
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm"
+      onClick={onClose}
+    >
+      <div
+        className="relative bg-[#FDF3EE] rounded-3xl shadow-2xl px-10 py-10 mx-4 w-full max-w-md flex flex-col items-center gap-6"
+        onClick={(e) => e.stopPropagation()}
+        style={{ fontFamily: "Poppins, sans-serif" }}
+      >
+        {/* Close */}
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition"
+        >
+          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+
+        <h3 className="text-lg font-bold text-[#5A4A3A]">Pilih Avatar</h3>
+
+        {/* Preview besar */}
+        <AvatarOption preset={selectedPreset} selected={false} onClick={() => {}} size="lg" />
+
+        {/* Deretan opsi */}
+        <div className="flex grid grid-cols-3 gap-3 flex-wrap justify-center">
+          {AVATAR_PRESETS.map((preset) => (
+            <AvatarOption
+              key={preset.id}
+              preset={preset}
+              selected={selected === preset.id}
+              onClick={() => setSelected(preset.id)}
+              size="sm"
+            />
+          ))}
+        </div>
+
+        {/* Tombol simpan */}
+        <button
+          onClick={() => onSave(selectedPreset)}
+          className="w-full py-3 bg-pink1 hover:bg-[#B23D2E] text-white font-semibold rounded-full transition shadow-md text-sm"
+        >
+          Pilih Avatar
+        </button>
+      </div>
+    </div>
+  );
+}
 
 export default function UserProfile() {
-  const { currentUser, logout } = useContext(UserContext);
+  const { currentUser, login, logout } = useContext(UserContext);
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("hasil");
+  const [showAvatarModal, setShowAvatarModal] = useState(false);
 
   const [wished, setWished] = useState([]);
   const [bookmarks, setBookmarks] = useState([]);
@@ -16,7 +124,7 @@ export default function UserProfile() {
   // Fetch Favorites
   useEffect(() => {
     if (!currentUser?.id) return;
-    setWishLoading (true);
+    setWishLoading(true);
     axios
       .get(`http://localhost:5000/api/favorite?userId=${currentUser.id}`)
       .then((res) => setWished(res.data))
@@ -37,9 +145,7 @@ export default function UserProfile() {
 
   const handleDeleteFavorite = async (productId) => {
     try {
-      await axios.delete(
-        `http://localhost:5000/api/favorite/${productId}?userId=${currentUser.id}`
-      );
+      await axios.delete(`http://localhost:5000/api/favorite/${productId}?userId=${currentUser.id}`);
       setWished((prev) => prev.filter((item) => item.productId !== productId));
     } catch (err) {
       console.error("Gagal menghapus favorite:", err);
@@ -48,22 +154,28 @@ export default function UserProfile() {
 
   const handleDeleteBookmark = async (mixmatchId) => {
     try {
-      await axios.delete(
-        `http://localhost:5000/api/bookmarks/${mixmatchId}?userId=${currentUser.id}`
-      );
+      await axios.delete(`http://localhost:5000/api/bookmarks/${mixmatchId}?userId=${currentUser.id}`);
       setBookmarks((prev) => prev.filter((item) => item.mixmatchId !== mixmatchId));
     } catch (err) {
       console.error("Gagal menghapus bookmark:", err);
     }
   };
 
+  // Simpan avatar ke localStorage via UserContext login()
+  const handleSaveAvatar = (preset) => {
+    const updated = { ...currentUser, avatarId: preset.id, avatarImage: preset.image, avatarColor: preset.color };
+    login(updated); // update context + localStorage
+    setShowAvatarModal(false);
+  };
+
   const handleLogout = () => {
     if (window.confirm("Yakin ingin logout?")) logout();
   };
 
-  const handleEditProfile = () => navigate("/edit-profile");
+  // Resolve avatar saat ini
+  const currentPreset = AVATAR_PRESETS.find((p) => p.id === currentUser?.avatarId);
+  const [avatarImgError, setAvatarImgError] = useState(false);
 
-  // Reusable empty state
   const EmptyState = ({ label }) => (
     <div className="col-span-3 flex flex-col items-center justify-center py-16 gap-3 opacity-70">
       <svg className="w-12 h-12 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -74,7 +186,6 @@ export default function UserProfile() {
     </div>
   );
 
-  // Reusable loading state
   const LoadingState = () => (
     <div className="col-span-3 flex justify-center py-16">
       <div className="w-8 h-8 border-4 border-white/30 border-t-white rounded-full animate-spin" />
@@ -104,39 +215,50 @@ export default function UserProfile() {
 
       {/* Profile Section */}
       <div className="max-w-6xl mx-auto px-4 py-12">
-        {/* Avatar & User Info */}
         <div className="bg-white rounded-2xl shadow-lg p-12 mb-12">
-          <div className="flex flex-col items-center gap-8">
-            <div className="w-40 h-40 rounded-full bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center shadow-lg">
-              {currentUser?.avatar ? (
-                <img src={currentUser.avatar} alt="avatar" className="w-full h-full rounded-full object-cover" />
-              ) : (
-                <span className="text-gray-400 font-semibold text-xl uppercase">
-                  {currentUser?.username?.[0] ?? "?"}
-                </span>
-              )}
+          <div className="flex flex-col items-center gap-6">
+
+            {/* Avatar besar + tombol edit overlay */}
+            <div className="relative group">
+              <div
+                className="w-40 h-40 rounded-full flex items-center justify-center shadow-lg overflow-hidden"
+                style={{ background: currentPreset?.color ?? "#E0E0E0" }}
+              >
+                {currentPreset && !avatarImgError ? (
+                  <img
+                    src={currentPreset.image}
+                    alt="avatar"
+                    className="w-full h-full object-cover"
+                    onError={() => setAvatarImgError(true)}
+                  />
+                ) : (
+                  <span className="text-white font-bold text-4xl uppercase">
+                    {currentUser?.username?.[0] ?? "?"}
+                  </span>
+                )}
+              </div>
+              {/* Overlay edit on hover */}
+              <button
+                onClick={() => setShowAvatarModal(true)}
+                className="absolute inset-0 rounded-full bg-black/30 opacity-0 group-hover:opacity-100 transition flex items-center justify-center"
+              >
+                <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15.232 5.232l3.536 3.536M9 13l6.536-6.536a2 2 0 012.828 2.828L11.828 15.828a2 2 0 01-1.414.586H8v-2.414a2 2 0 01.586-1.414z" />
+                </svg>
+              </button>
             </div>
 
+            {/* Username */}
             <div className="text-center space-y-4">
-              <div className="flex items-center justify-center gap-3">
+              <div className="flex items-center justify-center gap-2">
                 <h2 className="text-2xl font-bold text-[#5A4A3A]">
                   {currentUser?.username ?? "Guest User"}
                 </h2>
-                <button
-                  onClick={handleEditProfile}
-                  className="text-pink1 hover:text-[#B23D2E] transition"
-                  aria-label="Edit profile"
-                >
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z" />
-                    <path d="M20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" />
-                  </svg>
-                </button>
               </div>
 
               <div className="flex gap-4 justify-center">
                 <button
-                  onClick={handleEditProfile}
+                  onClick={() => setShowAvatarModal(true)}
                   className="px-8 py-3 rounded-full bg-pink1 text-white font-semibold hover:bg-[#B23D2E] transition shadow-md"
                 >
                   Edit Avatar
@@ -154,7 +276,6 @@ export default function UserProfile() {
 
         {/* Tabs */}
         <div className="bg-pink1 rounded-2xl shadow-lg overflow-hidden">
-          {/* Tab Headers */}
           <div className="grid grid-cols-3">
             {[
               { key: "hasil", label: "HASIL PERSONALISASI" },
@@ -175,7 +296,6 @@ export default function UserProfile() {
             ))}
           </div>
 
-          {/* Tab Content */}
           <div className="bg-pink1 p-8">
             {/* Hasil Personalisasi */}
             {activeTab === "hasil" && (
@@ -187,19 +307,17 @@ export default function UserProfile() {
             {/* Favorite */}
             {activeTab === "favorite" && (
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {wishLoading ? (
-                  <LoadingState />
-                ) : wished.length === 0 ? (
+                {wishLoading ? <LoadingState /> : wished.length === 0 ? (
                   <EmptyState label="produk favorit" />
                 ) : (
                   wished.map((item) => (
                     <div
+                      key={item._id}
                       onClick={() => navigate(`/wardrobe/${item.productId}`)}
-                      className=" relative group bg-white border-2 border-oren2 rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden flex flex-col items-center text-center aspect-square transition-transform duration-300 hover:scale-105 cursor-pointer"
+                      className="relative group bg-white border-2 border-oren2 rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden flex flex-col items-center text-center cursor-pointer hover:scale-105"
                     >
-                      {/* Tombol hapus */}
                       <button
-                        onClick={() => handleDeleteFavorite(item.productId)}
+                        onClick={(e) => { e.stopPropagation(); handleDeleteFavorite(item.productId); }}
                         className="absolute top-2 right-2 z-10 w-7 h-7 rounded-full bg-white/80 hover:bg-red-100 flex items-center justify-center opacity-0 group-hover:opacity-100 transition"
                         title="Hapus dari favorite"
                       >
@@ -207,18 +325,22 @@ export default function UserProfile() {
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                         </svg>
                       </button>
-
                       <div className="aspect-square w-full overflow-hidden">
                         {item.image ? (
                           <img src={`http://localhost:5000${item.image}`} alt={item.name} className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300" />
                         ) : (
-                          <div className="w-full h-full flex items-center justify-center">
+                          <div className="w-full h-full flex items-center justify-center bg-gray-100">
                             <span className="text-gray-400 text-sm font-semibold">NO IMAGE</span>
                           </div>
                         )}
                       </div>
                       <div className="p-4 text-center">
                         <p className="text-sm font-semibold text-black truncate">{item.name}</p>
+                        {item.price && (
+                          <p className="text-pink1 text-sm font-semibold mt-1">
+                            Rp {Number(item.price).toLocaleString("id-ID")}
+                          </p>
+                        )}
                       </div>
                     </div>
                   ))
@@ -229,19 +351,17 @@ export default function UserProfile() {
             {/* Bookmark */}
             {activeTab === "bookmark" && (
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {loadingBookmark ? (
-                  <LoadingState />
-                ) : bookmarks.length === 0 ? (
+                {loadingBookmark ? <LoadingState /> : bookmarks.length === 0 ? (
                   <EmptyState label="bookmark" />
                 ) : (
                   bookmarks.map((item) => (
                     <div
+                      key={item._id}
                       onClick={() => navigate(`/mixmatch/${item.mixmatchId}`)}
-                      className="bg-white border-2 border-oren2 rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition transform hover:scale-105 duration-300 relative group"
+                      className="bg-white border-2 border-oren2 rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition transform hover:scale-105 duration-300 relative group cursor-pointer"
                     >
-                      {/* Tombol hapus */}
                       <button
-                        onClick={() => handleDeleteBookmark(item.mixmatchId)}
+                        onClick={(e) => { e.stopPropagation(); handleDeleteBookmark(item.mixmatchId); }}
                         className="absolute top-2 right-2 z-10 w-7 h-7 rounded-full bg-white/80 hover:bg-red-100 flex items-center justify-center opacity-0 group-hover:opacity-100 transition"
                         title="Hapus bookmark"
                       >
@@ -249,7 +369,6 @@ export default function UserProfile() {
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                         </svg>
                       </button>
-
                       <div className="aspect-square bg-gray-100 overflow-hidden">
                         {item.image ? (
                           <img src={`http://localhost:5000${item.image}`} alt={item.title} className="w-full h-full object-cover" />
@@ -257,6 +376,14 @@ export default function UserProfile() {
                           <div className="w-full h-full flex items-center justify-center">
                             <span className="text-gray-400 text-sm font-semibold">NO IMAGE</span>
                           </div>
+                        )}
+                      </div>
+                      <div className="p-3 text-center">
+                        <p className="text-sm font-semibold text-[#5A4A3A] truncate">{item.title}</p>
+                        {item.category && (
+                          <span className="inline-block mt-1 px-3 py-0.5 bg-pink-100 text-pink1 text-xs rounded-full">
+                            {item.category}
+                          </span>
                         )}
                       </div>
                     </div>
@@ -267,6 +394,15 @@ export default function UserProfile() {
           </div>
         </div>
       </div>
+
+      {/* Modal Edit Avatar */}
+      {showAvatarModal && (
+        <EditAvatarModal
+          currentAvatarId={currentUser?.avatarId}
+          onSave={handleSaveAvatar}
+          onClose={() => setShowAvatarModal(false)}
+        />
+      )}
     </div>
   );
 }
