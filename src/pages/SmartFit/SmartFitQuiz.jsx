@@ -157,18 +157,27 @@ export default function SmartFitQuiz() {
   // =============================
   //  NEXT
   // =============================
-  function goNext() {
-    if (currentStep < questions.length - 1) {
-      setCurrentStep((s) => s + 1);
-    } else {
-      const result = calculateSmartFitResult(answers);
+function goNext() {
+  if (currentStep < questions.length - 1) {
+    setCurrentStep((s) => s + 1);
+  } else {
+    const result = calculateSmartFitResult(answers);
 
-      sessionStorage.setItem("smartFitResult", JSON.stringify(result));
-      sessionStorage.removeItem("smartFitTemp");
+    sessionStorage.setItem(
+      "smartFitResult",
+      JSON.stringify(result)
+    );
 
-      navigate("/smart-fit/done");
-    }
+    sessionStorage.setItem(
+      "smartFitCompleted",
+      "true"
+    );
+
+    sessionStorage.removeItem("smartFitTemp");
+
+    navigate("/smart-fit/done");
   }
+}
 
   // =============================
   //  SMART FIT LOGIC
@@ -291,16 +300,24 @@ function calculateSmartFitResult(a) {
           onClick={goNext}
           disabled={!isAnswered(q)}
           className={`
-            w-full py-3 rounded-full text-white text-lg transition-all
+            w-full mt-3 py-3 rounded-full text-white text-lg transition-all
             ${
               isAnswered(q)
-                ? "bg-[#C85E5A]"
+                ? "bg-pink1"
                 : "bg-[#E2A6A3] opacity-60 cursor-not-allowed"
             }
           `}
         >
           {currentStep === totalSteps - 1 ? "Selesai" : "Lanjut"}
         </button>
+        {currentStep > 0 && (
+        <button
+          onClick={() => setCurrentStep((s) => s - 1)}
+          className="w-full mt-3 py-3 rounded-full border bg-oren2 hover:bg-oren1 text-white text-lg transition-all"
+        >
+          Kembali
+        </button>
+      )}
       </div>
     </div>
   );

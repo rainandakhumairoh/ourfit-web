@@ -1,9 +1,21 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import karakterAnimasi from "../../assets/welcomingkarakter2.png"; // GANTI dengan path gambar karakter kamu
 
 export default function StyleQuiz() {
   const navigate = useNavigate();
+
+function handleStart() {
+  const smartFit = sessionStorage.getItem("smartFitResult");
+
+  if (!smartFit) {
+    alert("Isi Smart Fit terlebih dahulu");
+    navigate("/smart-fit");
+    return;
+  }
+
+  navigate("/style-quiz/question");
+}
 
   return (
     <div className="w-full min-h-screen bg-[#F8E3C3] flex justify-center items-center px-6 relative">
@@ -38,7 +50,7 @@ export default function StyleQuiz() {
 
         {/* Tombol Start */}
         <button
-          onClick={() => navigate("/style-quiz/question")}
+          onClick={handleStart}
           className="mt-8 bg-pink1 hover:bg-oren2 text-white px-10 py-3 rounded-full text-lg font-medium w-[180px] shadow-md transition"
         >
           Start

@@ -4,9 +4,18 @@ import animasiKarakter from "../../assets/welcomingkarakter.png";
 export default function SmartFitDone() {
   const navigate = useNavigate();
 
-  function handleNext() {
-    navigate("/style-quiz");
+function handleNext() {
+  const smartFit =
+    sessionStorage.getItem("smartFitResult");
+
+  if (!smartFit) {
+    alert("Data Smart Fit tidak ditemukan");
+    navigate("/smart-fit");
+    return;
   }
+
+  navigate("/style-quiz");
+}
 
   return (
     <div className="min-h-screen bg-primary flex items-center justify-center px-6">
