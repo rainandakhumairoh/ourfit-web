@@ -1,15 +1,16 @@
 import logo from '../../assets/logohorizontal.png';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { useContext, useState } from 'react';
 import { UserContext } from '../../context/UserContext';
+import { faUser, faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 export default function Navbar() {
   const location = useLocation();
   const navigate = useNavigate();
   const { currentUser } = useContext(UserContext); // ambil status login
   const [showLoginChoice, setShowLoginChoice] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const getLinkClass = (path) => {
     return location.pathname === path
@@ -37,28 +38,42 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-primary shadow-md fixed top-0 w-full z-50 h-16">
-      <div className="max-w-screen-xl mx-auto flex items-center p-4">
-        {/* Logo kiri */}
-        <Link to="/" className="flex items-center">
-          <img src={logo} alt="Ourfit Logo" className="h-10" />
+  <nav className="bg-primary shadow-md fixed top-0 w-full z-50">
+    <div className="max-w-screen-xl mx-auto flex items-center justify-between p-2">
+
+      {/* Logo */}
+      <Link to="/" className="flex items-center">
+        <img src={logo} alt="Ourfit Logo" className="h-12" />
+      </Link>
+
+      {/* Desktop Menu */}
+      <div className="hidden md:flex flex-1 justify-center space-x-5">
+        <Link to="/" className={getLinkClass('/')}>Home</Link>
+        <Link to="/smart-fit" className={getLinkClass('/smart-fit')}>
+          Personalization
         </Link>
+        <Link to="/wardrobe" className={getLinkClass('/wardrobe')}>
+          Wardrobe
+        </Link>
+        <Link to="/mixmatch" className={getLinkClass('/mixmatch')}>
+          Mix & Match
+        </Link>
+        <Link to="/about" className={getLinkClass('/about')}>
+          About Us
+        </Link>
+      </div>
 
-        {/* Menu tengah */}
-        <div className="flex-1 flex justify-center space-x-5">
-          <Link to="/" className={getLinkClass('/')}>Home</Link>
-          <Link to="/smart-fit" className={getLinkClass('/smart-fit')}>Personalization</Link>
-          <Link to="/wardrobe" className={getLinkClass('/wardrobe')}>Wardrobe</Link>
-          <Link to="/mixmatch" className={getLinkClass('/mixmatch')}>Mix & Match</Link>
-          <Link to="/about" className={getLinkClass('/about')}>About Us</Link>
-        </div>
-
-        {/* Profile kanan */}
-        <div>
-          <button onClick={handleProfileClick} className={getLinkClass('/profile')}>
-            <FontAwesomeIcon icon={faUser} className="mr-1 text-xl" />
-          </button>
-        </div>
+      {/* Desktop Profile */}
+      <div className="hidden md:block">
+        <button
+          onClick={handleProfileClick}
+          className={getLinkClass('/profile')}
+        >
+          <FontAwesomeIcon
+            icon={faUser}
+            className="mr-1 text-xl"
+          />
+        </button>
       </div>
 
       {/* Modal Pilihan Login */}
@@ -89,6 +104,80 @@ export default function Navbar() {
           </div>
         </div>
       )}
-    </nav>
+
+      {/* Mobile Menu Button */}
+      <button
+        className="text-pink1 md:hidden text-2xl"
+        onClick={() => setIsMenuOpen(!isMenuOpen)}
+      >
+        <FontAwesomeIcon
+          icon={isMenuOpen ? faTimes : faBars}
+        />
+      </button>
+
+    </div>
+
+    {/* Mobile Menu */}
+    {isMenuOpen && (
+      <div className="md:hidden bg-primary shadow-lg border-t">
+
+        <div className="flex flex-col p-4 space-y-3">
+
+          <Link
+            to="/"
+            className={getLinkClass('/')}
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Home
+          </Link>
+
+          <Link
+            to="/smart-fit"
+            className={getLinkClass('/smart-fit')}
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Personalization
+          </Link>
+
+          <Link
+            to="/wardrobe"
+            className={getLinkClass('/wardrobe')}
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Wardrobe
+          </Link>
+
+          <Link
+            to="/mixmatch"
+            className={getLinkClass('/mixmatch')}
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Mix & Match
+          </Link>
+
+          <Link
+            to="/about"
+            className={getLinkClass('/about')}
+            onClick={() => setIsMenuOpen(false)}
+          >
+            About Us
+          </Link>
+
+          <button
+            onClick={() => {
+              handleProfileClick();
+              setIsMenuOpen(false);
+            }}
+            className="flex items-center gap-2 py-2 text-pink1 bg-oren1/40 hover:bg-oren2 p-2"
+          >
+            <FontAwesomeIcon icon={faUser} />
+            Profile
+          </button>
+
+        </div>
+
+      </div>
+    )}
+  </nav>
   );
 }

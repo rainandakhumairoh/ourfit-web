@@ -15,11 +15,11 @@ export default function WelcomeSection() {
           backgroundRepeat: "no-repeat",
         }}
       >
-        <h1 className="text-md sm:text-lg md:text-xl lg:text-2xl font-bold text-center mb-12 md:mb-24 mt-12 md:mt-24 ">
-          HAI, KAMI OURFIT
+        <h1 className="text-lg sm:text-xl md:text-2xl lg:text-4xl font-bold text-center mb-12 md:mb-24 mt-12 md:mt-24 tracking-wide uppercase">
+          Hai, kami OURFIT
           <br />
-          PILIHAN TERBAIKMU UNTUK TAMPIL <br />
-          PERCAYA DIRI SETIAP HARI!
+          Pilihan terbaikmu untuk tampil <br />
+          percaya diri setiap hari!
         </h1>
 
         <img src={karakter2} alt="Karakter Ourfit" className="w-[200px] md:w-[350px] lg:w-[400px] scale-110 md:scale-125 lg:scale-150 mb-12 transition-transform duration-300 ease-in-out" />
