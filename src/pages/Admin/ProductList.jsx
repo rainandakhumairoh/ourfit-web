@@ -192,7 +192,7 @@ export default function ProductList({
                   onClick={() =>
                     startEdit(p)
                   }
-                  className="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-full"
+                  className="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-full font-semibold"
                 >
                   Edit
                 </button>
@@ -201,7 +201,7 @@ export default function ProductList({
                   onClick={() =>
                     handleDelete(p._id)
                   }
-                  className="flex-1 bg-red-500 hover:bg-red-600 text-white py-2 rounded-full"
+                  className="flex-1 bg-red-500 hover:bg-red-600 text-white py-2 rounded-full font-semibold"
                 >
                   Delete
                 </button>
