@@ -39,7 +39,7 @@ export default function Navbar() {
 
   return (
   <nav className="bg-primary shadow-md fixed top-0 w-full z-50">
-    <div className="max-w-screen-xl mx-auto flex items-center justify-between p-2">
+    <div className="max-w-screen-xl mx-auto flex items-center justify-between p-2 px-4">
 
       {/* Logo */}
       <Link to="/" className="flex items-center">
