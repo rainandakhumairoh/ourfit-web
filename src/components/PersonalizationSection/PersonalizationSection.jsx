@@ -7,8 +7,11 @@ import manekin from "../../assets/manekin.png";
 import styleQuiz from "../../assets/stylequiz.png";
 import benang from "../../assets/benang.png";
 import bgsmartfit from "../../assets/bgsmartfit.png";
-import bgstylequiz from "../..//assets/bgstylequiz.png";
+import bgstylequiz from "../..//assets/bgstylequiz2.png";
+import renda2 from "../..//assets/rendashadow.png";
 import karakter from "../../assets/karakternongol.png";
+import { motion } from "framer-motion";
+
 
 export default function PersonalizationSection() {
   const navigate = useNavigate();
@@ -32,7 +35,7 @@ export default function PersonalizationSection() {
 
       {/* ===== SECTION 1: SMART FIT ===== */}
       <section
-        className="relative z-20 w-full flex flex-col items-center justify-center bg-cover bg-center py-12 md:py-16 px-4 md:px-6"
+        className="relative z-20 w-full min-h-[700px] flex flex-col items-center justify-center bg-cover bg-center py-4 md:py-6 px-4 md:px-6"
         style={{
           backgroundImage: `url(${bgsmartfit})`,
           backgroundRepeat: "no-repeat",
@@ -40,69 +43,89 @@ export default function PersonalizationSection() {
         }}
       >
         {/* Gambar dekorasi */}
-        <div className="flex justify-between items-center gap-18 w-full mt-6 mb-6 ">
-          <img
-            src={gunting}
-            alt="gunting"
-            className="w-32 sm:w-48 md:w-72 lg:w-96 h-auto"
-          />
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6 md:gap-18 w-full mt-6 mb-6">
+        <img
+          src={gunting}
+          alt="gunting"
+          className="w-40 sm:w-48 md:w-72 lg:w-96 h-auto"
+        />
 
-          <div
-            onClick={() => navigate("/smart-fit")}
-            className="flex flex-col items-center cursor-pointer transition-transform hover:scale-105"
-          >
-            <img
-              src={smartFit}
-              alt="smart fit"
-              className="w-96 sm:w-96 md:w-96 lg:w-100 h-auto"
+        <div
+          onClick={() => navigate("/smart-fit")}
+          className="cursor-pointer transition-transform hover:scale-105"
+        >
+          <motion.img
+            src={smartFit}
+            alt="smart fit"
+            className="w-52 sm:w-72 md:w-96 lg:w-100 h-auto"
+            animate={{
+              scale: [1, 1.2, 1]
+              }}
+              transition={{
+                duration: 3.5,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
             />
-          </div>
-
-          <img
-            src={meteran}
-            alt="meteran"
-            className="w-32 sm:w-48 md:w-72 lg:w-96 h-auto"
-          />
         </div>
+
+        <img
+          src={meteran}
+          alt="meteran"
+          className="w-40 sm:w-48 md:w-72 lg:w-96 h-auto"
+        />
+      </div>
       </section>
 
       {/* ===== SECTION 2: STYLE QUIZ ===== */}
       <section
-        className="relative w-full flex flex-col items-center justify-center bg-cover bg-center py-32 md:py-48 px-4 md:px-6"
+        className="relative w-full flex flex-col items-center justify-center bg-cover bg-center py-12 md:py-24 px-4 md:px-6"
         style={{
           backgroundImage: `url(${bgstylequiz})`,
           backgroundRepeat: "no-repeat",
           marginTop: "-100px"
         }}
       >
-        {/* ===== Tambahkan background cream di belakang ===== */}
-        <div className="absolute inset-0 bg-primary -z-10 bottom-0 h-full"></div>
-        
-        <div className="flex justify-between items-center gap-18 w-full mt-6 mb-6">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6 md:gap-18 w-full py-16 mb-24">
           <img
             src={manekin}
             alt="manekin"
-            className="w-28 sm:w-40 md:w-72 lg:w-80 h-auto object-contain"
+            className="w-40 sm:w-48 md:w-72 lg:w-96 h-auto"
           />
 
           <div
             onClick={() => navigate("/style-quiz")}
             className="cursor-pointer transition-transform hover:scale-105"
           >
-            <img
+            <motion.img
               src={styleQuiz}
               alt="style quiz"
-              className="w-96 sm:w-96 md:w-96 lg:w-100 h-auto"
+              className="w-[70vw] max-w-[500px] md:w-[85vw] lg:w-[100vw] h-auto"
+              animate={{
+              scale: [1, 1.2, 1]
+              }}
+              transition={{
+                duration: 3.5,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
             />
           </div>
 
           <img
             src={benang}
             alt="benang"
-            className="w-28 sm:w-40 md:w-72 lg:w-80 h-auto object-contain"
+            className="w-40 sm:w-48 md:w-72 lg:w-96 h-auto"
           />
         </div>
       </section>
+        <div className="w-full bg-primary flex flex-col items-center justify-center pb-6">
+          <img 
+                src={renda2} 
+                alt="renda" 
+                className="w-[200%] sm:w-[180%] md:w-full max-w-none"
+            />
+        </div>
     </div>
   );
 }
