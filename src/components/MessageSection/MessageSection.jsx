@@ -31,16 +31,17 @@ export default function MessageSection() {
               }}>
             Want to Send a Message?
           </h2>
+
+            {/* ======== TOMBOL di atas bordir ======== */}
+            <div className="relative flex justify-center mt-6">
+              <Link
+                to="/contactus"
+                className="text-white bg-pink1 hover:bg-oren2 rounded-full px-32 py-3 text-sm flex items-center gap-2 transition-all duration-300 shadow-md"
+              >
+                Contact Us
+              </Link>
+            </div>
         </div>
-      {/* ======== TOMBOL di atas bordir ======== */}
-      <div className="relative flex justify-center mt-0">
-        <Link
-          to="/contactus"
-          className="text-white bg-pink1 hover:bg-oren2 rounded-full px-48 py-3 text-sm flex items-center gap-2 transition-all duration-300 shadow-md"
-        >
-          Contact Us
-        </Link>
-      </div>
       </div>
     </>
   );
