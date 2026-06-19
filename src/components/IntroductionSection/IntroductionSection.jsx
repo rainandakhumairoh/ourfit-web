@@ -14,12 +14,12 @@ export default function IntroductionSection() {
         }}
       >
         {/* Content Container */}
-        <div className="w-full px-2 md:px-4 lg:px-6 max-w-6xl mx-auto font-[Poppins] py-32">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+        <div className="w-full px-6 md:px-12 lg:px-6 max-w-6xl mx-auto font-[Poppins] py-12 md:py-32 lg:py-32">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
             
             {/* LEFT SIDE - HEADING */}
             <div className="text-center">
-              <p className="text-xl md:text-3xl lg:text-4xl font-bold text-[#C7752E] font-[Poppins] uppercase tracking-widest mb-2" 
+              <p className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#C7752E] font-[Poppins] uppercase tracking-widest mb-2" 
               style={{
                 textShadow: `
                   -4px -4px 0 #ffffff,

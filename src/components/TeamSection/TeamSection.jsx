@@ -30,7 +30,7 @@ export default function TeamSection() {
   return (
     <>
       {/* SECTION 1 - Background cream dan gelombang */}
-      <div className="relative w-full min-h-[calc(100vh-64px)] flex flex-col items-center justify-center text-center" 
+      <div className="relative w-full flex flex-col items-center justify-center text-center" 
       style={{ 
         backgroundColor: "#FFEBC8", 
         backgroundPosition: "center", 
@@ -42,7 +42,7 @@ export default function TeamSection() {
             key={currentPhoto}
             src={photos[currentPhoto]}
             alt="Foto Team"
-            className="w-[400px] md:w-[550px] lg:w-[900px] mt-2"
+            className="w-[400px] md:w-[550px] lg:w-[900px] mt-24 md:mt-4"
             initial={{
               opacity: 0,
             }}
@@ -59,16 +59,57 @@ export default function TeamSection() {
 
         {/* SECTION 2 - Container dengan 2 box persegi */}
         <div className="w-full relative font-[Poppins]">
-                <p className="absolute left-1/2 transform -translate-x-1/2 top-8 md:top-12 lg:top-14 max-w-xl text-sm md:text-base font-medium text-white text-center z-40">
-                    Di balik Ourfit, ada tim kecil yang besar dalam semangat. <br />
-                    Kami percaya keanggunan sejati lahir dari ketulusan dan perhatian pada detail.
-                    Setiap produk kami dibuat dengan cinta agar kamu selalu <br />merasa nyaman menjadi dirimu sendiri.
+                <p
+                  className="
+                    absolute
+                    left-1/2
+                    -translate-x-1/2
+                    top-10 md:top-12 lg:top-14
+
+                    w-[80%]
+                    md:w-auto
+                    max-w-[400px]
+                    md:max-w-xl
+
+                    text-[10px]
+                    sm:text-xs
+                    md:text-base
+
+                    leading-md
+                    font-medium
+                    text-white
+                    text-center
+                    z-40
+                  "
+                >
+                  Di balik Ourfit, ada tim kecil yang besar dalam semangat.
+                  
+                  Kami percaya keanggunan sejati lahir dari ketulusan dan
+                  perhatian pada detail.
+                  
+                  Setiap produk kami dibuat dengan cinta agar kamu selalu
+                  merasa nyaman menjadi dirimu sendiri.
                 </p>
-            <img 
-                src={boxgelombang} 
-                alt="Box Gelombang" 
-                className="absolute left-1/2 transform -translate-x-1/2 -top-6 md:-top-12 lg:-top-20 w-[250px] md:w-[400px] lg:w-[700px] z-30"
-            />
+
+                <img
+                  src={boxgelombang}
+                  alt="Box Gelombang"
+                  className="
+                    absolute
+                    left-1/2
+                    -translate-x-1/2
+
+                    -top-8
+                    md:-top-12
+                    lg:-top-20
+
+                    w-[380px]
+                    sm:w-[400px]
+                    md:w-[550px]
+                    lg:w-[700px]
+                    z-30
+                  "
+                />
           {/* Box Coklat (bagian atas - dengan dashed border) */}
           <div className="w-full bg-coklat flex flex-col items-center justify-center py-4 px-2 border-2 border-white">
             <div className="w-full flex flex-col items-center justify-center border-4 border-white"

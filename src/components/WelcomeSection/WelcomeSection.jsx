@@ -17,7 +17,7 @@ export default function WelcomeSection() {
       >
         {/* Teks judul */}
         <h1 className="text-xl sm:text-2xl md:text-2xl lg:text-3xl font-bold text-center 
-          mt-24 px-4 sm:px-8 
+          mt-28 px-4 sm:px-8 
           tracking-wide uppercase leading-snug">
           Hai, kami OURFIT
           <br />

@@ -5,7 +5,7 @@ export default function VisiMisiSection() {
     <>
       {/* SECTION - Background coklat dengan border dashed */}
       <div
-        className="relative w-full min-h-auto flex flex-col justify-center"
+        className="relative w-full min-h-auto flex flex-col justify-center overflow-hidden"
         style={{
           backgroundColor: "#C7752E",
         }}
@@ -21,9 +21,9 @@ export default function VisiMisiSection() {
             }}
           >
             {/* Inner Content */}
-            <div className="w-full bg-transparent flex flex-col items-center justify-center py-8 md:py-10 px-4 md:px-8">
+            <div className="w-full bg-transparent flex flex-col items-center justify-center py-8 md:py-10 lg:py-10 px-4 md:px-8 lg:px-8">
               {/* Main Grid Container */}
-              <div className="w-full grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 items-start">
+              <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-12 items-start">
                 
                 {/* LEFT SIDE - CHARACTER IMAGE */}
                 <div className="flex flex-col items-center justify-center">
@@ -42,7 +42,7 @@ export default function VisiMisiSection() {
                 <div className="lg:col-span-2 space-y-6">
                   
                   {/* VISI SECTION */}
-                  <div className="bg-white rounded-lg p-6 md:p-8 shadow-lg">
+                  <div className="bg-white rounded-lg p-6 md:p-8 shadow-md">
                     <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-coklat mb-4 font-[Poppins] uppercase tracking-wide">
                       VISI
                     </h2>
@@ -52,7 +52,7 @@ export default function VisiMisiSection() {
                   </div>
 
                   {/* MISI SECTION */}
-                  <div className="bg-white rounded-lg p-6 md:p-8 shadow-lg">
+                  <div className="bg-white rounded-lg p-6 md:p-8 shadow-md">
                     <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-coklat mb-6 font-[Poppins] uppercase tracking-wide">
                       MISI
                     </h2>

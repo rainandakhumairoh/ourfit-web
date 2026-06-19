@@ -25,7 +25,7 @@ export default function Footer() {
 >
         <div className="p-6 mx-auto max-w-screen-xl justify-between">
           <div className="lg:flex">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-36">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-[12rem]">
               <div className="absolute inset-0 bg-pink3 -z-10 bottom-0 h-full -top-[6rem]"></div>
               <div className="px-6 mt-[12rem]">
                 <a href="#">

@@ -15,7 +15,7 @@ export default function WardrobeItem() {
   }, []);
 
   return (
-    <div className="relative w-full pt-8 md:pt-12 bg-primary overflow-x-hidden">
+    <div className="relative w-full pt-8 md:pt-12 bg-primary overflow-hidden">
 
       {/* ======== Konten ======== */}
       <div className="relative z-10 flex flex-col items-center">

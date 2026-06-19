@@ -92,12 +92,12 @@ const handleSubmit = async (e) => {
     };
 
   return (
-    <div className="w-full min-h-screen flex items-center justify-center bg-pink3 p-6">
+    <div className="w-full min-h-screen flex items-center justify-center bg-pink3 p-4">
         {/* Close */}
         <button onClick={handleClose} className="absolute top-6 right-6 bg-pink1 text-white w-8 h-8 flex items-center justify-center rounded-full text-xl font-bold shadow-md hover:bg-oren2 transition-all active:scale-95" aria-label="Close">
             ✕
         </button>
-      <div className="relative w-full px-32 md:px-52">
+      <div className="relative w-full px-0 md:px-48 lg:px-48">
         <form
           onSubmit={handleSubmit}
           className="flex flex-col gap-5"

@@ -10,13 +10,13 @@ export default function StrengthSection() {
     <>
       {/* SECTION - Background Cream dengan Gradient */}
       <div
-        className="relative w-full min-h-screen flex flex-col items-center justify-center pt-4 md:pt-8"
+        className="relative w-full h-auto flex flex-col items-center justify-center pt-4 md:pt-8 lg:pt-10"
         style={{
           backgroundColor: "#FFEBC8",
         }}
       >
         {/* Title */}
-        <div className="text-center mb-16">
+        <div className="text-center py-6 md:py-12">
           <h2 className="text-4xl md:text-5xl font-bold text-[#C7752E] font-[Poppins] uppercase tracking-widest" 
           style={{
             textShadow: `
@@ -35,8 +35,8 @@ export default function StrengthSection() {
         </div>
 
         {/* Flower Cards Grid */}
-        <div className="w-full px-6 md:px-12 max-w-7xl mx-auto font-[Poppins]">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-24 justify-items-center">
+        <div className="w-full px-6 md:px-12 py-8 md:py-12  max-w-7xl mx-auto font-[Poppins]">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-24 justify-items-center">
             <div className="w-[150px] md:w-[250px] lg:w-400px] h-auto">
                 <motion.img
                   src={bunga1}
@@ -60,7 +60,7 @@ export default function StrengthSection() {
                   viewport={{ once: false }}
                 />
                 <div className="text-center">
-                    <p className="text-xs md:text-sm text-black font-light">
+                    <p className="text-sm text-black font-light">
                     Setiap busana dirancang khusus untuk proporsi tubuh perempuan petite Indonesia agar tetap pas dan nyaman dipakai, tanpa perlu alterasi tambahan.                    </p>
                 </div>
             </div>
@@ -88,7 +88,7 @@ export default function StrengthSection() {
                   viewport={{ once: false }}
                 />
                 <div className="text-center">
-                    <p className="text-xs md:text-sm text-black font-light">
+                    <p className="text-sm text-black font-light">
                     Koleksi warna kami disesuaikan dengan berbagai undertone kulit perempuan Indonesia, sehingga kamu bisa tampil lebih segar dan percaya diri.
                     </p>
                 </div>
@@ -116,7 +116,7 @@ export default function StrengthSection() {
                   viewport={{ once: false }}
                 />
                 <div className="text-center">
-                    <p className="text-xs md:text-sm text-black font-light">
+                    <p className="text-sm text-black font-light">
                     Gaya minimalis yang fleksibel untuk berbagai kesempatan, dari kasual hingga semi-formal, mudah dipadu-padankan.                    </p>
                 </div>
             </div>
@@ -143,7 +143,7 @@ export default function StrengthSection() {
                   viewport={{ once: false }}
                 />
                 <div className="text-center">
-                    <p className="text-xs md:text-sm text-black font-light">
+                    <p className="text-sm text-black font-light">
                     Nikmati pengalaman belanja yang lebih personal lewat fitur Smart Fit & Style Quiz untuk menemukan ukuran dan gaya yang paling cocok dengan dirimu!
                     </p>
                 </div>

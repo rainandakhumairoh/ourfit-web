@@ -78,7 +78,7 @@ export default function Navbar() {
 
       {/* Modal Pilihan Login */}
       {showLoginChoice && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
+        <div className="fixed inset-0 flex items-center justify-center bg-black/50 px-4 z-50">
           <div className="bg-white p-6 rounded-xl shadow-lg max-w-sm w-full text-center">
             <h2 className="text-lg font-semibold mb-4">Login/Daftar sebagai?</h2>
             <div className="flex flex-col gap-3">

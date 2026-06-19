@@ -86,7 +86,7 @@ export default function PersonalizationSection() {
           marginTop: "-100px"
         }}
       >
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6 md:gap-18 w-full py-16 mb-24">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-2 w-full py-16 mb-24">
           <img
             src={manekin}
             alt="manekin"
@@ -100,7 +100,7 @@ export default function PersonalizationSection() {
             <motion.img
               src={styleQuiz}
               alt="style quiz"
-              className="w-[70vw] max-w-[500px] md:w-[85vw] lg:w-[100vw] h-auto"
+              className="w-[70vw] max-w-[400] md:w-[85vw] lg:w-[100vw] h-auto"
               animate={{
               scale: [1, 1.2, 1]
               }}
