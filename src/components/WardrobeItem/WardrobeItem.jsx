@@ -15,7 +15,7 @@ export default function WardrobeItem() {
   }, []);
 
   return (
-    <div className="relative w-full pt-8 md:pt-12 bg-primary">
+    <div className="relative w-full pt-8 md:pt-12 bg-primary overflow-x-hidden">
 
       {/* ======== Konten ======== */}
       <div className="relative z-10 flex flex-col items-center">
@@ -92,7 +92,6 @@ export default function WardrobeItem() {
               left-1/2
               bottom-0
               -translate-x-1/2
-              scale-150
               origin-bottom
               z-0
             "
@@ -131,7 +130,6 @@ export default function WardrobeItem() {
               </Link>
             ))}
           </div>
-
           <div className="flex justify-center mt-6">
             <Link
               to="/wardrobe"
