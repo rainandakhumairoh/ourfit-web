@@ -51,9 +51,10 @@ export default function WardrobeItem() {
             
             {/* PRODUK ASLI */}
             {products.slice(0, 2).map((product) => (
-              <div
+              <Link
                 key={product._id}
-                className="w-[325px] h-[350px] bg-white rounded-xl shadow-lg flex items-center justify-center overflow-hidden transition-transform duration-300 hover:scale-95"
+                to={`/wardrobe/${product._id}`}
+                className="w-[325px] h-[350px] bg-white rounded-xl shadow-lg flex items-center justify-center overflow-hidden transition-transform duration-300 hover:scale-95 cursor-pointer"
               >
                 {product.coverImage ? (
                   <img
@@ -66,7 +67,7 @@ export default function WardrobeItem() {
                     FOTO PRODUK
                   </span>
                 )}
-              </div>
+              </Link>
             ))}
 
             {/* TOMBOL */}

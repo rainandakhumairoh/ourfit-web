@@ -34,9 +34,12 @@ export default function MixMatchItem() {
           <img src={bgGantungan} alt="Gantungan" className="relative w-full h-auto object-contain z-10" />
 
           {/* Kotak foto */}
-          <div className="absolute top-[50%] left-1/2 -translate-x-1/2 w-[85%] max-w-5xl flex justify-center gap-6 px-6 z-20">
+          <div className="absolute top-[50%] left-1/2 -translate-x-1/2 flex justify-center gap-8 px-6 z-20 aspect-square">
             {mixmatch.slice(0, 3).map((item) => (
-              <div key={item._id} className="w-[350px] h-[350px] bg-white rounded-xl shadow-md flex items-center justify-center border-2 border-oren1">
+              <Link 
+              key={item._id} 
+              to={`/mixmatch/${item._id}`} 
+              className="w-[350px] h-[350px] bg-white rounded-xl shadow-md flex items-center justify-center border-2 border-oren1 overflow-hidden flex flex-col transition-transform duration-300 hover:scale-105 cursor-pointer">
                 {item.image ? (
                   <img src={`http://localhost:5000${item.image}`} alt={item.title} className="object-cover w-full h-full rounded-lg" />
                 ) : (
@@ -44,7 +47,7 @@ export default function MixMatchItem() {
                     FOTO <br /> MIX & MATCH
                   </span>
                 )}
-              </div>
+              </Link>
             ))}
           </div>
         </div>
@@ -79,11 +82,11 @@ export default function MixMatchItem() {
                 shadow-md
               "
             >
-              <div className="grid grid-cols-1 gap-4">
+              <div className="grid grid-cols-1 gap-6">
                 {mixmatch.slice(0, 3).map((item) => (
                   <Link
                     key={item._id}
-                    to="/mixmatch"
+                    to={`/mixmatch/${item._id}`}
                     className="
                       bg-white
                       border-2
