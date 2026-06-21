@@ -1,104 +1,8 @@
-// import { useEffect, useState, useContext } from "react";
-// import axios from "axios";
-// import { UserContext } from "../../context/UserContext";
-
-// import ProductForm from "./ProductForm";
-// import ProductList from "./ProductList";
-// import MixMatchForm from "./MixMatchForm";
-// import MixMatchList from "./MixMatchList";
-
-// export default function AdminPage() {
-//   const { logout } = useContext(UserContext);
-//   const [products, setProducts] = useState([]);
-//   const [mixmatch, setMixmatch] = useState([]);
-
-//   // fetch products
-//   const fetchProducts = async () => {
-//     try {
-//       const res = await axios.get(
-//         "http://localhost:5000/api/products"
-//       );
-
-//       setProducts(res.data);
-
-//     } catch (err) {
-//       console.log(err);
-//     }
-//   };
-
-//   // FETCH MIXMATCH
-//   const fetchMixmatch = async () => {
-//     try {
-//       const res = await axios.get(
-//         "http://localhost:5000/api/mixmatch"
-//       );
-
-//       setMixmatch(res.data);
-
-//     } catch (err) {
-//       console.log(err);
-//     }
-//   };
-
-//   useEffect(() => {
-//     fetchProducts();
-//     fetchMixmatch();
-//   }, []);
-
-//   return (
-//     <div className="min-h-screen bg-primary p-10 pt-10">
-//       {/* HEADER */}
-//       <div className="flex justify-between items-center mb-10">
-//         <h1 className="text-4xl font-bold text-black">
-//           Admin Dashboard
-//         </h1>
-
-//         <button
-//           onClick={logout}
-//           className="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-full"
-//         >
-//           Logout
-//         </button>
-//       </div>
-
-//       {/* CONTENT */}
-//       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        
-//         {/* FORM */}
-//         <div>
-//           <ProductForm refresh={fetchProducts} />
-//         </div>
-
-//         {/* PRODUCT LIST */}
-//         <div className="lg:col-span-2">
-//           <ProductList
-//             products={products}
-//             refresh={fetchProducts}
-//           />
-//         </div>
-
-//         {/* FORM */}
-//         <div>
-//           <MixMatchForm refresh={fetchMixmatch} />
-//         </div>
-
-//         {/* MIXMATCH LIST */}
-//         <div className="lg:col-span-2">
-//           <MixMatchList
-//             mixmatch={mixmatch}
-//             refresh={fetchMixmatch}
-//           />
-//         </div>
-
-//       </div>
-//     </div>
-//   );
-// }
-
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { UserContext } from "../../context/UserContext";
-
+import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ProductForm from "./ProductForm";
 import ProductList from "./ProductList";
 import MixMatchForm from "./MixMatchForm";
@@ -106,9 +10,8 @@ import MixMatchList from "./MixMatchList";
 
 export default function AdminPage() {
   const { logout } = useContext(UserContext);
-
   const [activeMenu, setActiveMenu] = useState("products");
-
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [products, setProducts] = useState([]);
   const [mixmatch, setMixmatch] = useState([]);
 
@@ -140,10 +43,46 @@ export default function AdminPage() {
   }, []);
 
   return (
-    <div className="h-screen flex bg-gray-100 overflow-hidden">
+    <div className="min-h-screen flex bg-gray-100">
+
+      <button
+      onClick={() => setSidebarOpen(true)}
+      className="fixed top-4 left-4 z-50 lg:hidden bg-white p-3 rounded-lg shadow"
+    >
+      <FontAwesomeIcon icon={faBars} />
+    </button>
+
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black/40 z-40 lg:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
 
       {/* SIDEBAR */}
-      <aside className="w-64 h-screen bg-white shadow-lg flex flex-col shrink-0">
+      <aside
+        className={`
+          fixed lg:static
+          top-0 left-0
+          h-screen
+          w-64
+          bg-white
+          shadow-lg
+          flex flex-col
+          z-50
+          transition-transform duration-300
+          ${
+            sidebarOpen
+              ? "translate-x-0"
+              : "-translate-x-full lg:translate-x-0"
+          }
+        `}
+      >
+        <div className="lg:hidden flex justify-end p-4">
+          <button onClick={() => setSidebarOpen(false)}>
+            <FontAwesomeIcon icon={faTimes} size="lg" />
+          </button>
+        </div>
 
         <div className="p-6 border-b">
           <h1 className="text-2xl font-bold">
@@ -154,7 +93,10 @@ export default function AdminPage() {
         <nav className="flex-1 p-4 space-y-2">
 
           <button
-            onClick={() => setActiveMenu("products")}
+            onClick={() => {
+              setActiveMenu("products");
+              setSidebarOpen(false);
+            }}
             className={`w-full text-left px-4 py-3 rounded-lg ${
               activeMenu === "products"
                 ? "bg-pink1 text-white"
@@ -165,7 +107,10 @@ export default function AdminPage() {
           </button>
 
           <button
-            onClick={() => setActiveMenu("mixmatch")}
+            onClick={() => {
+              setActiveMenu("mixmatch");
+              setSidebarOpen(false);
+            }}
             className={`w-full text-left px-4 py-3 rounded-lg ${
               activeMenu === "mixmatch"
                 ? "bg-pink1 text-white"
@@ -175,7 +120,7 @@ export default function AdminPage() {
             Mix & Match
           </button>
 
-          <button
+          {/* <button
             onClick={() => setActiveMenu("users")}
             className={`w-full text-left px-4 py-3 rounded-lg ${
               activeMenu === "users"
@@ -195,7 +140,7 @@ export default function AdminPage() {
             }`}
           >
             Settings
-          </button>
+          </button> */}
 
         </nav>
 
@@ -211,7 +156,7 @@ export default function AdminPage() {
       </aside>
 
       {/* CONTENT */}
-      <main className="flex-1 h-screen overflow-hidden p-8">
+      <main className="flex-1 p-4 lg:p-8 lg:ml-0 mt-16 lg:mt-0">
 
         <h2 className="text-3xl font-bold mb-8 capitalize">
           {activeMenu}
