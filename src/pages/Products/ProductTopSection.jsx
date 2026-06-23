@@ -98,7 +98,7 @@ function SortDropdown({ sortValue, onChange }) {
     <div ref={ref} className="relative">
       <button
         onClick={() => setOpen((v) => !v)}
-        className={`flex items-center gap-2 rounded-full px-4 py-2 text-xs font-medium shadow-sm transition-colors
+        className={`flex items-center gap-2 rounded-full px-4 py-2 text-xs font-medium text-pink1 shadow-sm transition-colors
           ${open ? "bg-pink1 text-white" : "bg-white text-gray-600 hover:bg-gray-50"}`}
       >
         <span className="flex items-center gap-1">

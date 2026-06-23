@@ -252,7 +252,7 @@ export default function MixMatchDetails() {
                   to={`/wardrobe/${product._id}`}
                   className="bg-white rounded-2xl overflow-hidden shadow hover:shadow-md transition hover:scale-105 aspect-square flex flex-col"
                 >
-                  {product.image ? (
+                  {product.coverImage ? (
                     <img
                       src={`http://localhost:5000${product.coverImage}`}
                       alt={product.name}

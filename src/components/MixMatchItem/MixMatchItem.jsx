@@ -16,7 +16,7 @@ export default function MixMatchItem() {
   }, []);
 
   return (
-    <div className="relative w-full overflow-hidden pb-32">
+    <div className="relative w-full overflow-hidden pb-24">
       {/* ======== ATAS: TEKS ======== */}
       <div className="relative w-full bg-pink2 pb-16">
         <div className="text-center pt-16 pb-10 px-6">
@@ -130,6 +130,7 @@ export default function MixMatchItem() {
               origin-bottom
               w-[200%] sm:w-[180%] md:w-full max-w-none
               z-0
+              bg-pink3
             "
           />
 
