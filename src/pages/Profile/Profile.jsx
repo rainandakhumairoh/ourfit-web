@@ -2,12 +2,12 @@ import { useContext, useState, useEffect } from "react";
 import axios from "axios";
 import { UserContext } from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
-import avatar1 from "../../assets/fotoacil.jpg";
-import avatar2 from "../../assets/fotouli.jpg";
-import avatar3 from "../../assets/fotonara.jpg";
-import avatar4 from "../../assets/fotoulil.jpg";
-import avatar5 from "../../assets/fotorai.jpg";
-import avatar6 from "../../assets/fotoacil.jpg";
+import avatar1 from "../../assets/ava1.png";
+import avatar2 from "../../assets/ava2.png";
+import avatar3 from "../../assets/ava3.png";
+import avatar4 from "../../assets/ava4.png";
+import avatar5 from "../../assets/ava5.png";
+import avatar6 from "../../assets/ava6.png";
 import PersonalizationCard from "../../components/PersonalizationCard/PersonalizationCard";
 
 
@@ -165,11 +165,25 @@ export default function UserProfile() {
     }
   };
 
-  // Simpan avatar ke localStorage via UserContext login()
-  const handleSaveAvatar = (preset) => {
-    const updated = { ...currentUser, avatarId: preset.id, avatarImage: preset.image, avatarColor: preset.color };
-    login(updated); // update context + localStorage
-    setShowAvatarModal(false);
+  const handleSaveAvatar = async (preset) => {
+    try {
+      const userId = currentUser.id || currentUser._id;
+
+      const res = await axios.put(
+        `http://localhost:5000/api/auth/users/${userId}/avatar`,
+        {
+          avatarId: preset.id,
+        }
+      );
+
+      login(res.data);
+
+      setShowAvatarModal(false);
+    } catch (err) {
+      console.log(err);
+      console.log(err.response);
+      alert("Gagal menyimpan avatar");
+    }
   };
 
   const handleLogout = () => {
@@ -177,7 +191,9 @@ export default function UserProfile() {
   };
 
   // Resolve avatar saat ini
-  const currentPreset = AVATAR_PRESETS.find((p) => p.id === currentUser?.avatarId);
+  const currentPreset = AVATAR_PRESETS.find(
+    p => p.id === currentUser?.avatarId
+  );
   const [avatarImgError, setAvatarImgError] = useState(false);
 
   const EmptyState = ({ label }) => (
@@ -230,19 +246,18 @@ export default function UserProfile() {
             {/* Avatar besar + tombol edit overlay */}
             <div className="relative group">
               <div
-                className="w-40 h-40 rounded-full flex items-center justify-center shadow-lg overflow-hidden"
+                className="w-40 h-40 rounded-full flex items-center justify-center overflow-hidden shadow-lg"
                 style={{ background: currentPreset?.color ?? "#E0E0E0" }}
               >
-                {currentPreset && !avatarImgError ? (
+                {currentPreset ? (
                   <img
                     src={currentPreset.image}
-                    alt="avatar"
+                    alt="Avatar"
                     className="w-full h-full object-cover"
-                    onError={() => setAvatarImgError(true)}
                   />
                 ) : (
-                  <span className="text-white font-bold text-4xl uppercase">
-                    {currentUser?.username?.[0] ?? "?"}
+                  <span className="text-white text-5xl font-bold uppercase">
+                    {currentUser?.username?.charAt(0) || "?"}
                   </span>
                 )}
               </div>

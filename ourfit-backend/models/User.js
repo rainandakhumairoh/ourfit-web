@@ -16,6 +16,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     default: "user",
   },
+  avatarId: {
+    type: String,
+    default: "null"
+  }
 });
 
 const User = mongoose.model("User", UserSchema);
