@@ -100,7 +100,7 @@ export default function PersonalizationSection() {
             <motion.img
               src={styleQuiz}
               alt="style quiz"
-              className="w-[70vw] max-w-[400] md:w-[85vw] lg:w-[100vw] h-auto"
+              className="w-[70vw] md:w-[85vw] lg:w-[90vw] h-auto"
               animate={{
               scale: [1, 1.2, 1]
               }}

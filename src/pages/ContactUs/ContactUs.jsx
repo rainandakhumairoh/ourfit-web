@@ -180,7 +180,7 @@ const handleSubmit = async (e) => {
           )}
 
           {success && (
-            <div className="text-green text-sm">
+            <div className="text-white text-sm">
               Message sent successfully!
             </div>
           )}
