@@ -8,6 +8,8 @@ export default function ProductForm({ refresh }) {
   const [description, setDescription] = useState("");
   const [coverImage, setCoverImage] = useState(null);
   const [images, setImages] = useState([]);
+  const [shopeeLink, setShopeeLink] = useState("");
+  const [tiktokLink, setTiktokLink] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,10 +24,13 @@ export default function ProductForm({ refresh }) {
     formData.append("price", price);
     formData.append("category", category);
     formData.append("description", description);
+    formData.append("shopeeLink", shopeeLink);
+    formData.append("tiktokLink", tiktokLink);
     formData.append(
       "coverImage",
       coverImage
     );
+
 
     images.forEach((img) => {
       formData.append("images", img);
@@ -49,6 +54,8 @@ export default function ProductForm({ refresh }) {
       setPrice("");
       setCategory("");
       setDescription("");
+      setShopeeLink("");
+      setTiktokLink("");
       setCoverImage(null);
       setImages([]);
 
@@ -111,6 +118,31 @@ export default function ProductForm({ refresh }) {
         onChange={(e) => setDescription(e.target.value)}
         className="border p-3 rounded-xl h-28 resize-none"
       />
+
+      {/* MARKETPLACE */}
+      <div className="space-y-3">
+
+        <h3 className="font-semibold text-[#5a2e0f]">
+          Link Marketplace
+        </h3>
+
+        <input
+          type="url"
+          placeholder="Link Shopee (opsional)"
+          value={shopeeLink}
+          onChange={(e) => setShopeeLink(e.target.value)}
+          className="border p-3 rounded-xl w-full"
+        />
+
+        <input
+          type="url"
+          placeholder="Link TikTok Shop (opsional)"
+          value={tiktokLink}
+          onChange={(e) => setTiktokLink(e.target.value)}
+          className="border p-3 rounded-xl w-full"
+        />
+
+      </div>
 
       {/* IMAGE */}
       <div>

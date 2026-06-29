@@ -48,6 +48,8 @@ router.post(
         price,
         category,
         description,
+        shopeeLink,
+        tiktokLink,
       } = req.body;
 
       const coverImage =
@@ -68,6 +70,10 @@ router.post(
         price,
         category,
         description,
+        marketplaceLinks: {
+          shopee: shopeeLink,
+          tiktok: tiktokLink,
+        },
         coverImage,
         images,
       });
@@ -147,6 +153,8 @@ router.put(
         price,
         category,
         description,
+        shopeeLink,
+        tiktokLink,
       } = req.body;
 
       const updateData = {
@@ -154,6 +162,10 @@ router.put(
         price,
         category,
         description,
+        marketplaceLinks: {
+          shopee: shopeeLink,
+          tiktok: tiktokLink,
+        },
       };
 
       // COVER

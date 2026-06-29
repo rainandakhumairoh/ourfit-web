@@ -22,6 +22,12 @@ export default function ProductList({
     setEditDescription,
   ] = useState("");
 
+  const [editShopeeLink, setEditShopeeLink] =
+  useState("");
+
+  const [editTiktokLink, setEditTiktokLink] =
+  useState("");
+
   // COVER
   const [editCoverImage, setEditCoverImage] =
     useState(null);
@@ -58,6 +64,14 @@ export default function ProductList({
       product.description
     );
 
+    setEditShopeeLink(
+      product.marketplaceLinks?.shopee || ""
+    );
+
+    setEditTiktokLink(
+      product.marketplaceLinks?.tiktok || ""
+    );
+
     setEditCoverImage(null);
 
     setEditImages([]);
@@ -88,6 +102,16 @@ export default function ProductList({
       formData.append(
         "description",
         editDescription
+      );
+
+      formData.append(
+        "shopeeLink",
+        editShopeeLink
+      );
+
+      formData.append(
+        "tiktokLink",
+        editTiktokLink
       );
 
       // COVER
@@ -291,6 +315,35 @@ export default function ProductList({
                 }
                 className="border p-3 rounded-xl h-28 resize-none"
               />
+
+              
+              <div className="space-y-3">
+
+                <h3 className="font-semibold text-[#5a2e0f]">
+                  Link Marketplace
+                </h3>
+
+                <input
+                  type="url"
+                  placeholder="Link Shopee"
+                  value={editShopeeLink}
+                  onChange={(e) =>
+                    setEditShopeeLink(e.target.value)
+                  }
+                  className="border p-3 rounded-xl w-full"
+                />
+
+                <input
+                  type="url"
+                  placeholder="Link TikTok Shop"
+                  value={editTiktokLink}
+                  onChange={(e) =>
+                    setEditTiktokLink(e.target.value)
+                  }
+                  className="border p-3 rounded-xl w-full"
+                />
+
+              </div>
 
               {/* COVER */}
               <div>

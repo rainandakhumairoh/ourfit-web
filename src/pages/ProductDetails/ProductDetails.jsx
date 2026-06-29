@@ -70,13 +70,72 @@ import { UserContext } from "../../context/UserContext"; // sesuaikan path
   );
 }
 
+function MarketplacePopup({ product, onClose }) {
+  console.log(product);               // cek
+  console.log(product.marketplaceLinks);
+  const links = product.marketplaceLinks || {};
+
+  const marketplaces = [
+    {
+      name: "Shopee",
+      color: "bg-orange-500 hover:bg-orange-600",
+      url: links.shopee?.trim(),
+    },
+    {
+      name: "TikTok Shop",
+      color: "bg-black hover:bg-gray-800",
+      url: links.tiktok?.trim(),
+    },
+  ].filter((item) => item.url);
+
+
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm"
+      onClick={onClose}
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="bg-white rounded-3xl w-full max-w-sm p-8 mx-4 shadow-2xl"
+      >
+        <h2 className="text-xl font-bold text-center text-[#5A4A3A] mb-2">
+          Pilih Marketplace
+        </h2>
+
+        <p className="text-sm text-gray-500 text-center mb-6">
+          Kamu ingin membeli produk ini di mana?
+        </p>
+
+        <div className="space-y-3">
+          {marketplaces.map((market) => (
+            <button
+              key={market.name}
+              onClick={() => window.open(market.url, "_blank")}
+              className={`w-full py-3 rounded-xl text-white font-semibold transition ${market.color}`}
+            >
+              {market.name}
+            </button>
+          ))}
+        </div>
+
+        <button
+          onClick={onClose}
+          className="w-full mt-5 py-2 rounded-xl bg-gray-200 hover:bg-gray-300 text-gray-700"
+        >
+          Batal
+        </button>
+      </div>
+    </div>
+  );
+}
+
 export default function ProductDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
   const {currentUser} = useContext(UserContext);
   const [product, setProduct] = useState(null);
   const [selectedImage, setSelectedImage] = useState("");
-  const [activeTab, setActiveTab] = useState("deskripsi");
   const [thumbStart, setThumbStart] = useState(0);
 
   const [isWished, setIsWished] = useState(false);
@@ -86,6 +145,28 @@ export default function ProductDetails() {
   const [selectedSize, setSelectedSize] = useState("");
 
   const [showLoginPopup, setShowLoginPopup] = useState(false);
+  const [showMarketplaceModal, setShowMarketplaceModal] = useState(false);
+  const handleBuyNow = () => {
+  const shopee = product.marketplaceLinks?.shopee?.trim();
+  const tiktok = product.marketplaceLinks?.tiktok?.trim();
+
+  const availableLinks = [shopee, tiktok].filter(Boolean);
+
+  // Tidak ada marketplace
+  if (availableLinks.length === 0) {
+    alert("Link marketplace belum tersedia.");
+    return;
+  }
+
+  // Hanya satu marketplace
+  if (availableLinks.length === 1) {
+    window.open(availableLinks[0], "_blank");
+    return;
+  }
+
+  // Dua marketplace
+  setShowMarketplaceModal(true);
+};
 
   const THUMB_VISIBLE = 5;
 
@@ -171,6 +252,10 @@ export default function ProductDetails() {
   const visibleThumbs = allImages.slice(thumbStart, thumbStart + THUMB_VISIBLE);
   const colors = product.colors || ["Broken white", "Ivory", "Soft pink", "Maroon", "Sage", "Soft blue", "Black"];
   const sizes = product.sizes || ["Petite size", "All size"];
+  const buyLink =
+  product.marketplaceLinks?.shopee ||
+  product.marketplaceLinks?.tiktok ||
+  "";
 
   return (
     <>
@@ -286,8 +371,11 @@ export default function ProductDetails() {
 
           {/* TOMBOL BELI + WISHLIST — ← diupdate */}
           <div className="flex items-center gap-3">
-            <button className="flex-1 bg-pink1 hover:bg-oren2 text-white font-semibold py-3 rounded-full shadow-md transition active:scale-95">
-              Beli sekarang
+            <button
+              onClick={handleBuyNow}
+              className="flex-1 bg-pink1 hover:bg-oren2 text-white font-semibold py-3 rounded-full shadow-md transition active:scale-95"
+            >
+              Beli Sekarang
             </button>
             <button
               onClick={handleWishToggle}
@@ -315,37 +403,25 @@ export default function ProductDetails() {
         </div>
       </div>
 
-      {/* TAB — tidak berubah */}
+      {/* TAB */}
       <div className="max-w-5xl mx-auto bg-white border-2 border-[#f4cda3] rounded-3xl p-6">
-        <div className="flex border-b border-[#f4cda3] mb-5">
-          <button
-            onClick={() => setActiveTab("deskripsi")}
-            className={`flex-1 py-3 font-semibold text-sm transition ${
-              activeTab === "deskripsi"
-                ? "text-[#804000] border-b-4 border-[#804000]"
-                : "text-gray-400 hover:text-gray-600"
-            }`}
-          >
-            Deskripsi
-          </button>
-          <button
-            onClick={() => setActiveTab("review")}
-            className={`flex-1 py-3 font-semibold text-sm transition ${
-              activeTab === "review"
-                ? "text-[#804000] border-b-4 border-[#804000]"
-                : "text-gray-400 hover:text-gray-600"
-            }`}
-          >
-            Review
-          </button>
-        </div>
-        {activeTab === "deskripsi" ? (
-          <p className="text-gray-700 leading-relaxed text-sm">{product.description}</p>
-        ) : (
-          <p className="text-gray-500 italic text-sm">Belum ada review.</p>
-        )}
+        <h2 className="text-xl font-bold text-[#5a2e0f] mb-4">
+          Deskripsi Produk
+        </h2>
+
+        <div className="border-b border-[#f4cda3] my-4"></div>
+
+        <p className="text-gray-700 leading-relaxed whitespace-pre-line">
+          {product.description}
+        </p>
       </div>
     </div>
+    {showMarketplaceModal && (
+      <MarketplacePopup
+        product={product}
+        onClose={() => setShowMarketplaceModal(false)}
+      />
+    )}
   </>
   );
 }

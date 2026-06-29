@@ -21,6 +21,17 @@ const productSchema = new mongoose.Schema(
       type: String,
     },
 
+    marketplaceLinks: {
+      shopee: {
+        type: String,
+        default: ""
+      },
+      tiktok: {
+        type: String,
+        default: ""
+      },
+    },
+
     // COVER
     coverImage: {
       type: String,
@@ -38,6 +49,7 @@ const productSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+
 
 
 const Product = mongoose.model("Product", productSchema);
