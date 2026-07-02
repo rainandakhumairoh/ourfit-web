@@ -144,7 +144,7 @@ export default function MixMatchItem() {
                 text-white
                 bg-pink1
                 rounded-full
-                px-8 md:px-16 
+                px-16 md:px-18 lg:px-20 
                 py-2
                 text-sm
                 shadow-md
@@ -153,7 +153,7 @@ export default function MixMatchItem() {
                 transition-all
               "
             >
-              Lihat Selengkapnya
+              See more
             </Link>
           </div>
         </div>

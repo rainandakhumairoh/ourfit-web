@@ -86,9 +86,9 @@ export default function WardrobeItem() {
             <div className="w-[330px] h-[500px] bg-transparent flex flex-col items-center justify-end pb-4">
               <Link
                 to="/wardrobe"
-                className="border border-white text-white bg-[#8A3E2D] rounded-full px-16 py-2 text-sm hover:bg-white hover:text-coklat transition-all shadow-md"
+                className="border border-white text-white bg-[#8A3E2D] rounded-full px-20 py-2 text-sm hover:bg-white hover:text-coklat transition-all shadow-md"
               >
-                Lihat Selengkapnya
+                See more
               </Link>
             </div>
           </div>
@@ -148,7 +148,7 @@ export default function WardrobeItem() {
               to="/wardrobe"
               className="border border-white text-white bg-[#8A3E2D] rounded-full px-16 py-2 text-sm hover:bg-white hover:text-coklat transition-all shadow-md"
             >
-              Lihat Selengkapnya
+              See more
             </Link>
           </div>
         </div>

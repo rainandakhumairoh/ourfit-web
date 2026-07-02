@@ -46,7 +46,7 @@ function LoginPopup({ onClose, onLogin }) {
         <div className="text-center font-[Poppins]">
           <h3 className="text-lg font-bold text-gray-800">Login Dulu, Yuk!</h3>
           <p className="text-sm text-gray-500 mt-1 leading-relaxed">
-            Kamu perlu login untuk menyimpan dan melihat outfit bookmark kamu.
+            Kamu perlu login untuk menyimpan dan melihat produk favorit kamu.
           </p>
         </div>
 
