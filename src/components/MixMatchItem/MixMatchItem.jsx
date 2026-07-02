@@ -21,7 +21,7 @@ export default function MixMatchItem() {
       <div className="relative w-full bg-pink2 pb-16">
         <div className="text-center pt-16 pb-10 px-6">
           <h1 className="text-white font-bold text-3xl mb-4 font-[Poppins]">MIX & MATCH</h1>
-          <p className="text-white text-sm max-w-xl mx-auto leading-relaxed font-[Poppins] font-light">
+          <p className="text-white text-sm max-w-xl mx-auto leading-relaxed font-[Poppins] font-medium">
             Jelajahi berbagai kombinasi outfit dan temukan inspirasi gaya baru setiap hari! <br />
             Fitur Mix & Match ini membantu kamu memadupadankan produk Ourfit sesuai warna, potongan, dan gaya favoritmu.
           </p>

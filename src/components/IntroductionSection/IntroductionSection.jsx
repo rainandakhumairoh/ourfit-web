@@ -51,7 +51,7 @@ export default function IntroductionSection() {
             </div>
 
             {/* RIGHT SIDE - TEXT CONTENT */}
-            <div className="text-left space-y-6 mb text-justify">
+            <div className="text-left space-y-6 mb text-justify font-medium">
               {/* Paragraph 1 */}
               <p className="text-sm md:text-base text-black leading-relaxed">
                 Ourfit adalah brand fashion muslimah yang petite-friendly, dirancang khusus untuk kamu yang sering kesulitan cari baju yang pas di badan.

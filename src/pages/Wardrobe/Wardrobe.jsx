@@ -50,7 +50,7 @@ export default function Products() {
       />
       <div className="min-h-screen bg-coklat p-10 pt-8">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold text-center text-white mb-8">
+          <h2 className="text-3xl font-bold text-center text-white mb-8 font-[Poppins]">
             Wardrobe Collection
           </h2>
 

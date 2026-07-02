@@ -100,6 +100,28 @@ export default function StyleQuizQuestion() {
     return answers[q.id] && answers[q.id] !== "";
   }
 
+  function goNext() {
+    if (currentStep < questions.length - 1) {
+      setCurrentStep((s) => s + 1);
+    } else {
+      const result = calculateStyleQuizResult(answers);
+
+      sessionStorage.setItem(
+        "styleQuizResult",
+        JSON.stringify(result)
+      );
+
+      sessionStorage.setItem(
+        "styleQuizCompleted",
+        "true"
+      );
+
+      sessionStorage.removeItem("styleQuizTemp");
+
+      navigate("/style-quiz/done");
+    }
+  }
+
   // ============================
   // SCORING RULES (dari brief)
   // ============================
@@ -320,9 +342,10 @@ export default function StyleQuizQuestion() {
   }
 
   const q = questions[currentStep];
+  const totalSteps = questions.length;
 
   return (
-    <div className="relative min-h-screen bg-[#F7E3C6] flex flex-col items-center px-5 py-10">
+    <div className="relative min-h-screen bg-primary flex flex-col items-center px-5 py-10">
       {/* CLOSE BUTTON */}
       <button
         onClick={() => {
@@ -337,7 +360,7 @@ export default function StyleQuizQuestion() {
       </button>
 
       {/* TITLE */}
-      <h1 className="text-[#C64747] text-2xl font-bold text-center mb-6">
+      <h1 className="text-pink1 text-2xl font-bold text-center mb-6 font-[Poppins]">
         OURFIT STYLE QUIZ
       </h1>
 
@@ -358,17 +381,17 @@ export default function StyleQuizQuestion() {
       </div>
 
       {/* QUESTION */}
-      <p className="text-gray-700 text-center mb-6 px-4">{q.question}</p>
+      <p className="text-gray-700 text-center mb-6 px-4 font-[Poppins] font-medium">{q.question}</p>
 
       {/* OPTIONS */}
-      <div className="w-full max-w-md flex flex-col mb-10">
+      <div className="w-full max-w-md flex flex-col mb-10 font-[Poppins]">
         {q.options.map((op) => (
           <button
             key={op}
             onClick={() => handleSelect(q.id, op)}
             className={`w-full py-3 px-4 my-2 rounded-xl border text-left transition-all ${
               answers[q.id] === op
-                ? "bg-[#D27672] text-white border-[#D27672]"
+                ? "bg-pink1 text-white border-pink1"
                 : "bg-white text-gray-700 border-gray-300"
             }`}
           >
@@ -382,14 +405,25 @@ export default function StyleQuizQuestion() {
         <button
           onClick={goNext}
           disabled={!isAnswered(q)}
-          className={`w-full py-3 rounded-full text-white text-lg transition-all ${
-            isAnswered(q)
-              ? "bg-[#C85E5A]"
-              : "bg-[#E2A6A3] opacity-60 cursor-not-allowed"
-          }`}
+          className={`
+            w-full mt-3 py-3 rounded-full text-white text-lg transition-all
+            ${
+              isAnswered(q)
+                ? "bg-pink1"
+                : "bg-[#E2A6A3] opacity-60 cursor-not-allowed"
+            }
+          `}
         >
-          {currentStep === questions.length - 1 ? "Selesai" : "Lanjut"}
+          {currentStep === totalSteps - 1 ? "Selesai" : "Lanjut"}
         </button>
+        {currentStep > 0 && (
+        <button
+          onClick={() => setCurrentStep((s) => s - 1)}
+          className="w-full mt-3 py-3 rounded-full border bg-oren3 hover:bg-oren1 text-white text-lg transition-all"
+        >
+          Kembali
+        </button>
+      )}
       </div>
     </div>
   );

@@ -15,7 +15,6 @@ function LoginPopup({ onClose, onLogin }) {
       <div
         className="relative bg-white rounded-3xl shadow-2xl px-8 py-8 mx-4 max-w-sm w-full flex flex-col items-center gap-4 animate-[popIn_0.25s_ease-out]"
         onClick={(e) => e.stopPropagation()}
-        style={{ fontFamily: "Poppins, sans-serif" }}
       >
         {/* Tombol Close */}
         <button
@@ -35,7 +34,7 @@ function LoginPopup({ onClose, onLogin }) {
         </div>
 
         {/* Teks */}
-        <div className="text-center">
+        <div className="text-center font-[Poppins]">
           <h3 className="text-lg font-bold text-gray-800">Login Dulu, Yuk!</h3>
           <p className="text-sm text-gray-500 mt-1 leading-relaxed">
             Kamu perlu login untuk menyimpan dan melihat outfit bookmark kamu.

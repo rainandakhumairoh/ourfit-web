@@ -23,7 +23,7 @@ function handleNext() {
         
         {/* LEFT — Center vertically */}
         <div className="flex flex-col items-center justify-center text-center">
-          <h1 className="text-[#C24E4E] font-bold text-2xl leading-tight mb-8 text-center md:text-left">
+          <h1 className="text-pink1 font-bold text-2xl leading-tight mb-8 text-center md:text-left font-[Poppins]">
             SELESAI! YUK LANJUT <br /> TEMUKAN STYLE-MU!
           </h1>
 
@@ -40,7 +40,7 @@ function handleNext() {
           <img
             src={animasiKarakter}
             alt="Animasi Karakter"
-            className="w-60 h-60 object-contain"
+            className="w-100 h-100 object-contain"
           />
         </div>
       </div>

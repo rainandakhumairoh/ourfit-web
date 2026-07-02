@@ -30,7 +30,7 @@ export default function TeamSection() {
   return (
     <>
       {/* SECTION 1 - Background cream dan gelombang */}
-      <div className="relative w-full flex flex-col items-center justify-center text-center" 
+      <div className="relative w-full flex flex-col items-center justify-center text-center overflow-hidden" 
       style={{ 
         backgroundColor: "#FFEBC8", 
         backgroundPosition: "center", 
@@ -78,7 +78,7 @@ export default function TeamSection() {
                     -translate-x-1/2
                     top-10 md:top-12 lg:top-14
 
-                    w-[80%]
+                    w-[90%]
                     md:w-auto
                     max-w-[400px]
                     md:max-w-xl

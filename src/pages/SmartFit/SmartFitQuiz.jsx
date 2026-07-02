@@ -217,7 +217,7 @@ function calculateSmartFitResult(a) {
   const totalSteps = questions.length;
 
   return (
-    <div className="relative min-h-screen bg-[#F7E3C6] flex flex-col items-center px-5 py-10">
+    <div className="relative min-h-screen bg-primary flex flex-col items-center px-6 py-10">
 
       {/* CLOSE BUTTON */}
       <button
@@ -226,18 +226,18 @@ function calculateSmartFitResult(a) {
           sessionStorage.removeItem("smartFitResult");
           navigate("/");
         }}
-        className="absolute top-5 right-5 text-[#C75E58] text-2xl font-bold"
+        className="absolute top-5 right-5 text-pink1 text-2xl font-bold"
       >
         ×
       </button>
 
       {/* TITLE */}
-      <h1 className="text-[#C64747] text-2xl font-bold text-center mb-6">
+      <h1 className="text-pink1 text-2xl font-bold text-center mb-6 font-[Poppins]">
         PILIH YANG PALING SESUAI DENGANMU
       </h1>
 
       {/* PROGRESS BAR */}
-      <div className="flex gap-3 mb-8">
+      <div className="flex gap-2 mb-8">
         {questions.map((qItem, i) => {
           const filled = isAnswered(qItem);
 
@@ -249,7 +249,7 @@ function calculateSmartFitResult(a) {
                   i === currentStep
                     ? "bg-[#C64747]"
                     : filled
-                    ? "bg-[#D27672]"
+                    ? "bg-pink1"
                     : "bg-[#C9C5BB]"
                 }`}
             ></div>
@@ -258,10 +258,10 @@ function calculateSmartFitResult(a) {
       </div>
 
       {/* QUESTION */}
-      <p className="text-gray-700 text-center mb-6 px-4">{q.question}</p>
+      <p className="text-gray-700 text-center mb-6 px-4 font-[Poppins] font-medium">{q.question}</p>
 
       {/* OPTIONS */}
-      <div className="w-full max-w-md flex flex-col mb-10">
+      <div className="w-full max-w-md flex flex-col mb-10 font-[Poppins]">
         {q.type === "checkbox"
           ? q.options.map((op) => (
               <label
@@ -284,7 +284,7 @@ function calculateSmartFitResult(a) {
                   w-full py-3 px-4 my-2 rounded-xl border text-left transition-all
                   ${
                     answers[q.id] === op
-                      ? "bg-[#D27672] text-white border-[#D27672]"
+                      ? "bg-pink1 text-white border-[#D27672]"
                       : "bg-white text-gray-700 border-gray-300"
                   }
                 `}
@@ -313,7 +313,7 @@ function calculateSmartFitResult(a) {
         {currentStep > 0 && (
         <button
           onClick={() => setCurrentStep((s) => s - 1)}
-          className="w-full mt-3 py-3 rounded-full border bg-oren2 hover:bg-oren1 text-white text-lg transition-all"
+          className="w-full mt-3 py-3 rounded-full border bg-oren3 hover:bg-oren1 text-white text-lg transition-all"
         >
           Kembali
         </button>

@@ -28,7 +28,7 @@ export default function MasukkanNama() {
       {/* Tombol X */}
       <button
         onClick={handleClose}
-        className="absolute top-6 right-6 text-[#C67A3F] hover:opacity-70 transition"
+        className="absolute top-6 right-6 text-pink1 hover:opacity-70 transition"
       >
         <X size={28} strokeWidth={2.5} />
       </button>
@@ -37,8 +37,8 @@ export default function MasukkanNama() {
       <div className="w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
         
         {/* FORM */}
-        <div className="flex flex-col">
-          <h1 className="text-[#C64747] font-bold text-3xl leading-tight mb-6">
+        <div className="flex flex-col justify-items-center">
+          <h1 className="text-pink1 font-bold text-3xl leading-tight mb-6 font-[Poppins] text-center">
             MASUKKAN NAMAMU DULU YA!
           </h1>
 
@@ -56,7 +56,7 @@ export default function MasukkanNama() {
             className={`py-4 rounded-full text-white text-lg shadow-md transition-all
               ${
                 name.trim()
-                  ? "bg-[#C85E5A]"
+                  ? "bg-pink1"
                   : "bg-[#D8A4A0] opacity-60 cursor-not-allowed"
               }`}
           >
@@ -69,7 +69,7 @@ export default function MasukkanNama() {
           <img
             src={karakter}
             alt="Karakter Animasi"
-            className="w-64 h-64 object-contain rounded-full"
+            className="w-100 h-100 object-contain rounded-full"
           />
         </div>
       </div>

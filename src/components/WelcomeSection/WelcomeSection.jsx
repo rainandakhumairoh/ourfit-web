@@ -17,8 +17,8 @@ export default function WelcomeSection() {
       >
         {/* Teks judul */}
         <h1 className="text-xl sm:text-2xl md:text-2xl lg:text-3xl font-bold text-center 
-          mt-28 px-4 sm:px-8 
-          tracking-wide uppercase leading-snug">
+          mt-28 px-2 md:px-8 
+           uppercase leading-snug">
           Hai, kami OURFIT
           <br />
           Pilihan terbaikmu untuk tampil <br />
@@ -42,7 +42,7 @@ export default function WelcomeSection() {
           px-4 sm:px-8 md:px-12">
           <p className="text-white text-xs sm:text-sm md:text-base 
             max-w-xs sm:max-w-sm md:max-w-xl 
-            mx-auto text-center font-light leading-relaxed">
+            mx-auto text-center font-medium leading-relaxed">
             Di website ini, kamu bisa menemukan berbagai koleksi outfit terbaru, 
             fitur Smart Fit untuk bantu pilih ukuran terbaik, dan Style Quiz untuk 
             temukan gaya yang paling cocok dengan kepribadianmu.

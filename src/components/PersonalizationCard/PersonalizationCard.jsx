@@ -124,18 +124,24 @@ export default function PersonalizationCard({ smart, styleRes, readOnly = false 
     setSaving(true);
     try {
       const userId = currentUser.id || currentUser._id;
+      console.log(currentUser);
+      console.log(userId);
       await axios.post("http://localhost:5000/api/personalization", {
         userId,
-        primary,
-        title: displayTitle,
-        mix: mix ?? null,
-        versatile: versatile ?? false,
-        undertone,
-        colors: finalColors,
-        styleDesc: meta.desc,
-        scores: scores ?? {},
-        sizeCategory: smart.sizeCategory,
-        BMI: smart.BMI,
+        name: currentUser.name,
+
+        smartFit: {
+          BMI: smart.BMI,
+          sizeCategory: smart.sizeCategory,
+        },
+
+        styleQuiz: {
+          primary,
+          mix,
+          versatile,
+          undertone,
+          scores,
+        },
       });
       alert("Hasil berhasil disimpan!");
     } catch (err) {

@@ -89,7 +89,7 @@ async function handleRetake() {
           className="w-72 h-auto object-contain"
         />
 
-        <h1 className="text-pink1 text-2xl font-bold mt-6">
+        <h1 className="text-pink1 text-xl md:text-2xl lg:text-2xl font-bold font-[Poppins] mt-6">
           AYO TEMUKAN UKURAN YANG
           <br />
           FIT DENGAN SMART FIT!
@@ -117,7 +117,7 @@ async function handleRetake() {
           </>
         ) : (
           <>
-            <p className="text-coklat text-sm max-w-[350px] mt-3">
+            <p className="text-coklat text-sm font-medium px-8 mt-3 font-[Poppins]">
               Siap cari ukuran paling pas? Yuk jawab beberapa pertanyaan cepat
               biar kami bantu temukan size outfitmu dalam hitungan detik!
             </p>

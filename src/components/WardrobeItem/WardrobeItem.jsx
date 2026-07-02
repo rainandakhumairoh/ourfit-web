@@ -19,7 +19,19 @@ export default function WardrobeItem() {
 
       {/* ======== Konten ======== */}
       <div className="relative z-10 flex flex-col items-center">
-        <h2 className="text-center text-pink1 font-bold text-4xl mb-8 font-[Poppins]">
+        <h2 className="text-center text-pink1 font-bold text-3xl mb-8 font-[Poppins] px-2"
+        style={{
+            textShadow: `
+              -4px -4px 0 #ffffff,
+              4px -4px 0 #ffffff,
+              -4px  4px 0 #ffffff,
+              4px  4px 0 #ffffff,
+              0px -4px 0 #ffffff,
+              0px  4px 0 #ffffff,
+              -4px  0px 0 #ffffff,
+              4px  0px 0 #ffffff
+            `,
+          }}>
           OURFIT’S WARDROBE
         </h2>
 

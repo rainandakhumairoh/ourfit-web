@@ -79,18 +79,18 @@ export default function Navbar() {
       {/* Modal Pilihan Login */}
       {showLoginChoice && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/50 px-4 z-50">
-          <div className="bg-white p-6 rounded-xl shadow-lg max-w-sm w-full text-center">
+          <div className="bg-white p-6 rounded-xl shadow-lg max-w-sm w-full text-center font-[Poppins]">
             <h2 className="text-lg font-semibold mb-4">Login/Daftar sebagai?</h2>
             <div className="flex flex-col gap-3">
               <button
                 onClick={() => handleChoice("user")}
-                className="py-2 px-4 bg-coklat text-white rounded-full bg-oren3 hover:bg-coklat"
+                className="py-2 px-4 bg-coklat text-white rounded-full bg-coklat hover:bg-oren3"
               >
                 User
               </button>
               <button
                 onClick={() => handleChoice("admin")}
-                className="py-2 px-4 bg-[#C75E58] text-white rounded-full bg-pink2 hover:bg-pink1"
+                className="py-2 px-4 bg-[#C75E58] text-white rounded-full bg-pink1 hover:bg-pink2"
               >
                 Admin
               </button>

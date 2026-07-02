@@ -22,6 +22,9 @@ export default {
         xl: '5rem',
         '2xl': '6rem',
       },
+      fontFamily: {
+        poppins: ['Poppins', 'sans-serif'],
+      },
     },
   },
   plugins: [],

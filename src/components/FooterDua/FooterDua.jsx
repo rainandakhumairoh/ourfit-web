@@ -9,8 +9,8 @@ import { faInstagram, faTiktok, faShopify, faWhatsapp } from '@fortawesome/free-
 
 export default function FooterDua() {
   return (
-    <footer className="bg-primary text-[#A95C18] py-12 px-8">
-      <div className="max-w-6xl mx-auto px-4 md:px-12 grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12 items-center md:items-start">
+    <footer className="bg-primary text-[#A95C18] py-12 px-8 overflow-hidden">
+      <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-12 grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-6 lg:gap-12 items-center md:items-start">
         
         {/* === LEFT SECTION === */}
         <div className="flex flex-col items-center md:items-start text-center md:text-left">
@@ -39,7 +39,7 @@ export default function FooterDua() {
         </div>
 
         {/* === RIGHT SECTION === */}
-        <div className="text-center md:text-left md:ml-32">
+        <div className="text-center md:text-left md:ml-12 lg:ml-32">
         <h3 className="text-xl font-bold mb-3 uppercase">
           Contact
         </h3>

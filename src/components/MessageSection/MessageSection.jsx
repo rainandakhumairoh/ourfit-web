@@ -10,7 +10,7 @@ export default function MessageSection() {
     <>
       {/* SECTION - Background Cream dengan Gradient */}
       <div
-        className="relative w-full min-h-full flex flex-col items-center justify-center py-12 md:py-24"
+        className="relative w-full min-h-full flex flex-col items-center justify-center py-12 md:py-24 "
         style={{
           backgroundColor: "#D98282",
         }}
@@ -36,7 +36,7 @@ export default function MessageSection() {
             <div className="relative flex justify-center mt-6">
               <Link
                 to="/contactus"
-                className="text-white bg-pink1 hover:bg-oren2 rounded-full px-32 py-3 text-sm flex items-center gap-2 transition-all duration-300 shadow-md"
+                className="text-white bg-pink1 hover:bg-oren2 rounded-full px-32 py-3 text-sm flex items-center gap-2 transition-all duration-300"
               >
                 Contact Us
               </Link>

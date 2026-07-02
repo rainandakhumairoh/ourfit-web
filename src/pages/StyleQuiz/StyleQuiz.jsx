@@ -39,12 +39,12 @@ function handleStart() {
         />
 
         {/* Judul */}
-        <h1 className="text-pink1 text-2xl font-bold mt-6">
+        <h1 className="text-pink1 text-xl md:text-2xl lg:text-2xl font-bold mt-6 font-[Poppins]">
           AYO TEMUKAN STYLE YANG <br/> COCOK DENGAN STYLE QUIZ!
         </h1>
 
         {/* Deskripsi */}
-        <p className="text-coklat text-sm max-w-[350px] mt-3">
+        <p className="text-coklat text-sm px-4 md:px-4 lg:px-6 mt-3 font-[Poppins]">
           Belum tahu gaya yang paling cocok untukmu? Yuk coba Style Quiz! Kami bantu pilih inspirasi outfit yang sesuai dengan selera dan vibe kamu.
         </p>
 
