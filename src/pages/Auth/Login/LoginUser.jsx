@@ -43,10 +43,19 @@ export default function LoginUser() {
       // LOGIN BERHASIL
       if (data.success) {
 
-        // simpan user ke localStorage
+        // simpan user ke Context + localStorage
         login(data.user);
 
-        navigate("/profile");
+        // Cek apakah ada halaman tujuan setelah login
+        const redirect =
+          sessionStorage.getItem("redirectAfterLogin");
+
+        if (redirect) {
+          sessionStorage.removeItem("redirectAfterLogin");
+          navigate(redirect);
+        } else {
+          navigate("/profile");
+        }
 
       } else {
 

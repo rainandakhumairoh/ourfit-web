@@ -100,27 +100,6 @@ export default function StyleQuizQuestion() {
     return answers[q.id] && answers[q.id] !== "";
   }
 
-  function goNext() {
-    if (currentStep < questions.length - 1) {
-      setCurrentStep((s) => s + 1);
-    } else {
-      const result = calculateStyleQuizResult(answers);
-
-      sessionStorage.setItem(
-        "styleQuizResult",
-        JSON.stringify(result)
-      );
-
-      sessionStorage.setItem(
-        "styleQuizCompleted",
-        "true"
-      );
-
-      sessionStorage.removeItem("styleQuizTemp");
-
-      navigate("/style-quiz/done");
-    }
-  }
 
   // ============================
   // SCORING RULES (dari brief)

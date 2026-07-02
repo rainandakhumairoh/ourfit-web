@@ -4,50 +4,39 @@ import { UserContext } from "../../context/UserContext";
 import PersonalizationCard from "../../components/PersonalizationCard/PersonalizationCard";
 
 export default function HasilPersonalisasi() {
-  const { currentUser } = useContext(UserContext);
+  const smart = JSON.parse(
+    sessionStorage.getItem("smartFitResult")
+  );
 
-  const [result, setResult] = useState(null);
+  const style = JSON.parse(
+    sessionStorage.getItem("styleQuizResult")
+  );
 
-  useEffect(() => {
-    async function getData() {
-      try {
-        if (!currentUser?._id) return;
+  const name =
+    sessionStorage.getItem("userName") || "User";
 
-        const res = await axios.get(
-          `http://localhost:5000/api/personalization/${currentUser._id}`
-        );
-
-        setResult(res.data);
-      } catch (err) {
-        console.error(err);
-      }
-    }
-
-    getData();
-  }, [currentUser]);
-
-  if (!result) {
+  if (!smart || !style) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        Loading...
+        Belum ada hasil personalisasi.
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#F7E3C6] px-6 py-10 relative">
-      <h1 className="text-[#C64747] text-3xl font-bold text-center">
-        Hai, {result.name || "User"}! ✨
+    <div className="min-h-screen bg-primary px-6 py-10 relative">
+      <h1 className="text-pink1 text-4xl font-bold text-center font-[Poppins]">
+        Hai, {name}! ✨
       </h1>
 
-      <p className="text-center text-gray-700 mt-1 mb-8">
+      <p className="text-center text-gray-700 mt-1 mb-8 font-[Poppins] font-medium">
         Ini hasil personalisasi lengkap untukmu.
       </p>
 
       <PersonalizationCard
-        smart={result.smartFit}
-        styleRes={result.styleQuiz}
-        readOnly={true}
+        smart={smart}
+        styleRes={style}
+        readOnly={false}
       />
     </div>
   );
