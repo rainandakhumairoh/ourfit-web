@@ -36,7 +36,7 @@ export default function MessageSection() {
             <div className="relative flex justify-center mt-6">
               <Link
                 to="/contactus"
-                className="border border-white text-white bg-pink1 hover:bg-oren2 border-white rounded-full px-32 py-3 text-sm flex items-center gap-2 transition-all duration-300"
+                className="border border-white text-white bg-pink1 hover:bg-oren2 border-white rounded-full px-32 py-3 text-sm flex items-center gap-2 transition-all duration-300 shadow-sm"
               >
                 Contact Us
               </Link>
