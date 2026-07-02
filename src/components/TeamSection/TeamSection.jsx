@@ -37,25 +37,37 @@ export default function TeamSection() {
         backgroundRepeat: "no-repeat", 
         }}>
 
-          <AnimatePresence mode="wait">
-          <motion.img
-            key={currentPhoto}
-            src={photos[currentPhoto]}
-            alt="Foto Team"
-            className="w-[400px] md:w-[550px] lg:w-[900px] mt-24 md:mt-4"
-            initial={{
-              opacity: 0,
-            }}
-
-            animate={{
-              opacity: 1,
-            }}
-
-            exit={{
-              opacity: 0,
-            }}
-          />
-        </AnimatePresence>
+        <div
+          className="
+            relative
+            w-[400px]
+            md:w-[550px]
+            lg:w-[1000px]
+            h-[200px]
+            md:h-[350px]
+            lg:h-[500px]
+            mt-24
+            md:mt-4
+          "
+        >
+          {photos.map((photo, index) => (
+            <motion.img
+              key={index}
+              src={photo}
+              alt={`Foto Team ${index + 1}`}
+              className="absolute inset-0 w-full h-full object-contain"
+              initial={false}
+              animate={{
+                opacity: currentPhoto === index ? 1 : 0,
+                scale: currentPhoto === index ? 1 : 1.02,
+              }}
+              transition={{
+                duration: 0.8,
+                ease: "easeInOut",
+              }}
+            />
+          ))}
+        </div>
 
         {/* SECTION 2 - Container dengan 2 box persegi */}
         <div className="w-full relative font-[Poppins]">
