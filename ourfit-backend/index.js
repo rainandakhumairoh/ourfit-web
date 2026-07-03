@@ -28,6 +28,13 @@ app.use("/api/bookmarks", bookmarkRoute);
 app.use("/api/favorite", favoriteRoute);
 app.use("/api/personalization", personalizationRoute);
 
+app.get("/", (req, res) => {
+  res.json({
+    success: true,
+    message: "Ourfit Backend is Running 🚀"
+  });
+});
+
 // Connect MongoDB
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connected"))
