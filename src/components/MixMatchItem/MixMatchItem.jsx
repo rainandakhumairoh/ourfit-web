@@ -9,7 +9,7 @@ export default function MixMatchItem() {
   const [mixmatch, setMixes] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/mixmatch")
+    fetch("/mixmatch")
       .then((res) => res.json())
       .then((data) => setMixes(data))
       .catch((err) => console.error(err));
@@ -29,19 +29,19 @@ export default function MixMatchItem() {
 
         {/* ======== desktop ======== */}
         <div className="hidden md:block relative w-full flex flex-col items-center justify-center bg-cover bg-center">
-
           {/* GANTUNGAN di atas bordir */}
           <img src={bgGantungan} alt="Gantungan" className="relative w-full h-auto object-contain z-10" />
 
           {/* Kotak foto */}
           <div className="absolute top-[50%] left-1/2 -translate-x-1/2 flex justify-center gap-8 px-6 z-20 aspect-square">
             {mixmatch.slice(0, 3).map((item) => (
-              <Link 
-              key={item._id} 
-              to={`/mixmatch/${item._id}`} 
-              className="w-[350px] h-[350px] bg-white rounded-xl shadow-md flex items-center justify-center border-2 border-oren1 overflow-hidden flex flex-col transition-transform duration-300 hover:scale-105 cursor-pointer">
+              <Link
+                key={item._id}
+                to={`/mixmatch/${item._id}`}
+                className="w-[350px] h-[350px] bg-white rounded-xl shadow-md flex items-center justify-center border-2 border-oren1 overflow-hidden flex flex-col transition-transform duration-300 hover:scale-105 cursor-pointer"
+              >
                 {item.image ? (
-                  <img src={`http://localhost:5000${item.image}`} alt={item.title} className="object-cover w-full h-full rounded-lg" />
+                  <img src={`${item.image}`} alt={item.title} className="object-cover w-full h-full rounded-lg" />
                 ) : (
                   <span className="text-gray-400 font-semibold text-center leading-tight">
                     FOTO <br /> MIX & MATCH
@@ -52,13 +52,10 @@ export default function MixMatchItem() {
           </div>
         </div>
 
-
         {/* mobile */}
         <div className="md:hidden relative">
-
           {/* Wrapper gantungan + card */}
           <div className="relative">
-
             {/* Gantungan */}
             <img
               src={bgGantungan4}
@@ -97,24 +94,12 @@ export default function MixMatchItem() {
                       shadow-md
                     "
                   >
-                    {item.image ? (
-                      <img
-                        src={`http://localhost:5000${item.image}`}
-                        alt={item.title}
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center text-gray-400">
-                        FOTO MIX & MATCH
-                      </div>
-                    )}
+                    {item.image ? <img src={`${item.image}`} alt={item.title} className="w-full h-full object-cover" /> : <div className="w-full h-full flex items-center justify-center text-gray-400">FOTO MIX & MATCH</div>}
                   </Link>
                 ))}
               </div>
             </div>
-
           </div>
-
         </div>
 
         {/* ======== BORDIR ======== */}
@@ -157,9 +142,7 @@ export default function MixMatchItem() {
             </Link>
           </div>
         </div>
-
       </div>
-
     </div>
   );
 }
