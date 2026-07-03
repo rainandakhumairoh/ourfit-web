@@ -2,16 +2,25 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import bgLemari from "../../assets/bgLemari.png";
 import bgelips from "../../assets/bgelips.png";
+import api from "../../api/api";
 
 export default function WardrobeItem() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    fetch("/products")
-      .then((res) => res.json())
-      .then((data) => setProducts(data))
-      .catch((err) => console.error(err));
-  }, []);
+  const fetchProducts = async () => {
+    try {
+      const res = await api.get("/products");
+      setProducts(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  fetchProducts();
+}, []);
+
+  
 
   return (
     <div className="relative w-full pt-8 md:pt-12 bg-primary overflow-hidden">

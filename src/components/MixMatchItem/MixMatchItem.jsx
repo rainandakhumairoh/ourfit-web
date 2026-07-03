@@ -4,16 +4,23 @@ import bgGantungan3 from "../../assets/bggantungan3.png";
 import bgGantungan4 from "../../assets/bggantungan4.png";
 import bgBordir from "../../assets/bgbordir2.png";
 import { useEffect, useState } from "react";
+import api from "../../api/api";
 
 export default function MixMatchItem() {
   const [mixmatch, setMixes] = useState([]);
 
   useEffect(() => {
-    fetch("/mixmatch")
-      .then((res) => res.json())
-      .then((data) => setMixes(data))
-      .catch((err) => console.error(err));
-  }, []);
+  const fetchMixmatch = async () => {
+    try {
+      const res = await api.get("/mixmatch");
+      setMixes(res.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  fetchMixmatch();
+}, []);
 
   return (
     <div className="relative w-full overflow-hidden pb-24">
