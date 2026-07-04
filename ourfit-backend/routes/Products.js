@@ -1,22 +1,9 @@
 import express from "express";
 import Product from "../models/Product.js";
 import multer from "multer";
+import { storage } from "../config/cloudinary.js";
 
 const router = express.Router();
-
-// STORAGE
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads/");
-  },
-
-  filename: (req, file, cb) => {
-    cb(
-      null,
-      Date.now() + "-" + file.originalname
-    );
-  },
-});
 
 const upload = multer({ storage });
 
@@ -54,14 +41,13 @@ router.post(
 
       const coverImage =
         req.files?.coverImage?.[0]
-          ? `/uploads/${req.files.coverImage[0].filename}`
+          ? req.files.coverImage[0].path
           : "";
 
       const images =
         req.files?.images
           ? req.files.images.map(
-              (file) =>
-                `/uploads/${file.filename}`
+              (file) => file.path
             )
           : [];
 
@@ -169,20 +155,13 @@ router.put(
       };
 
       // COVER
-      if (
-        req.files?.coverImage?.[0]
-      ) {
-        updateData.coverImage =
-          `/uploads/${req.files.coverImage[0].filename}`;
+      if (req.files?.coverImage?.[0]) {
+        updateData.coverImage = req.files.coverImage[0].path;
       }
 
       // GALLERY
       if (req.files?.images) {
-        updateData.images =
-          req.files.images.map(
-            (file) =>
-              `/uploads/${file.filename}`
-          );
+        updateData.images = req.files.images.map(file => file.path);
       }
 
       const updatedProduct =

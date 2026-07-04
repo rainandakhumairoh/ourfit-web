@@ -1,24 +1,14 @@
 import express from "express";
 import Mixmatch from "../models/Mixmatch.js";
 import multer from "multer";
+import { storage } from "../config/cloudinary.js";
 
 const router = express.Router();
 
 // MULTER STORAGE
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads/");
-  },
-
-  filename: (req, file, cb) => {
-    cb(
-      null,
-      Date.now() + "-" + file.originalname
-    );
-  },
-});
-
-const upload = multer({ storage });
+  const upload = multer({
+    storage,
+  });
 
 // CREATE MIXMATCH
 router.post(
@@ -40,7 +30,7 @@ router.post(
         category,
 
         image: req.file
-          ? `/uploads/${req.file.filename}`
+          ? req.file.path
           : "",
 
         products: Array.isArray(products)
@@ -130,7 +120,7 @@ router.put(
 
       // jika upload gambar baru
       if (req.file) {
-        updateData.image = `/uploads/${req.file.filename}`;
+        updateData.image = req.file.path;
       }
 
       const item = await Mixmatch.findByIdAndUpdate(

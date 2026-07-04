@@ -104,7 +104,7 @@ export default function ProductList({ products, refresh }) {
         {products.map((p) => (
           <div key={p._id} className="bg-white rounded-3xl shadow-md overflow-hidden">
             {/* COVER */}
-            <img src={`${p.coverImage}`} alt={p.name} className="w-full h-64 object-cover" />
+            <img src={p.coverImage} alt={p.name} className="w-full h-64 object-cover" />
 
             <div className="p-5">
               {/* CATEGORY */}
