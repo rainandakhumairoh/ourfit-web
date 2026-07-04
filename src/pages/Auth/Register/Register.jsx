@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import karakter from "../../../assets/welcomingkarakter.png";
+import api from "../../../api/api";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -34,20 +35,12 @@ export default function Register() {
 
     try {
       // KIRIM KE BACKEND
-      const response = await fetch("/auth/register", {
-        method: "POST",
-
-        headers: {
-          "Content-Type": "application/json",
-        },
-
-        body: JSON.stringify({
-          username,
-          password,
-        }),
+      const response = await api.post("/auth/register", {
+        username,
+        password,
       });
 
-      const data = await response.json();
+      const data = response.data;
 
       // REGISTER BERHASIL
       if (data.success) {

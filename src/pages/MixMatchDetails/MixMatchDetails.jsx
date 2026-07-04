@@ -200,7 +200,7 @@ export default function MixMatchDetails() {
               ? item.products.map((product) => (
                   <Link key={product._id} to={`/wardrobe/${product._id}`} className="bg-white rounded-2xl overflow-hidden shadow hover:shadow-md transition hover:scale-105 aspect-square flex flex-col">
                     {product.coverImage ? (
-                      <img src={product.coverImage} alt={product.name} className="w-full h-full object-cover" />
+                      <img src={`${product.coverImage}`} alt={product.name} className="w-full h-full object-cover" />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center">
                         <span className="text-[#c9a07a] text-xs font-medium">FOTO PRODUK</span>
