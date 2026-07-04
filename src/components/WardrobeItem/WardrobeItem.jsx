@@ -103,7 +103,7 @@ export default function WardrobeItem() {
           <div className="relative px-6 py-6 bg-coklat rounded-2xl z-10 border-2 border-oren2 shadow-md">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
               {products.slice(0, 2).map((product) => (
-                <Link key={product._id} to={`/wardrobe/${product._id}`} className="bg-[#A95C18] border-2 border-oren2 rounded-2xl p-3 aspect-square shadow-md">
+                <Link key={product._id} to={`/wardrobe/${product._id}`} className="w-full bg-[#A95C18] border-2 border-oren2 rounded-2xl p-3 aspect-square shadow-md">
                   <div className="w-full h-full bg-white border-2 border-oren2 rounded-xl overflow-hidden flex flex-col transition-transform duration-300 hover:scale-105 cursor-pointer">
                     {/* Gambar */}
                     <div className="flex-1 overflow-hidden">
