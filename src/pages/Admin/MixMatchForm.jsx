@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import api from "../../api/api";
 import { X, Plus } from "lucide-react";
 
@@ -7,6 +7,7 @@ export default function MixMatchForm({ refresh }) {
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState(null);
+  const imageInputRef = useRef(null);
 
   // Daftar semua produk dari DB untuk dipilih
   const [allProducts, setAllProducts] = useState([]);
@@ -33,6 +34,12 @@ export default function MixMatchForm({ refresh }) {
 
   const handleRemoveProduct = (id) => {
     setSelectedProducts((prev) => prev.filter((p) => p._id !== id));
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    setImage(file);
   };
 
   const handleSubmit = async (e) => {
@@ -63,6 +70,10 @@ export default function MixMatchForm({ refresh }) {
       setImage(null);
       setSelectedProducts([]);
       setSearchQuery("");
+
+      if (imageInputRef.current) {
+        imageInputRef.current.value = "";
+      }
 
       refresh();
     } catch (err) {
@@ -96,14 +107,42 @@ export default function MixMatchForm({ refresh }) {
       {/* FOTO MIX & MATCH */}
       <div>
         <p className="mb-2 font-medium">Foto Mix & Match</p>
-        <input key={image ? "has-img" : "no-img"} type="file" accept="image/*" onChange={(e) => setImage(e.target.files[0])} className="border p-2 rounded-xl w-full" required />
-      </div>
+        <input
+          ref={imageInputRef}
+          type="file"
+          accept="image/*"
+          onChange={handleImageChange}
+          className="border p-2 rounded-xl w-full"
+          required
+        />  
+        </div>
 
       {/* PREVIEW FOTO */}
       {image && (
         <div>
           <p className="text-sm mb-2 text-gray-500">Preview</p>
-          <img src={URL.createObjectURL(image)} alt="" className="w-40 h-40 object-cover rounded-2xl border border-[#f4cda3]" />
+
+          <div className="relative w-40">
+            <img
+              src={URL.createObjectURL(image)}
+              alt=""
+              className="w-40 h-40 object-cover rounded-2xl border border-[#f4cda3]"
+            />
+
+            <button
+              type="button"
+              onClick={() => {
+                setImage(null);
+
+                if (imageInputRef.current) {
+                  imageInputRef.current.value = "";
+                }
+              }}
+              className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-7 h-7"
+            >
+              ✕
+            </button>
+          </div>
         </div>
       )}
 

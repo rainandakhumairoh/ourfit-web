@@ -11,6 +11,12 @@ export default function ProductForm({ refresh }) {
   const [shopeeLink, setShopeeLink] = useState("");
   const [tiktokLink, setTiktokLink] = useState("");
 
+  const removeImage = (index) => {
+    setImages(prev =>
+        prev.filter((_, i) => i !== index)
+    );
+};
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -93,8 +99,17 @@ export default function ProductForm({ refresh }) {
       {/* IMAGE */}
       <div>
         <p className="mb-2 font-medium">Cover Produk</p>
-
-        <input key={coverImage ? "has-cover" : "no-cover"} type="file" accept="image/*" onChange={(e) => setCoverImage(e.target.files[0])} className="border p-2 rounded-xl w-full" required />
+        <input
+          type="file"
+          accept="image/*"
+          onChange={(e) => {
+            if (e.target.files.length > 0) {
+              setCoverImage(e.target.files[0]);
+            }
+          }}
+          className="border p-2 rounded-xl w-full"
+          required
+        />
       </div>
 
       {/* PREVIEW COVER */}
@@ -109,7 +124,27 @@ export default function ProductForm({ refresh }) {
       <div>
         <p className="mb-2 font-medium">Gallery Produk</p>
 
-        <input key={images.length} type="file" accept="image/*" multiple onChange={(e) => setImages(Array.from(e.target.files))} className="border p-2 rounded-xl w-full" />
+        <input key={images.length} type="file" accept="image/*" multiple 
+          onChange={(e) => {
+            const newFiles = Array.from(e.target.files);
+
+            setImages(prev => {
+                const merged = [...prev, ...newFiles];
+
+                return merged.filter(
+                    (file, index, self) =>
+                        index ===
+                        self.findIndex(
+                            f =>
+                                f.name === file.name &&
+                                f.size === file.size
+                        )
+                );
+            });
+
+            e.target.value = "";
+        }}
+      className="border p-2 rounded-xl w-full" />
       </div>
 
       {/* PREVIEW GALLERY */}
@@ -119,7 +154,21 @@ export default function ProductForm({ refresh }) {
 
           <div className="flex gap-3 flex-wrap">
             {images.map((img, index) => (
-              <img key={index} src={URL.createObjectURL(img)} alt="" className="w-24 h-24 object-cover rounded-xl border" />
+              <div key={index} className="relative">
+                <img
+                  src={URL.createObjectURL(img)}
+                  alt=""
+                  className="w-24 h-24 object-cover rounded-xl border"
+                />
+
+                <button
+                  type="button"
+                  onClick={() => removeImage(index)}
+                  className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-red-500 text-white text-sm"
+                >
+                  ✕
+                </button>
+              </div>
             ))}
           </div>
         </div>

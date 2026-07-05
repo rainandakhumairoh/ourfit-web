@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import api from "../../api/api";
 import { X, Plus } from "lucide-react";
 
@@ -11,6 +11,8 @@ export default function MixMatchList({ mixmatch, refresh }) {
   const [editDescription, setEditDescription] = useState("");
   const [editImage, setEditImage] = useState(null);
   const [editSelectedProducts, setEditSelectedProducts] = useState([]);
+  const imageInputRef = useRef(null);
+  const [currentImage, setCurrentImage] = useState("");
 
   // Untuk search produk di modal edit
   const [allProducts, setAllProducts] = useState([]);
@@ -45,8 +47,10 @@ export default function MixMatchList({ mixmatch, refresh }) {
     setEditCategory(item.category || "");
     setEditDescription(item.description || "");
     setEditImage(null);
+    setCurrentImage(item.image || "");
     setEditSelectedProducts(item.products || []);
     setSearchQuery("");
+    
   };
 
   // SUBMIT EDIT
@@ -64,6 +68,7 @@ export default function MixMatchList({ mixmatch, refresh }) {
       formData.append("description", editDescription);
       if (editImage) formData.append("image", editImage);
       editSelectedProducts.forEach((p) => formData.append("products", p._id));
+      formData.append("currentImage", currentImage);
 
       await api.put(`/mixmatch/${editItem._id}`, formData, { headers: { "Content-Type": "multipart/form-data" } });
 
@@ -72,6 +77,13 @@ export default function MixMatchList({ mixmatch, refresh }) {
     } catch (err) {
       console.error(err);
       alert("Gagal menyimpan perubahan");
+    }
+  };
+
+  const handleEditImageChange = (e) => {
+    if (e.target.files.length > 0) {
+      setEditImage(e.target.files[0]);
+      e.target.value = "";
     }
   };
 
@@ -173,24 +185,43 @@ export default function MixMatchList({ mixmatch, refresh }) {
               <div>
                 <p className="font-medium mb-2">Foto Mix & Match</p>
 
-                {/* Preview foto saat ini */}
-                {editItem.image && !editImage && (
-                  <div className="mb-2">
-                    <p className="text-xs text-gray-400 mb-1">Foto saat ini:</p>
-                    <img src={`${editItem.image}`} alt="" className="w-32 h-32 object-cover rounded-2xl border border-[#f4cda3]" />
+                <input
+                  ref={imageInputRef}
+                  type="file"
+                  accept="image/*"
+                  onChange={handleEditImageChange}
+                  className="border p-2 rounded-xl w-full"
+                />
+
+                {(editImage || currentImage) && (
+                  <div className="relative w-40 mt-3">
+
+                    <img
+                      src={
+                        editImage
+                          ? URL.createObjectURL(editImage)
+                          : currentImage
+                      }
+                      className="w-40 h-40 object-cover rounded-2xl border border-[#f4cda3]"
+                    />
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setEditImage(null);
+                        setCurrentImage("");
+
+                        if (imageInputRef.current) {
+                          imageInputRef.current.value = "";
+                        }
+                      }}
+                      className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-7 h-7"
+                    >
+                      ✕
+                    </button>
+
                   </div>
                 )}
-
-                {/* Preview foto baru */}
-                {editImage && (
-                  <div className="mb-2">
-                    <p className="text-xs text-gray-400 mb-1">Foto baru:</p>
-                    <img src={URL.createObjectURL(editImage)} alt="" className="w-32 h-32 object-cover rounded-2xl border border-[#f4cda3]" />
-                  </div>
-                )}
-
-                <input type="file" accept="image/*" onChange={(e) => setEditImage(e.target.files[0])} className="border p-2 rounded-xl w-full" />
-                <p className="text-xs text-gray-400 mt-1">Kosongkan jika tidak ingin mengganti foto</p>
               </div>
 
               {/* REKOMENDASI PRODUK */}
@@ -258,10 +289,10 @@ export default function MixMatchList({ mixmatch, refresh }) {
               {/* BUTTONS */}
               <div className="flex gap-3 mt-2">
                 <button type="submit" className="flex-1 bg-green-500 hover:bg-green-600 text-white py-3 rounded-full font-semibold transition">
-                  Simpan
+                  Save
                 </button>
                 <button type="button" onClick={() => setEditItem(null)} className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 py-3 rounded-full font-semibold transition">
-                  Batal
+                  Cancel
                 </button>
               </div>
             </form>

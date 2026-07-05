@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import { UserContext } from "../../../context/UserContext";
 import { useNavigate } from "react-router-dom";
 import karakter from "../../../assets/welcomingkarakter.png";
+import api from "../../../api/api";
 
 export default function LoginUser() {
   const navigate = useNavigate();
@@ -18,28 +19,16 @@ export default function LoginUser() {
     setError("");
 
     try {
-      // REQUEST LOGIN KE BACKEND
-      const response = await fetch("/auth/login", {
-        method: "POST",
-
-        headers: {
-          "Content-Type": "application/json",
-        },
-
-        body: JSON.stringify({
-          username,
-          password,
-        }),
+      const res = await api.post("/auth/login", {
+        username,
+        password,
       });
 
-      const data = await response.json();
+      const data = res.data;
 
-      // LOGIN BERHASIL
       if (data.success) {
-        // simpan user ke Context + localStorage
         login(data.user);
 
-        // Cek apakah ada halaman tujuan setelah login
         const redirect = sessionStorage.getItem("redirectAfterLogin");
 
         if (redirect) {
@@ -48,13 +37,14 @@ export default function LoginUser() {
         } else {
           navigate("/profile");
         }
-      } else {
-        setError(data.message);
       }
     } catch (err) {
       console.log(err);
 
-      setError("User tidak ditemukan, silakan registrasi dahulu");
+      setError(
+        err.response?.data?.message ||
+        "Username atau password salah"
+      );
     }
 
     setIsLoading(false);

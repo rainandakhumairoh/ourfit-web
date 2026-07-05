@@ -1,26 +1,25 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import api from "../../api/api";
 
 export default function ProductList({ products, refresh }) {
   const [editProduct, setEditProduct] = useState(null);
-
   const [editName, setEditName] = useState("");
-
   const [editPrice, setEditPrice] = useState("");
-
   const [editCategory, setEditCategory] = useState("");
-
   const [editDescription, setEditDescription] = useState("");
-
   const [editShopeeLink, setEditShopeeLink] = useState("");
-
   const [editTiktokLink, setEditTiktokLink] = useState("");
+  const coverInputRef = useRef(null);
+  const galleryInputRef = useRef(null);
+  const [existingImages, setExistingImages] = useState([]);
+  const [currentCover, setCurrentCover] = useState("");
 
   // COVER
   const [editCoverImage, setEditCoverImage] = useState(null);
 
   // GALLERY
   const [editImages, setEditImages] = useState([]);
+  
 
   // DELETE
   const handleDelete = async (id) => {
@@ -36,22 +35,31 @@ export default function ProductList({ products, refresh }) {
   // START EDIT
   const startEdit = (product) => {
     setEditProduct(product);
-
     setEditName(product.name);
-
     setEditPrice(product.price);
-
     setEditCategory(product.category);
-
     setEditDescription(product.description);
-
     setEditShopeeLink(product.marketplaceLinks?.shopee || "");
-
     setEditTiktokLink(product.marketplaceLinks?.tiktok || "");
-
     setEditCoverImage(null);
-
+    setCurrentCover(product.coverImage);
+    setExistingImages(product.images || []);
     setEditImages([]);
+  };
+
+  const handleEditCoverChange = (e) => {
+    if (e.target.files.length > 0) {
+      setEditCoverImage(e.target.files[0]);
+      e.target.value = "";
+    }
+  };
+
+  const handleEditGalleryChange = (e) => {
+  const files = Array.from(e.target.files);
+
+    setEditImages((prev) => [...prev, ...files]);
+
+    e.target.value = "";
   };
 
   // SUBMIT EDIT
@@ -72,9 +80,17 @@ export default function ProductList({ products, refresh }) {
       formData.append("shopeeLink", editShopeeLink);
 
       formData.append("tiktokLink", editTiktokLink);
+      formData.append(
+        "existingImages",
+        JSON.stringify(existingImages)
+      );
+      formData.append(
+          "deleteCover",
+          currentCover === "" ? "true" : "false"
+      );
 
       // COVER
-      if (editCoverImage) {
+     if (editCoverImage) {
         formData.append("coverImage", editCoverImage);
       }
 
@@ -184,14 +200,104 @@ export default function ProductList({ products, refresh }) {
               <div>
                 <p className="font-medium mb-2">Cover Produk</p>
 
-                <input type="file" accept="image/*" onChange={(e) => setEditCoverImage(e.target.files[0])} />
+                <input
+                  ref={coverInputRef}
+                  type="file"
+                  accept="image/*"
+                  onChange={handleEditCoverChange}
+                />
               </div>
+
+              
+              {(editCoverImage || currentCover) && (
+                <div className="relative w-40 mt-3">
+                  <img
+                    src={
+                      editCoverImage
+                        ? URL.createObjectURL(editCoverImage)
+                        : currentCover
+                    }
+                    alt=""
+                    className="w-40 h-40 object-cover rounded-xl border"
+                  />
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setEditCoverImage(null);
+                      setCurrentCover("");
+
+                      if (coverInputRef.current) {
+                        coverInputRef.current.value = "";
+                      }
+                    }}
+                    className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-7 h-7"
+                  >
+                    ✕
+                  </button>
+                </div>
+              )}
 
               {/* GALLERY */}
               <div>
                 <p className="font-medium mb-2">Gallery Produk</p>
 
-                <input type="file" accept="image/*" multiple onChange={(e) => setEditImages(Array.from(e.target.files))} />
+                <input
+                  ref={galleryInputRef}
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  onChange={handleEditGalleryChange}
+                />
+              </div>
+
+              {/* preview */}
+              <div className="flex gap-2 flex-wrap">
+
+                {/* gambar lama */}
+                {existingImages.map((img, index) => (
+                  <div key={index} className="relative">
+                    <img
+                      src={img}
+                      className="w-24 h-24 object-cover rounded-lg border"
+                    />
+
+                   <button
+                    type="button"
+                    onClick={() =>
+                      setExistingImages(prev =>
+                        prev.filter((_, i) => i !== index)
+                      )
+                    }
+                    className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-7 h-7"
+                  >
+                    ✕
+                  </button>
+                  </div>
+                ))}
+
+                {/* gambar baru */}
+                {editImages.map((img, index) => (
+                  <div key={index} className="relative">
+                    <img
+                      src={URL.createObjectURL(img)}
+                      className="w-24 h-24 object-cover rounded-lg border"
+                    />
+
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setEditImages(prev =>
+                          prev.filter((_, i) => i !== index)
+                        )
+                      }
+                      className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-7 h-7"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                ))}
+
               </div>
 
               {/* BUTTONS */}
